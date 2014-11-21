@@ -6,7 +6,7 @@
     <ProjectGuid>{49AB8441-F6E0-4C79-8ED6-9655F040BB9D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PJanssen.ParsecSharp.Tests</RootNamespace>
+    <RootNamespace>PJanssen.ParsecSharp</RootNamespace>
     <AssemblyName>PJanssen.ParsecSharp.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Either\EitherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

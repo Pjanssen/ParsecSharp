@@ -38,6 +38,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Either\Either.cs" />
+    <Compile Include="Either\Either.T2.cs" />
+    <Compile Include="Either\Failure.cs" />
+    <Compile Include="Either\Success.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
