@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp
 {
-   internal class Success<S, F> : Either<S, F>
+   internal class Success<S, E> : Either<S, E>
    {
       public Success(S value)
       {
@@ -23,7 +23,7 @@ namespace PJanssen.ParsecSharp
          return true;
       }
 
-      public override bool IsFailure()
+      public override bool IsError()
       {
          return false;
       }
@@ -33,12 +33,12 @@ namespace PJanssen.ParsecSharp
          return this.Value;
       }
 
-      public override F FromFailure()
+      public override E FromError()
       {
-         throw new InvalidOperationException("Cannot call FromFailure on Success");
+         throw new InvalidOperationException("Cannot call FromError on Success");
       }
 
-      public override Either<TResult, F> Select<TResult>(Func<S, Either<TResult, F>> func)
+      public override Either<TResult, E> Select<TResult>(Func<S, Either<TResult, E>> func)
       {
          return func(this.Value);
       }

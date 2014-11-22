@@ -17,9 +17,9 @@ namespace PJanssen.ParsecSharp
       }
 
       [TestMethod]
-      public void IsSuccess_Failure_ReturnsFalse()
+      public void IsSuccess_Error_ReturnsFalse()
       {
-         Either<bool, int> either = Either.Fail<bool, int>(42);
+         Either<bool, int> either = Either.Error<bool, int>(42);
 
          Assert.IsFalse(either.IsSuccess());
       }
@@ -38,52 +38,52 @@ namespace PJanssen.ParsecSharp
 
       [TestMethod]
       [ExpectedException(typeof(InvalidOperationException))]
-      public void FromSuccess_Failure_ThrowsException()
+      public void FromSuccess_Error_ThrowsException()
       {
-         Either<bool, int> either = Either.Fail<bool, int>(42);
+         Either<bool, int> either = Either.Error<bool, int>(42);
 
          either.FromSuccess();
       }
 
       #endregion
 
-      #region IsFailure
+      #region IsError
 
       [TestMethod]
-      public void IsFailure_Success_ReturnsFalse()
+      public void IsError_Success_ReturnsFalse()
       {
          Either<bool, int> either = Either.Success<bool, int>(true);
 
-         Assert.IsFalse(either.IsFailure());
+         Assert.IsFalse(either.IsError());
       }
 
       [TestMethod]
-      public void IsFailure_Failure_ReturnsTrue()
+      public void IsError_Error_ReturnsTrue()
       {
-         Either<bool, int> either = Either.Fail<bool, int>(42);
+         Either<bool, int> either = Either.Error<bool, int>(42);
 
-         Assert.IsTrue(either.IsFailure());
+         Assert.IsTrue(either.IsError());
       }
 
       #endregion
 
-      #region FromFailure
+      #region FromError
 
       [TestMethod]
       [ExpectedException(typeof(InvalidOperationException))]
-      public void FromFailure_Success_ThrowsException()
+      public void FromError_Success_ThrowsException()
       {
          Either<bool, int> either = Either.Success<bool, int>(true);
 
-         either.FromFailure();
+         either.FromError();
       }
 
       [TestMethod]
-      public void FromFailure_Failure_ReturnsValue()
+      public void FromError_Error_ReturnsValue()
       {
-         Either<bool, int> either = Either.Fail<bool, int>(42);
+         Either<bool, int> either = Either.Error<bool, int>(42);
 
-         Assert.AreEqual(42, either.FromFailure());
+         Assert.AreEqual(42, either.FromError());
       }
 
       #endregion
@@ -100,12 +100,12 @@ namespace PJanssen.ParsecSharp
       }
 
       [TestMethod]
-      public void Select_Failure_ReturnsFailure()
+      public void Select_Error_ReturnsError()
       {
-         var result = from x in Either.Fail<bool, int>(42)
+         var result = from x in Either.Error<bool, int>(42)
                       select x.ToString();
 
-         Assert.AreEqual(42, result.FromFailure());
+         Assert.AreEqual(42, result.FromError());
       }
 
       #endregion
@@ -124,14 +124,14 @@ namespace PJanssen.ParsecSharp
       }
 
       [TestMethod]
-      public void SelectMany_Failure_ReturnsFailure()
+      public void SelectMany_Error_ReturnsError()
       {
          var result = from x in Either.Success<string, bool>("x")
-                      from y in Either.Fail<string, bool>(true)
+                      from y in Either.Error<string, bool>(true)
                       from z in Either.Success<string, bool>("z")
                       select x + y + z;
 
-         Assert.AreEqual(true, result.FromFailure());
+         Assert.AreEqual(true, result.FromError());
       }
 
       #endregion

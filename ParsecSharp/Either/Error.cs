@@ -5,14 +5,14 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp
 {
-   internal class Failure<S, F> : Either<S, F>
+   internal class Error<S, E> : Either<S, E>
    {
-      public Failure(F value)
+      public Error(E value)
       {
          this.Value = value;
       }
 
-      public F Value
+      public E Value
       {
          get;
          private set;
@@ -23,24 +23,24 @@ namespace PJanssen.ParsecSharp
          return false;
       }
 
-      public override bool IsFailure()
+      public override bool IsError()
       {
          return true;
       }
 
       public override S FromSuccess()
       {
-         throw new InvalidOperationException("Cannot call FromSuccess on Failure");
+         throw new InvalidOperationException("Cannot call FromSuccess on Error");
       }
 
-      public override F FromFailure()
+      public override E FromError()
       {
          return this.Value;
       }
 
-      public override Either<TResult, F> Select<TResult>(Func<S, Either<TResult, F>> func)
+      public override Either<TResult, E> Select<TResult>(Func<S, Either<TResult, E>> func)
       {
-         return new Failure<TResult, F>(this.Value);
+         return new Error<TResult, E>(this.Value);
       }
    }
 }

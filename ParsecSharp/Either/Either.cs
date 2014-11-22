@@ -14,7 +14,7 @@ namespace PJanssen.ParsecSharp
       /// Creates a new Success value.
       /// </summary>
       /// <typeparam name="S">The type of the Success value.</typeparam>
-      /// <typeparam name="F">The type of the Failure value.</typeparam>
+      /// <typeparam name="F">The type of the Error value.</typeparam>
       /// <param name="value">The value to be wrapped.</param>
       public static Either<S, F> Success<S, F>(S value)
       {
@@ -22,14 +22,14 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
-      /// Creates a new Failure value.
+      /// Creates a new Error value.
       /// </summary>
       /// <typeparam name="S">The type of the Success value.</typeparam>
-      /// <typeparam name="F">The type of the Failure value.</typeparam>
+      /// <typeparam name="E">The type of the Error value.</typeparam>
       /// <param name="value">The value to be wrapped.</param>
-      public static Either<S, F> Fail<S, F>(F value)
+      public static Either<S, E> Error<S, E>(E value)
       {
-         return new Failure<S, F>(value);
+         return new Error<S, E>(value);
       }
    }
 }
