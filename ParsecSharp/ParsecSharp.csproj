@@ -40,9 +40,13 @@
   <ItemGroup>
     <Compile Include="Either\Either.cs" />
     <Compile Include="Either\Either.T2.cs" />
-    <Compile Include="Either\Failure.cs" />
+    <Compile Include="Either\Error.cs" />
     <Compile Include="Either\Success.cs" />
+    <Compile Include="Parse.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="ParserExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Throw.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
