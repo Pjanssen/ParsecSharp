@@ -22,5 +22,20 @@ namespace PJanssen.ParsecSharp
       {
          return _ => Either.Error<TValue, string>(message);
       }
+
+      /// <summary>
+      /// Succeeds only at the end of the input.
+      /// </summary>
+      public static Parser<Unit> Eof()
+      {
+         return input =>
+         {
+            int i = input.Read();
+            if (i != -1)
+               return Either.Error<Unit, string>("Expected end of input");
+
+            return Either.Success<Unit, string>(Unit.Instance);
+         };
+      }
    }
 }

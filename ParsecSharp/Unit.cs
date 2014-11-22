@@ -5,8 +5,10 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp
 {
-   public struct Unit
+   public class Unit
    {
+      private Unit() { }
+
       private static Unit _Instance = new Unit();
 
       public static Unit Instance
