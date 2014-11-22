@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Either\EitherTests.cs" />
+    <Compile Include="ParserExtensionsTests.cs" />
     <Compile Include="ParseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
