@@ -135,5 +135,36 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Test
+
+      [TestMethod]
+      public void Test_Error_ReturnsError()
+      {
+         Either<int, string> either = Either.Error<int, string>("test");
+         var result = either.Test(i => true, i => "");
+
+         Assert.AreEqual("test", result.FromError());
+      }
+
+      [TestMethod]
+      public void Test_SuccessFailingPredicate_ReturnsError()
+      {
+         Either<int, string> either = Either.Success<int, string>(42);
+         var result = either.Test(i => false, i => "test");
+
+         Assert.AreEqual("test", result.FromError());
+      }
+
+      [TestMethod]
+      public void Test_SuccessPassingPredicate_ReturnsSuccess()
+      {
+         Either<int, string> either = Either.Success<int, string>(42);
+         var result = either.Test(i => true, i => "test");
+
+         Assert.AreEqual(42, result.FromSuccess());
+      }
+
+      #endregion
    }
 }

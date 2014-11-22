@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chars.cs" />
     <Compile Include="Either\Either.cs" />
     <Compile Include="Either\Either.T2.cs" />
     <Compile Include="Either\Error.cs" />
