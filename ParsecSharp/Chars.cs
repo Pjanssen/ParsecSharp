@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp
 {
+   /// <summary>
+   /// Defines commonly used character parsers.
+   /// </summary>
    public static class Chars
    {
       /// <summary>

@@ -19,7 +19,7 @@ namespace PJanssen.ParsecSharp
 
          var result = parser.Run("");
 
-         Assert.AreEqual(42, result.FromSuccess());
+         ParseAssert.ValueEquals(42, result);
       }
 
       [TestMethod]
@@ -30,7 +30,7 @@ namespace PJanssen.ParsecSharp
 
          var result = parser.Run("");
 
-         Assert.AreEqual("test", result.FromError());
+         ParseAssert.ErrorEquals("test", result);
       }
 
       #endregion
@@ -46,7 +46,7 @@ namespace PJanssen.ParsecSharp
          
          var result = parser.Run("");
 
-         Assert.AreEqual(42, result.FromSuccess());
+         ParseAssert.ValueEquals(42, result);
       }
 
       [TestMethod]
@@ -58,7 +58,7 @@ namespace PJanssen.ParsecSharp
 
          var result = parser.Run("");
 
-         Assert.AreEqual("test", result.FromError());
+         ParseAssert.ErrorEquals("test", result);
       }
 
       [TestMethod]
@@ -72,7 +72,7 @@ namespace PJanssen.ParsecSharp
 
          var result = parser.Run("");
 
-         Assert.AreEqual(42, result.FromSuccess());
+         ParseAssert.ValueEquals(42, result);
       }
 
       #endregion

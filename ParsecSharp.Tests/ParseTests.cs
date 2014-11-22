@@ -17,7 +17,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Parse.Success('x');
          var result = parser.Run("");
 
-         Assert.AreEqual('x', result.FromSuccess());
+         ParseAssert.ValueEquals('x', result);
       }
 
       #endregion
@@ -30,7 +30,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Parse.Error<char>("test");
          var result = parser.Run("");
 
-         Assert.AreEqual("test", result.FromError());
+         ParseAssert.ErrorEquals("test", result);
       }
 
       #endregion

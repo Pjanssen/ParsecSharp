@@ -14,7 +14,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Chars.Any();
          var result = parser.Run("");
 
-         Assert.IsTrue(result.IsError());
+         ParseAssert.IsError(result);
       }
 
       [TestMethod]
@@ -23,7 +23,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Chars.Any();
          var result = parser.Run("a");
 
-         Assert.AreEqual('a', result.FromSuccess());
+         ParseAssert.ValueEquals('a', result);
       }
 
       #endregion
@@ -43,7 +43,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Chars.Satisfy(c => true);
          var result = parser.Run("xyz");
 
-         Assert.AreEqual('x', result.FromSuccess());
+         ParseAssert.ValueEquals('x', result);
       }
 
       [TestMethod]
@@ -52,7 +52,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Chars.Satisfy(c => false);
          var result = parser.Run("xyz");
 
-         Assert.IsTrue(result.IsError());
+         ParseAssert.IsError(result);
       }
 
       #endregion
@@ -65,7 +65,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Chars.Char('x');
          var result = parser.Run("xyz");
 
-         Assert.AreEqual('x', result.FromSuccess());
+         ParseAssert.ValueEquals('x', result);
       }
 
       [TestMethod]
@@ -74,7 +74,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Chars.Char('x');
          var result = parser.Run("abc");
 
-         Assert.IsTrue(result.IsError());
+         ParseAssert.IsError(result);
       }
 
       #endregion
@@ -87,7 +87,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Chars.OneOf("abc");
          var result = parser.Run("b");
 
-         Assert.AreEqual('b', result.FromSuccess());
+         ParseAssert.ValueEquals('b', result);
       }
 
       [TestMethod]
@@ -96,7 +96,7 @@ namespace PJanssen.ParsecSharp
          Parser<char> parser = Chars.OneOf("xyz");
          var result = parser.Run("a");
 
-         Assert.IsTrue(result.IsError());
+         ParseAssert.IsError(result);
       }
 
       #endregion
