@@ -42,5 +42,10 @@ namespace PJanssen.ParsecSharp
       {
          return func(this.Value);
       }
+
+      public override string ToString()
+      {
+         return "Success (" + this.Value.ToString() + ")";
+      }
    }
 }

@@ -42,5 +42,10 @@ namespace PJanssen.ParsecSharp
       {
          return new Error<TResult, E>(this.Value);
       }
+
+      public override string ToString()
+      {
+         return "Error (" + this.Value.ToString() + ")";
+      }
    }
 }
