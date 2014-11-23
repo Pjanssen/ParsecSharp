@@ -134,7 +134,7 @@ namespace PJanssen.ParsecSharp
          var parser = Parse.Error<int>("Oh noes").Label("Test");
          var result = parser.Run("");
 
-         ParseAssert.ErrorEquals("Oh noes. Test", result);
+         ParseAssert.ErrorEquals("Oh noes. Test.", result);
       }
 
       #endregion

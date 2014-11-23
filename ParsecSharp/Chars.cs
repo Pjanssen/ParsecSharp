@@ -64,6 +64,80 @@ namespace PJanssen.ParsecSharp
                   .Label(() => string.Format("Expected any char except \"{0}\"", string.Concat(characters)));
       }
 
+      /// <summary>
+      /// Succeeds if the current character is a letter. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Letter()
+      {
+         return Satisfy(c => char.IsLetter(c))
+                  .Label("Expected a letter");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a letter. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Digit()
+      {
+         return Satisfy(c => char.IsDigit(c))
+                  .Label("Expected a digit");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a letter or digit. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> AlphaNum()
+      {
+         return Satisfy(c => char.IsLetterOrDigit(c))
+                  .Label("Expected a letter or digit");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a space. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Space()
+      {
+         return Satisfy(c => c == ' ')
+                  .Label("Expected a space");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a tab. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Tab()
+      {
+         return Satisfy(c => c == '\t')
+                  .Label("Expected a tab");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a whitespace character. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> WhiteSpace()
+      {
+         return Satisfy(c => char.IsWhiteSpace(c))
+                  .Label("Expected a whitespace character");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a CR ('\r'), followed by an LF ('\n').
+      /// Returns the line feed.
+      /// </summary>
+      public static Parser<char> CrLf()
+      {
+         return (from cr in Char('\r')
+                 from lf in Char('\n')
+                 select lf).Label("Expected CRLF");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a LF ('\n') or CRLF ('\r\n').
+      /// Returns the line feed.
+      /// </summary>
+      public static Parser<char> EndOfLine()
+      {
+         return Combine.Or(Char('\n'), CrLf());
+      }
+
       public static Parser<string> String(string str)
       {
          return input =>
