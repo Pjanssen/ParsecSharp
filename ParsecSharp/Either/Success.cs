@@ -38,14 +38,6 @@ namespace PJanssen.ParsecSharp
          throw new InvalidOperationException("Cannot call FromError on Success");
       }
 
-      public override Either<S, E> Test(Predicate<S> predicate, Func<S, E> selectErrorValue)
-      {
-         if (predicate(this.Value))
-            return this;
-
-         return Either.Error<S, E>(selectErrorValue(this.Value));
-      }
-
       public override Either<TResult, E> Select<TResult>(Func<S, Either<TResult, E>> func)
       {
          return func(this.Value);

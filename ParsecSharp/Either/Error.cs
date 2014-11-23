@@ -38,11 +38,6 @@ namespace PJanssen.ParsecSharp
          return this.Value;
       }
 
-      public override Either<S, E> Test(Predicate<S> predicate, Func<S, E> selectErrorValue)
-      {
-         return this;
-      }
-
       public override Either<TResult, E> Select<TResult>(Func<S, Either<TResult, E>> func)
       {
          return new Error<TResult, E>(this.Value);

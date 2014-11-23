@@ -33,12 +33,6 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public abstract E FromError();
 
-      /// <summary>
-      /// For a Success value returns the value if the given predicate is true, or the selected Error otherwise.
-      /// Always returns an Error for an Error value.
-      /// </summary>
-      public abstract Either<S, E> Test(Predicate<S> predicate, Func<S, E> selectError);
-
       public abstract Either<TResult, E> Select<TResult>(Func<S, Either<TResult, E>> func);
 
       public Either<TResult, E> Select<TResult>(Func<S, TResult> func)
