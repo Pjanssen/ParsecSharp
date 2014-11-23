@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace PJanssen.ParsecSharp.CharStream
+namespace PJanssen.ParsecSharp.IO
 {
    public class SimpleCharStream : StringCharStream
    {

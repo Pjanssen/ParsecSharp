@@ -100,5 +100,27 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region String
+
+      [TestMethod]
+      public void String_NoMatch_ReturnsError()
+      {
+         Parser<string> parser = Chars.String("xyz");
+         var result = parser.Run("abc");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void String_Match_ReturnsValue()
+      {
+         Parser<string> parser = Chars.String("abc");
+         var result = parser.Run("abc");
+
+         ParseAssert.ValueEquals("abc", result);
+      }
+
+      #endregion
    }
 }

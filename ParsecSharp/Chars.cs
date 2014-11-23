@@ -15,22 +15,12 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<char> Any()
       {
-         return input => 
+         return input =>
          {
             if (input.EndOfStream)
                return Either.Error<char, string>("Unexpected end of input");
-            
+
             return Either.Success<char, string>(input.Read());
-         };
-      }
-
-      private static Parser<char> Satisfy(Predicate<char> predicate, Func<char, string> errorMessage)
-      {
-         Throw.IfNull(predicate, "predicate");
-
-         return input =>
-         {
-            return Any()(input).Test(predicate, errorMessage);
          };
       }
 
@@ -39,7 +29,11 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<char> Satisfy(Predicate<char> predicate)
       {
-         return Satisfy(predicate, c => "Unexpected '" + c + "'");
+         Throw.IfNull(predicate, "predicate");
+
+         return from c in Any()
+                where predicate(c)
+                select c;
       }
 
       /// <summary>
@@ -47,11 +41,8 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<char> Char(char character)
       {
-         Func<char, string> error = c => string.Format("Expected '{0}', got '{1}'"
-                                                      , character
-                                                      , c);
-
-         return Satisfy(c => c == character, error);
+         return Satisfy(c => c == character)
+                  .Label("expected " + character);
       }
 
       /// <summary>
@@ -59,11 +50,23 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<char> OneOf(IEnumerable<char> characters)
       {
-         Func<char, string> error = c => string.Format("Expected one of \"{0}\", got '{1}'"
-                                                      , string.Concat(characters)
-                                                      , c);
+         return Satisfy(c => characters.Contains(c))
+                  .Label(() => string.Format("expected one of \"{0}\"", string.Concat(characters)));
+      }
 
-         return Satisfy(c => characters.Contains(c), error);
+      public static Parser<string> String(string str)
+      {
+         return input =>
+         {
+            for (int i = 0; i < str.Length; i++)
+            {
+               var result = Char(str[i])(input);
+               if (result.IsError())
+                  return Either.Error<string, string>(result.FromError());
+            }
+
+            return Either.Success<string, string>(str);
+         };
       }
    }
 }

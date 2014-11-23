@@ -36,5 +36,22 @@ namespace PJanssen.ParsecSharp
             return Either.Error<Unit, string>("Expected end of input");
          };
       }
+
+      /// <summary>
+      /// Tries to parse the input using the given parser, resetting the input position if it fails.
+      /// </summary>
+      public static Parser<TValue> Try<TValue>(Parser<TValue> parser)
+      {
+         return input =>
+         {
+            int position = input.Position;
+
+            var result = parser(input);
+            if (result.IsError())
+               input.Seek(position);
+
+            return result;
+         };
+      }
    }
 }

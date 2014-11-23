@@ -39,7 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chars.cs" />
-    <Compile Include="CharStream\SimpleCharStream.cs" />
+    <Compile Include="IO\CharStream.cs" />
+    <Compile Include="IO\SimpleCharStream.cs" />
     <Compile Include="Either\Either.cs" />
     <Compile Include="Either\Either.T2.cs" />
     <Compile Include="Either\Error.cs" />
@@ -49,8 +50,8 @@
     <Compile Include="Parse.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParserExtensions.cs" />
-    <Compile Include="CharStream\ICharStream.cs" />
-    <Compile Include="CharStream\StringCharStream.cs" />
+    <Compile Include="IO\ICharStream.cs" />
+    <Compile Include="IO\StringCharStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

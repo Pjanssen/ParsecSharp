@@ -77,6 +77,68 @@ namespace PJanssen.ParsecSharp
 
       #endregion
 
+      #region Where
+
+      [TestMethod]
+      public void Where_PassingPredicate_ReturnsSuccess()
+      {
+         var parser = from x in Parse.Success(42)
+                      where x == 42
+                      select x;
+
+         var result = parser.Run("");
+
+         ParseAssert.ValueEquals(42, result);
+      }
+
+      [TestMethod]
+      public void Where_Error_ReturnsError()
+      {
+         var parser = from x in Parse.Error<int>("test")
+                      where x == 42
+                      select x;
+
+         var result = parser.Run("");
+
+         ParseAssert.ErrorEquals("test", result);
+      }
+
+      [TestMethod]
+      public void Where_FailingPredicate_ReturnsError()
+      {
+         var parser = from x in Parse.Success(42)
+                      where x != 42
+                      select x;
+
+         var result = parser.Run("");
+
+         ParseAssert.ErrorEquals("Unexpected 42", result);
+      }
+
+      #endregion
+
+      #region Label
+
+      [TestMethod]
+      public void Label_Success_ReturnsSuccess()
+      {
+         var parser = Parse.Success(42).Label("test");
+         var result = parser.Run("");
+
+         ParseAssert.ValueEquals(42, result);
+      }
+
+      [TestMethod]
+      public void Label_Error_ReturnsErrorWithMessage()
+      {
+         var parser = Parse.Error<int>("Oh noes").Label("test");
+         var result = parser.Run("");
+
+         ParseAssert.ErrorEquals("Oh noes, test", result);
+      }
+
+      #endregion
+
       #region Or
 
       [TestMethod]
@@ -91,10 +153,10 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Or_FirstError_ReturnsSecondResult()
       {
-         Parser<char> parser = Chars.Char('x').Or(Chars.Char('y'));
-         var result = parser.Run("y");
+         var parser = Parse.Error<int>("test").Or(Parse.Success(42));
+         var result = parser.Run("");
 
-         ParseAssert.ValueEquals('y', result);
+         ParseAssert.ValueEquals(42, result);
       }
 
       #endregion

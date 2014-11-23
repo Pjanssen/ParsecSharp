@@ -10,24 +10,24 @@ namespace PJanssen.ParsecSharp
    {
       public static void IsSuccess<TValue>(Either<TValue, string> result)
       {
-         Assert.IsTrue(result.IsSuccess());
+         Assert.IsTrue(result.IsSuccess(), "Parser did not return Success");
       }
 
       public static void IsError<TValue>(Either<TValue, string> result)
       {
-         Assert.IsTrue(result.IsError());
+         Assert.IsTrue(result.IsError(), "Parser did not return Error");
       }
 
       public static void ValueEquals<TValue>(TValue expected, Either<TValue, string> result) 
       {
-         Assert.IsTrue(result.IsSuccess());
-         Assert.AreEqual(expected, result.FromSuccess());
+         IsSuccess(result);
+         Assert.AreEqual(expected, result.FromSuccess(), "Parsed value");
       }
 
       public static void ErrorEquals<TValue>(string expected, Either<TValue, string> result)
       {
-         Assert.IsTrue(result.IsError());
-         Assert.AreEqual(expected, result.FromError());
+         IsError(result);
+         Assert.AreEqual(expected, result.FromError(), "Error message");
       }
    }
 }

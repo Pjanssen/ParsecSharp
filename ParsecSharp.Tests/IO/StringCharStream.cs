@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace PJanssen.ParsecSharp.CharStream
+namespace PJanssen.ParsecSharp.IO
 {
    [TestClass]
    public class StringReaderTests

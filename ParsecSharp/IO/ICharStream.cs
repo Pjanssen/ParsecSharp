@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PJanssen.ParsecSharp.CharStream
+namespace PJanssen.ParsecSharp.IO
 {
    public interface ICharStream
    {

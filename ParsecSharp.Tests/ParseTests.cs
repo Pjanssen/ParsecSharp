@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PJanssen.ParsecSharp.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,36 @@ namespace PJanssen.ParsecSharp
          var result = parser.Run("abc");
 
          ParseAssert.IsError(result);
+      }
+
+      #endregion
+
+      #region Try
+
+      [TestMethod]
+      public void Try_Success_ReturnsSuccess()
+      {
+         var parser = from a in Parse.Try(Chars.Char('a'))
+                      from b in Parse.Try(Chars.Char('b'))
+                      select a.ToString() + b.ToString();
+
+         var result = parser.Run("abc");
+
+         ParseAssert.ValueEquals("ab", result);
+      }
+
+      [TestMethod]
+      public void Try_Error_ReturnsErrorAndResetsPosition()
+      {
+         var parserA = Parse.Try(Chars.Char('a'));
+         var parserB = Parse.Try(Chars.Char('b'));
+
+         ICharStream input = CharStream.Create("bc");
+         var resultA = parserA(input);
+         ParseAssert.IsError(resultA);
+
+         var resultB = parserB(input);
+         ParseAssert.ValueEquals('b', resultB);
       }
 
       #endregion

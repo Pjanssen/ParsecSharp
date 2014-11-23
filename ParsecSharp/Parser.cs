@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using PJanssen.ParsecSharp.CharStream;
+using PJanssen.ParsecSharp.IO;
 
 namespace PJanssen.ParsecSharp
 {

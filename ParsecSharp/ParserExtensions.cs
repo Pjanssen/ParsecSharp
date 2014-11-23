@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PJanssen.ParsecSharp.CharStream;
+using PJanssen.ParsecSharp.IO;
 
 namespace PJanssen.ParsecSharp
 {
@@ -16,7 +16,7 @@ namespace PJanssen.ParsecSharp
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
 
-         ICharStream stream = new StringCharStream(input);
+         ICharStream stream = CharStream.Create(input);
          return parser(stream);
       }
 
@@ -28,7 +28,7 @@ namespace PJanssen.ParsecSharp
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
 
-         ICharStream stream = new SimpleCharStream(input, encoding);
+         ICharStream stream = CharStream.Create(input, encoding);
          return parser(stream);
       }
 
@@ -56,17 +56,58 @@ namespace PJanssen.ParsecSharp
          };
       }
 
+      /// <summary>
+      /// Tests the given predicate for this parser and returns an error if it fails.
+      /// </summary>
+      public static Parser<TValue> Where<TValue>(this Parser<TValue> parser, Predicate<TValue> predicate)
+      {
+         return input =>
+         {
+            var result = parser(input);
+            if (result.IsError())
+               return result;
+
+            if (predicate(result.FromSuccess()))
+               return result;
+
+            return Either.Error<TValue, string>("Unexpected " + result.FromSuccess().ToString());
+         };
+      }
+
+      /// <summary>
+      /// Labels the parser with a message that is added to a potential Error value.
+      /// </summary>
+      public static Parser<TValue> Label<TValue>(this Parser<TValue> parser, string message)
+      {
+         return Label(parser, () => message);
+      }
+
+      /// <summary>
+      /// Labels the parser with a message that is added to a potential Error value.
+      /// </summary>
+      public static Parser<TValue> Label<TValue>(this Parser<TValue> parser, Func<string> msgFunc)
+      {
+         return input =>
+         {
+            var result = parser(input);
+            if (result.IsSuccess())
+               return result;
+
+            return Either.Error<TValue, string>(result.FromError() + ", " + msgFunc());
+         };
+      }
+
       public static Parser<TValue> Or<TValue>(this Parser<TValue> parserA, Parser<TValue> parserB)
       {
          return input =>
          {
-            int position = input.Position;
+            //int position = input.Position;
 
             var result = parserA(input);
-            if (result.IsSuccess())
+            if (result.IsSuccess()) // || input.Position != position)
                return result;
 
-            input.Seek(position);
+            //input.Seek(position);
 
             return parserB(input);
          };
