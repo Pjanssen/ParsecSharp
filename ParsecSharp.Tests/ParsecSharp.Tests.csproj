@@ -61,6 +61,7 @@
     <Compile Include="CharsTests.cs" />
     <Compile Include="IO\StringCharStream.cs" />
     <Compile Include="CombineTests.cs" />
+    <Compile Include="ErrorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParsecSharp\ParsecSharp.csproj">

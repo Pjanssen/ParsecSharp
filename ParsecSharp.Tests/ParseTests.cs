@@ -23,19 +23,6 @@ namespace PJanssen.ParsecSharp
 
       #endregion
 
-      #region Error
-
-      [TestMethod]
-      public void Error_ReturnsErrorMessage()
-      {
-         Parser<char> parser = Parse.Error<char>("test");
-         var result = parser.Run("");
-
-         ParseAssert.ErrorEquals("test", result);
-      }
-
-      #endregion
-
       #region Eof
 
       [TestMethod]
@@ -102,8 +89,8 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void NotFollowedBy_Error_ReturnsSuccess()
       {
-         var parser = Parse.NotFollowedBy(Parse.Error<int>("test"));
-         var result = parser.Run("");
+         var parser = Parse.NotFollowedBy(Chars.String("xyz"));
+         var result = parser.Run("x");
 
          ParseAssert.ValueEquals(Unit.Instance, result);
       }

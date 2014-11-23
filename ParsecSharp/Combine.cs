@@ -40,7 +40,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<TValue> Choose<TValue>(IEnumerable<Parser<TValue>> parsers)
       {
-         return parsers.Aggregate( Parse.Error<TValue>("Empty choose sequence")
+         return parsers.Aggregate( Error.Fail<TValue>("Empty choose sequence")
                                  , (acc, p) => Combine.Or(acc, p));
       }
    }

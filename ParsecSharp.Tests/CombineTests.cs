@@ -20,7 +20,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Or_FirstError_ReturnsSecondResult()
       {
-         var parser = Combine.Or(Parse.Error<int>("test"), Parse.Success(42));
+         var parser = Combine.Or(Error.Fail<int>("test"), Parse.Success(42));
          var result = parser.Run("");
 
          ParseAssert.ValueEquals(42, result);
@@ -30,7 +30,7 @@ namespace PJanssen.ParsecSharp
       public void Or_FirstErrorConsumesInput_ReturnsFirstError()
       {
          var parserA = from x in Chars.Any()
-                       from y in Parse.Error<char>("test")
+                       from y in Error.Fail<char>("test")
                        select y;
          var parserB = Chars.Any();
          var parser = Combine.Or(parserA, parserB);

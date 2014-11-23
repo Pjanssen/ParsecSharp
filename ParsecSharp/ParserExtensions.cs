@@ -39,7 +39,7 @@ namespace PJanssen.ParsecSharp
          {
             var result = parser(input);
             if (result.IsError())
-               return Either.Error<TResult, string>(result.FromError());
+               return Error.Create<TResult>(result.FromError());
 
             return Either.Success<TResult, string>(func(result.FromSuccess()));
          };
@@ -70,7 +70,7 @@ namespace PJanssen.ParsecSharp
             if (predicate(result.FromSuccess()))
                return result;
 
-            return Either.Error<TValue, string>("Unexpected " + result.FromSuccess().ToString());
+            return Error.Create<TValue>("Unexpected " + result.FromSuccess().ToString());
          };
       }
 
@@ -93,7 +93,7 @@ namespace PJanssen.ParsecSharp
             if (result.IsSuccess())
                return result;
 
-            return Either.Error<TValue, string>(result.FromError() + ". " + msgFunc() + ".");
+            return Error.Create<TValue>(result.FromError() + ". " + msgFunc() + ".");
          };
       }
    }

@@ -25,7 +25,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Select_Error_ReturnsError()
       {
-         Parser<int> parser = from i in Parse.Error<int>("test")
+         Parser<int> parser = from i in Error.Fail<int>("test")
                               select i * 2;
 
          var result = parser.Run("");
@@ -53,7 +53,7 @@ namespace PJanssen.ParsecSharp
       public void SelectMany_SuccessThenError_ReturnsErrorValue()
       {
          Parser<int> parser = from x in Parse.Success(21)
-                              from y in Parse.Error<int>("test")
+                              from y in Error.Fail<int>("test")
                               select x * y;
 
          var result = parser.Run("");
@@ -94,7 +94,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Where_Error_ReturnsError()
       {
-         var parser = from x in Parse.Error<int>("test")
+         var parser = from x in Error.Fail<int>("test")
                       where x == 42
                       select x;
 
@@ -131,7 +131,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Label_Error_ReturnsErrorWithMessage()
       {
-         var parser = Parse.Error<int>("Oh noes").Label("Test");
+         var parser = Error.Fail<int>("Oh noes").Label("Test");
          var result = parser.Run("");
 
          ParseAssert.ErrorEquals("Oh noes. Test.", result);
