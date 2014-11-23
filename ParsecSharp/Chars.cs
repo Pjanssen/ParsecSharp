@@ -55,6 +55,15 @@ namespace PJanssen.ParsecSharp
                   .Label(() => string.Format("expected one of \"{0}\"", string.Concat(characters)));
       }
 
+      /// <summary>
+      /// Succeeds if the current character is not in the given sequence of characters. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> NoneOf(IEnumerable<char> characters)
+      {
+         return Satisfy(c => !characters.Contains(c))
+                  .Label(() => string.Format("expected any char except \"{0}\"", string.Concat(characters)));
+      }
+
       public static Parser<string> String(string str)
       {
          return input =>

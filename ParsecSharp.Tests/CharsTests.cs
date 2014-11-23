@@ -11,7 +11,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Any_EmptyStream_ReturnsError()
       {
-         Parser<char> parser = Chars.Any();
+         var parser = Chars.Any();
          var result = parser.Run("");
 
          ParseAssert.IsError(result);
@@ -20,7 +20,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Any_NonEmptyStream_ReturnsChar()
       {
-         Parser<char> parser = Chars.Any();
+         var parser = Chars.Any();
          var result = parser.Run("a");
 
          ParseAssert.ValueEquals('a', result);
@@ -40,7 +40,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Satisfy_PassingPredicate_ReturnsChar()
       {
-         Parser<char> parser = Chars.Satisfy(c => true);
+         var parser = Chars.Satisfy(c => true);
          var result = parser.Run("xyz");
 
          ParseAssert.ValueEquals('x', result);
@@ -49,7 +49,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Satisfy_FailingPredicate_ReturnsError()
       {
-         Parser<char> parser = Chars.Satisfy(c => false);
+         var parser = Chars.Satisfy(c => false);
          var result = parser.Run("xyz");
 
          ParseAssert.IsError(result);
@@ -62,7 +62,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Char_MatchingChar_ReturnsChar()
       {
-         Parser<char> parser = Chars.Char('x');
+         var parser = Chars.Char('x');
          var result = parser.Run("xyz");
 
          ParseAssert.ValueEquals('x', result);
@@ -71,7 +71,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Char_NonMatchingChar_ReturnsChar()
       {
-         Parser<char> parser = Chars.Char('x');
+         var parser = Chars.Char('x');
          var result = parser.Run("abc");
 
          ParseAssert.IsError(result);
@@ -84,7 +84,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void OneOf_MatchingChar_ReturnsChar()
       {
-         Parser<char> parser = Chars.OneOf("abc");
+         var parser = Chars.OneOf("abc");
          var result = parser.Run("b");
 
          ParseAssert.ValueEquals('b', result);
@@ -93,10 +93,32 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void OneOf_NonMatchingChar_ReturnsError()
       {
-         Parser<char> parser = Chars.OneOf("xyz");
+         var parser = Chars.OneOf("xyz");
          var result = parser.Run("a");
 
          ParseAssert.IsError(result);
+      }
+
+      #endregion
+
+      #region NoneOf
+
+      [TestMethod]
+      public void NoneOf_MatchingChar_ReturnsError()
+      {
+         var parser = Chars.NoneOf("abc");
+         var result = parser.Run("b");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void OneOf_NonMatchingChar_ReturnsChar()
+      {
+         var parser = Chars.NoneOf("xyz");
+         var result = parser.Run("b");
+
+         ParseAssert.ValueEquals('b', result);
       }
 
       #endregion
