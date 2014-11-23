@@ -93,7 +93,7 @@ namespace PJanssen.ParsecSharp
             if (result.IsSuccess())
                return result;
 
-            return Either.Error<TValue, string>(result.FromError() + ", " + msgFunc());
+            return Either.Error<TValue, string>(result.FromError() + ". " + msgFunc());
          };
       }
    }

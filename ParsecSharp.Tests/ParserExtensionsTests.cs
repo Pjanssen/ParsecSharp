@@ -131,10 +131,10 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Label_Error_ReturnsErrorWithMessage()
       {
-         var parser = Parse.Error<int>("Oh noes").Label("test");
+         var parser = Parse.Error<int>("Oh noes").Label("Test");
          var result = parser.Run("");
 
-         ParseAssert.ErrorEquals("Oh noes, test", result);
+         ParseAssert.ErrorEquals("Oh noes. Test", result);
       }
 
       #endregion

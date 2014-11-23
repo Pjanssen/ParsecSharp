@@ -43,7 +43,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> Char(char character)
       {
          return Satisfy(c => c == character)
-                  .Label("expected " + character);
+                  .Label("Expected " + character);
       }
 
       /// <summary>
@@ -52,7 +52,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> OneOf(IEnumerable<char> characters)
       {
          return Satisfy(c => characters.Contains(c))
-                  .Label(() => string.Format("expected one of \"{0}\"", string.Concat(characters)));
+                  .Label(() => string.Format("Expected one of \"{0}\"", string.Concat(characters)));
       }
 
       /// <summary>
@@ -61,7 +61,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> NoneOf(IEnumerable<char> characters)
       {
          return Satisfy(c => !characters.Contains(c))
-                  .Label(() => string.Format("expected any char except \"{0}\"", string.Concat(characters)));
+                  .Label(() => string.Format("Expected any char except \"{0}\"", string.Concat(characters)));
       }
 
       public static Parser<string> String(string str)
