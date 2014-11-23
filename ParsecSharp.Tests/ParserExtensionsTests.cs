@@ -138,27 +138,5 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
-
-      #region Or
-
-      [TestMethod]
-      public void Or_FirstSuccess_ReturnsFirstResult()
-      {
-         Parser<char> parser = Chars.Char('x').Or(Chars.Char('y'));
-         var result = parser.Run("x");
-
-         ParseAssert.ValueEquals('x', result);
-      }
-
-      [TestMethod]
-      public void Or_FirstError_ReturnsSecondResult()
-      {
-         var parser = Parse.Error<int>("test").Or(Parse.Success(42));
-         var result = parser.Run("");
-
-         ParseAssert.ValueEquals(42, result);
-      }
-
-      #endregion
    }
 }

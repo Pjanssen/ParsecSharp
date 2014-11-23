@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chars.cs" />
+    <Compile Include="Combine.cs" />
     <Compile Include="IO\CharStream.cs" />
     <Compile Include="IO\SimpleCharStream.cs" />
     <Compile Include="Either\Either.cs" />

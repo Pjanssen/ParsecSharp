@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CharsTests.cs" />
     <Compile Include="IO\StringCharStream.cs" />
+    <Compile Include="CombineTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParsecSharp\ParsecSharp.csproj">

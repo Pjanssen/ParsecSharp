@@ -38,7 +38,7 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
-      /// Tries to parse the input using the given parser, resetting the input position if it fails.
+      /// Tries to parse the input using the given parser, only consuming input when the parser succeeds.
       /// </summary>
       public static Parser<TValue> Try<TValue>(Parser<TValue> parser)
       {

@@ -96,21 +96,5 @@ namespace PJanssen.ParsecSharp
             return Either.Error<TValue, string>(result.FromError() + ", " + msgFunc());
          };
       }
-
-      public static Parser<TValue> Or<TValue>(this Parser<TValue> parserA, Parser<TValue> parserB)
-      {
-         return input =>
-         {
-            //int position = input.Position;
-
-            var result = parserA(input);
-            if (result.IsSuccess()) // || input.Position != position)
-               return result;
-
-            //input.Seek(position);
-
-            return parserB(input);
-         };
-      }
    }
 }

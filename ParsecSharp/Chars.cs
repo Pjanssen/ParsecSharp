@@ -20,7 +20,8 @@ namespace PJanssen.ParsecSharp
             if (input.EndOfStream)
                return Either.Error<char, string>("Unexpected end of input");
 
-            return Either.Success<char, string>(input.Read());
+            char c = input.Read();
+            return Either.Success<char, string>(c);
          };
       }
 
@@ -31,9 +32,9 @@ namespace PJanssen.ParsecSharp
       {
          Throw.IfNull(predicate, "predicate");
 
-         return from c in Any()
-                where predicate(c)
-                select c;
+         return Parse.Try(from c in Any()
+                          where predicate(c)
+                          select c);
       }
 
       /// <summary>
