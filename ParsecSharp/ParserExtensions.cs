@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
+using PJanssen.ParsecSharp.CharStream;
 
 namespace PJanssen.ParsecSharp
 {
@@ -16,20 +16,20 @@ namespace PJanssen.ParsecSharp
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
 
-         TextReader reader = new StringReader(input);
-         return parser(reader);
+         ICharStream stream = new StringCharStream(input);
+         return parser(stream);
       }
 
       /// <summary>
       /// Runs the parser with the given input stream.
       /// </summary>
-      public static Either<TValue, string> Run<TValue>(this Parser<TValue> parser, Stream input)
+      public static Either<TValue, string> Run<TValue>(this Parser<TValue> parser, System.IO.Stream input, Encoding encoding)
       {
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
 
-         TextReader reader = new StreamReader(input);
-         return parser(reader);
+         ICharStream stream = new SimpleCharStream(input, encoding);
+         return parser(stream);
       }
 
       public static Parser<TResult> Select<TValue, TResult>(this Parser<TValue> parser, 
@@ -53,6 +53,22 @@ namespace PJanssen.ParsecSharp
          {
             return parser(input).Select(resultA => func(resultA)(input).Select(
                                         resultB => combine(resultA, resultB)));
+         };
+      }
+
+      public static Parser<TValue> Or<TValue>(this Parser<TValue> parserA, Parser<TValue> parserB)
+      {
+         return input =>
+         {
+            int position = input.Position;
+
+            var result = parserA(input);
+            if (result.IsSuccess())
+               return result;
+
+            input.Seek(position);
+
+            return parserB(input);
          };
       }
    }

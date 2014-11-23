@@ -30,11 +30,10 @@ namespace PJanssen.ParsecSharp
       {
          return input =>
          {
-            int i = input.Read();
-            if (i != -1)
-               return Either.Error<Unit, string>("Expected end of input");
+            if (input.EndOfStream)
+               return Either.Success<Unit, string>(Unit.Instance);
 
-            return Either.Success<Unit, string>(Unit.Instance);
+            return Either.Error<Unit, string>("Expected end of input");
          };
       }
    }

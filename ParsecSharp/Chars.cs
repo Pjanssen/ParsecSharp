@@ -17,11 +17,10 @@ namespace PJanssen.ParsecSharp
       {
          return input => 
          {
-            int c = input.Read();
-            if (c == -1)
+            if (input.EndOfStream)
                return Either.Error<char, string>("Unexpected end of input");
-
-            return Either.Success<char, string>((char)c);
+            
+            return Either.Success<char, string>(input.Read());
          };
       }
 
