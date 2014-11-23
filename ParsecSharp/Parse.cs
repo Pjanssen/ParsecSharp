@@ -8,7 +8,7 @@ namespace PJanssen.ParsecSharp
    public static class Parse
    {
       /// <summary>
-      /// Craetes a parser that always returns the given value, regardless of the input.
+      /// Always succeeds with the given value, without consuming any input.
       /// </summary>
       public static Parser<TValue> Success<TValue>(TValue value)
       {
@@ -16,11 +16,19 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
-      /// Creates a parser that always returns the given error message, regardless of the input.
+      /// Always fails with the given error message, without consuming any input.
       /// </summary>
       public static Parser<TValue> Error<TValue>(string message)
       {
          return _ => Either.Error<TValue, string>(message);
+      }
+
+      /// <summary>
+      /// Always fails with an "unexpected x" error message, without consuming input.
+      /// </summary>
+      public static Parser<TValue> Unexpected<TValue>(object value)
+      {
+         return _ => Either.Error<TValue, string>("Unexpected " + value.ToString());
       }
 
       /// <summary>
@@ -52,6 +60,18 @@ namespace PJanssen.ParsecSharp
 
             return result;
          };
+      }
+
+      /// <summary>
+      /// Only succeeds when the given parser fails.
+      /// </summary>
+      public static Parser<Unit> NotFollowedBy<TValue>(Parser<TValue> parser)
+      {
+         var unexpectedParser = from x in Try(parser)
+                                from e in Unexpected<Unit>(x)
+                                select e;
+
+         return Combine.Or(unexpectedParser, Success(Unit.Instance));
       }
    }
 }
