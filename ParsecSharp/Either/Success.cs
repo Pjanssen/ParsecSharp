@@ -40,6 +40,8 @@ namespace PJanssen.ParsecSharp
 
       public override Either<TResult, E> Select<TResult>(Func<S, Either<TResult, E>> func)
       {
+         Throw.IfNull(func, "func");
+
          return func(this.Value);
       }
 

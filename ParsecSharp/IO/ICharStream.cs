@@ -15,7 +15,7 @@ namespace PJanssen.ParsecSharp.IO
       /// <summary>
       /// Sets the position of the reader to the given offset, relative to the beginning of the input.
       /// </summary>
-      void Seek(int offset);
+      void Seek(int position);
 
       /// <summary>
       /// Gets the current position in the stream, i.e. the total number of characters that have been read.

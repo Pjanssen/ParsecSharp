@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp
 {
-   public class Unit
+   public sealed class Unit
    {
       private Unit() { }
 

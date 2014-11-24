@@ -16,9 +16,9 @@ namespace PJanssen.ParsecSharp
       /// <typeparam name="S">The type of the Success value.</typeparam>
       /// <typeparam name="F">The type of the Error value.</typeparam>
       /// <param name="value">The value to be wrapped.</param>
-      public static Either<S, F> Success<S, F>(S value)
+      public static Either<S, E> Success<S, E>(S value)
       {
-         return new Success<S, F>(value);
+         return new Success<S, E>(value);
       }
 
       /// <summary>
