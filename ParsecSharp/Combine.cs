@@ -40,8 +40,56 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<TValue> Choose<TValue>(IEnumerable<Parser<TValue>> parsers)
       {
-         return parsers.Aggregate( Error.Fail<TValue>("Empty choose sequence")
+         return parsers.Aggregate(Error.Fail<TValue>("Empty choose sequence")
                                  , (acc, p) => Combine.Or(acc, p));
+      }
+
+      /// <summary>
+      /// Applies the parser zero or more times.
+      /// </summary>
+      public static Parser<IEnumerable<TValue>> Many<TValue>(Parser<TValue> parser)
+      {
+         List<TValue> seed = new List<TValue>();
+         Func<List<TValue>, TValue, List<TValue>> func = (xs, x) =>
+         {
+            xs.Add(x);
+            return xs;
+         };
+         Func<List<TValue>, IEnumerable<TValue>> sel = xs => (IEnumerable<TValue>)xs;
+
+         return parser.Aggregate(seed, func, sel);
+      }
+
+      /// <summary>
+      /// Applies the parser zero or more times.
+      /// </summary>
+      public static Parser<string> Many(Parser<char> parser)
+      {
+         StringBuilder seed = new StringBuilder();
+         Func<StringBuilder, char, StringBuilder> func = (builder, c) => builder.Append(c);
+         Func<StringBuilder, string> sel = builder => builder.ToString();
+
+         return parser.Aggregate(seed, func, sel);
+      }
+
+      /// <summary>
+      /// Applies the parser one or more times.
+      /// </summary>
+      public static Parser<IEnumerable<TValue>> Many1<TValue>(Parser<TValue> parser)
+      {
+         return from x in parser
+                from xs in Many(parser)
+                select new[] { x }.Concat(xs);
+      }
+
+      /// <summary>
+      /// Applies the parser one or more times.
+      /// </summary>
+      public static Parser<string> Many1(Parser<char> parser)
+      {
+         return from x in parser
+                from xs in Many(parser)
+                select x + xs;
       }
    }
 }

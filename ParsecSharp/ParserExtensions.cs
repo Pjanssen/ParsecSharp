@@ -32,6 +32,9 @@ namespace PJanssen.ParsecSharp
          return parser(stream);
       }
 
+      /// <summary>
+      /// Applies a projection function to the result of a parser.
+      /// </summary>
       public static Parser<TResult> Select<TValue, TResult>(this Parser<TValue> parser, 
                                                             Func<TValue, TResult> func)
       {
@@ -45,9 +48,12 @@ namespace PJanssen.ParsecSharp
          };
       }
 
-      public static Parser<C> SelectMany<A, B, C>(this Parser<A> parser, 
-                                                  Func<A, Parser<B>> func, 
-                                                  Func<A, B, C> combine)
+      /// <summary>
+      /// Combines the results of two Parsers.
+      /// </summary>
+      public static Parser<TResult> SelectMany<TValueA, TValueB, TResult>(this Parser<TValueA> parser, 
+                                                                          Func<TValueA, Parser<TValueB>> func, 
+                                                                          Func<TValueA, TValueB, TResult> combine)
       {
          return input =>
          {
@@ -71,6 +77,46 @@ namespace PJanssen.ParsecSharp
                return result;
 
             return Error.Create<TValue>("Unexpected " + result.FromSuccess().ToString());
+         };
+      }
+
+      /// <summary>
+      /// Applies the parser until it fails, combining the results using the given accumulator function and initial value.
+      /// </summary>
+      /// <typeparam name="TValue">The type of the parser</typeparam>
+      /// <typeparam name="TAccum">The type of the aggregated value</typeparam>
+      /// <param name="seed">The initial accumulator value</param>
+      /// <param name="func">An accumulator function that takes the current accumulated value, the currently parsed result, and combines them into a new accumulated value.</param>
+      public static Parser<TAccum> Aggregate<TValue, TAccum>(this Parser<TValue> parser, 
+                                                             TAccum seed, 
+                                                             Func<TAccum, TValue, TAccum> func)
+      {
+         return Aggregate(parser, seed, func, x => x);
+      }
+
+      /// <summary>
+      /// Applies the parser until it fails, combining the results using the given accumulator function and initial value.
+      /// </summary>
+      /// <typeparam name="TValue">The type of the parser</typeparam>
+      /// <typeparam name="TAccum">The type of the aggregated value</typeparam>
+      /// <param name="seed">The initial accumulator value</param>
+      /// <param name="func">An accumulator function that takes the current accumulated value, the currently parsed result, and combines them into a new accumulated value.</param>
+      public static Parser<TResult> Aggregate<TValue, TAccum, TResult>(this Parser<TValue> parser,
+                                                                       TAccum seed,
+                                                                       Func<TAccum, TValue, TAccum> func,
+                                                                       Func<TAccum, TResult> resultSelector)
+      {
+         return input =>
+         {
+            TAccum acc = seed;
+            Either<TValue, string> result = null;
+            while ((result = parser(input)).IsSuccess())
+            {
+               acc = func(acc, result.FromSuccess());
+            }
+
+            TResult accResult = resultSelector(acc);
+            return Either.Success<TResult, string>(accResult);
          };
       }
 

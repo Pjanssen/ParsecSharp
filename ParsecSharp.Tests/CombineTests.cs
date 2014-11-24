@@ -72,5 +72,67 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Many
+
+      [TestMethod]
+      public void Many_NoMatch_ReturnsEmptySet()
+      {
+         var parser = Combine.Many(Chars.Char('x'));
+         var result = parser.Run("y");
+
+         ParseAssert.ValueEquals("", result);
+      }
+
+      [TestMethod]
+      public void Many_OneMatch_ReturnsSetWithOneMatch()
+      {
+         var parser = Combine.Many(Chars.Char('x'));
+         var result = parser.Run("xy");
+
+         ParseAssert.ValueEquals("x", result);
+      }
+
+      [TestMethod]
+      public void Many_ManyMatches_ReturnsSet()
+      {
+         var parser = Combine.Many(Chars.OneOf("xyz"));
+         var result = parser.Run("xxyz0");
+
+         ParseAssert.ValueEquals("xxyz", result);
+      }
+
+      #endregion
+
+      #region Many1
+
+      [TestMethod]
+      public void Many1_NoMatch_ReturnsError()
+      {
+         var parser = Combine.Many1(Chars.Char('x'));
+         var result = parser.Run("y");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void Many1_OneMatch_ReturnsSetWithOneMatch()
+      {
+         var parser = Combine.Many1(Chars.Char('x'));
+         var result = parser.Run("xy");
+
+         ParseAssert.ValueEquals("x", result);
+      }
+
+      [TestMethod]
+      public void Many1_ManyMatches_ReturnsSet()
+      {
+         var parser = Combine.Many1(Chars.OneOf("xyz"));
+         var result = parser.Run("xxyz");
+
+         ParseAssert.ValueEquals("xxyz", result);
+      }
+
+      #endregion
    }
 }

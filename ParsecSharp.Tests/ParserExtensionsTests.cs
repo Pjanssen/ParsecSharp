@@ -117,6 +117,41 @@ namespace PJanssen.ParsecSharp
 
       #endregion
 
+      #region Aggregate
+
+      [TestMethod]
+      public void Aggregate_NoMatch_ReturnsSeed()
+      {
+         var parser = Error.Fail<char>("xyz")
+                           .Aggregate("test", (acc, c) => acc + c);
+         var result = parser.Run("zz");
+
+         ParseAssert.ValueEquals("test", result);
+      }
+
+      [TestMethod]
+      public void Aggregate_CombinesParsedValues_UntilError()
+      {
+         var parser = Chars.OneOf("xy")
+                           .Aggregate("test", (acc, c) => acc + c);
+         var result = parser.Run("xxyyzz");
+
+         ParseAssert.ValueEquals("testxxyy", result);
+      }
+
+      [TestMethod]
+      public void Aggregate_ResultSelector_ReturnsTransformedResult()
+      {
+         var parser = Chars.Digit()
+                           .Aggregate("", (acc, c) => acc + c, 
+                                          x => int.Parse(x));
+         var result = parser.Run("42017");
+
+         ParseAssert.ValueEquals(42017, result);
+      }
+
+      #endregion
+
       #region Label
 
       [TestMethod]
