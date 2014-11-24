@@ -50,6 +50,7 @@
     <Compile Include="Either\Success.cs" />
     <Compile Include="Helpers\Throw.cs" />
     <Compile Include="Helpers\Unit.cs" />
+    <Compile Include="Numeric.cs" />
     <Compile Include="Parse.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParserExtensions.cs" />
