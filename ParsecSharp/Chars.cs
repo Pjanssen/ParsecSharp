@@ -43,7 +43,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> Char(char character)
       {
          return Satisfy(c => c == character)
-                  .Label("Expected " + character);
+                  .Label(() => "Expected " + character);
       }
 
       /// <summary>
@@ -70,7 +70,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> Letter()
       {
          return Satisfy(c => char.IsLetter(c))
-                  .Label("Expected a letter");
+                  .Label(() => "Expected a letter");
       }
 
       /// <summary>
@@ -79,7 +79,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> Digit()
       {
          return Satisfy(c => char.IsDigit(c))
-                  .Label("Expected a digit");
+                  .Label(() => "Expected a digit");
       }
 
       /// <summary>
@@ -88,7 +88,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> AlphaNum()
       {
          return Satisfy(c => char.IsLetterOrDigit(c))
-                  .Label("Expected a letter or digit");
+                  .Label(() => "Expected a letter or digit");
       }
 
       /// <summary>
@@ -97,7 +97,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> Space()
       {
          return Satisfy(c => c == ' ')
-                  .Label("Expected a space");
+                  .Label(() => "Expected a space");
       }
 
       /// <summary>
@@ -106,7 +106,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> Tab()
       {
          return Satisfy(c => c == '\t')
-                  .Label("Expected a tab");
+                  .Label(() => "Expected a tab");
       }
 
       /// <summary>
@@ -115,7 +115,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> WhiteSpace()
       {
          return Satisfy(c => char.IsWhiteSpace(c))
-                  .Label("Expected a whitespace character");
+                  .Label(() => "Expected a whitespace character");
       }
 
       /// <summary>
@@ -126,7 +126,7 @@ namespace PJanssen.ParsecSharp
       {
          return (from cr in Char('\r')
                  from lf in Char('\n')
-                 select lf).Label("Expected CRLF");
+                 select lf).Label(() => "Expected CRLF");
       }
 
       /// <summary>

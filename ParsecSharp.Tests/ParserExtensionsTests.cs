@@ -157,7 +157,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Label_Success_ReturnsSuccess()
       {
-         var parser = Parse.Success(42).Label("test");
+         var parser = Parse.Success(42).Label(() => "test");
          var result = parser.Run("");
 
          ParseAssert.ValueEquals(42, result);
@@ -166,7 +166,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Label_Error_ReturnsErrorWithMessage()
       {
-         var parser = Error.Fail<int>("Oh noes").Label("Test");
+         var parser = Error.Fail<int>("Oh noes").Label(() => "Test");
          var result = parser.Run("");
 
          ParseAssert.ErrorEquals("Oh noes. Test.", result);

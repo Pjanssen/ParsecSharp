@@ -123,14 +123,6 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Labels the parser with a message that is added to a potential Error value.
       /// </summary>
-      public static Parser<TValue> Label<TValue>(this Parser<TValue> parser, string message)
-      {
-         return Label(parser, () => message);
-      }
-
-      /// <summary>
-      /// Labels the parser with a message that is added to a potential Error value.
-      /// </summary>
       public static Parser<TValue> Label<TValue>(this Parser<TValue> parser, Func<string> msgFunc)
       {
          return input =>
