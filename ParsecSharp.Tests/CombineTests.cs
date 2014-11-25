@@ -134,5 +134,54 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Between
+
+      [TestMethod]
+      public void Between_NonMatchingOpen_ReturnsError()
+      {
+         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Chars.Any());
+         var result = parser.Run("_x]");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void Between_NonMatchingClose_ReturnsError()
+      {
+         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Chars.Any());
+         var result = parser.Run("[x_");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void Between_NonMatchingValue_ReturnsError()
+      {
+         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Chars.Char('x'));
+         var result = parser.Run("[_]");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void Between_AllMatching_ReturnsValue()
+      {
+         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Chars.Any());
+         var result = parser.Run("[x]");
+
+         ParseAssert.ValueEquals('x', result);
+      }
+
+      [TestMethod]
+      public void Between_RepeatingValue_ReturnsValue()
+      {
+         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Combine.Many(Chars.NoneOf("]")));
+         var result = parser.Run("[xyz]");
+
+         ParseAssert.ValueEquals("xyz", result);
+      }
+
+      #endregion
    }
 }

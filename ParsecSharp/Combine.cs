@@ -91,5 +91,16 @@ namespace PJanssen.ParsecSharp
                 from xs in Many(parser)
                 select x + xs;
       }
+
+      /// <summary>
+      /// Applies the open parser followed by value and close, returning the result of the value parser.
+      /// </summary>
+      public static Parser<TValue> Between<TOpen, TClose, TValue>(Parser<TOpen> open, Parser<TClose> close, Parser<TValue> value)
+      {
+         return from o in open
+                from v in value
+                from c in close
+                select v;
+      }
    }
 }
