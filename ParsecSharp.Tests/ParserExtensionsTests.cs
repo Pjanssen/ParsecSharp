@@ -112,7 +112,7 @@ namespace PJanssen.ParsecSharp
 
          var result = parser.Run("");
 
-         ParseAssert.ErrorEquals("Unexpected 42", result);
+         ParseAssert.ErrorEquals("Unexpected \"42\"", result);
       }
 
       #endregion

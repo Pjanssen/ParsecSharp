@@ -43,7 +43,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<char> Char(char character)
       {
          return Satisfy(c => c == character)
-                  .Label(() => "Expected " + character);
+                  .Label(() => "Expected \"" + character + "\"");
       }
 
       /// <summary>

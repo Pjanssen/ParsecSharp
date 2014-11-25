@@ -73,10 +73,11 @@ namespace PJanssen.ParsecSharp
             if (result.IsError())
                return result;
 
-            if (predicate(result.FromSuccess()))
+            TValue resultValue = result.FromSuccess();
+            if (predicate(resultValue))
                return result;
 
-            return Error.Create<TValue>("Unexpected " + result.FromSuccess().ToString());
+            return Error.UnexpectedValue<TValue>(resultValue);
          };
       }
 

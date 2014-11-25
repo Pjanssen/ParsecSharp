@@ -52,7 +52,7 @@ namespace PJanssen.ParsecSharp
       public static Parser<Unit> NotFollowedBy<TValue>(Parser<TValue> parser)
       {
          var unexpectedParser = from x in Try(parser)
-                                from e in Error.UnexpectedValue<Unit>(x)
+                                from e in Error.UnexpectedParser<Unit>(x)
                                 select e;
 
          return Combine.Or(unexpectedParser, Success(Unit.Instance));

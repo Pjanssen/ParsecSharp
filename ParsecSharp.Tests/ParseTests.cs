@@ -83,7 +83,7 @@ namespace PJanssen.ParsecSharp
          var parser = Parse.NotFollowedBy(Chars.Any());
          var result = parser.Run("xyz");
 
-         ParseAssert.ErrorEquals("Unexpected x", result);
+         ParseAssert.ErrorEquals("Unexpected \"x\"", result);
       }
 
       [TestMethod]
