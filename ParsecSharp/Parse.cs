@@ -45,17 +45,5 @@ namespace PJanssen.ParsecSharp
             return result;
          };
       }
-
-      /// <summary>
-      /// Only succeeds when the given parser fails.
-      /// </summary>
-      public static Parser<Unit> NotFollowedBy<TValue>(Parser<TValue> parser)
-      {
-         var unexpectedParser = from x in Try(parser)
-                                from e in Error.UnexpectedParser<Unit>(x)
-                                select e;
-
-         return Combine.Or(unexpectedParser, Success(Unit.Instance));
-      }
    }
 }

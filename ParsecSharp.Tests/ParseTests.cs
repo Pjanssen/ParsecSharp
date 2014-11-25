@@ -74,27 +74,5 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
-
-      #region NotFollowedBy
-
-      [TestMethod]
-      public void NotFollowedBy_Success_ReturnsError()
-      {
-         var parser = Parse.NotFollowedBy(Chars.Any());
-         var result = parser.Run("xyz");
-
-         ParseAssert.ErrorEquals("Unexpected \"x\"", result);
-      }
-
-      [TestMethod]
-      public void NotFollowedBy_Error_ReturnsSuccess()
-      {
-         var parser = Parse.NotFollowedBy(Chars.String("xyz"));
-         var result = parser.Run("x");
-
-         ParseAssert.ValueEquals(Unit.Instance, result);
-      }
-
-      #endregion
    }
 }

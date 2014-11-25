@@ -6,6 +6,55 @@ namespace PJanssen.ParsecSharp
    [TestClass]
    public class CombineTests
    {
+      #region NotFollowedBy
+
+      [TestMethod]
+      public void NotFollowedBy_Success_ReturnsError()
+      {
+         var parser = Combine.NotFollowedBy(Chars.Any());
+         var result = parser.Run("xyz");
+
+         ParseAssert.ErrorEquals("Unexpected \"x\"", result);
+      }
+
+      [TestMethod]
+      public void NotFollowedBy_Error_ReturnsSuccess()
+      {
+         var parser = Combine.NotFollowedBy(Chars.String("xyz"));
+         var result = parser.Run("x");
+
+         ParseAssert.ValueEquals(Unit.Instance, result);
+      }
+
+      [TestMethod]
+      public void NotFollowedBy_ParserAError_ReturnsError()
+      {
+         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var result = parser.Run("y");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void NotFollowedBy_ParserBError_ReturnsParserAValue()
+      {
+         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var result = parser.Run("xz");
+
+         ParseAssert.ValueEquals('x', result);
+      }
+
+      [TestMethod]
+      public void NotFollowedBy_ParserBSuccess_ReturnsError()
+      {
+         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var result = parser.Run("xy");
+
+         ParseAssert.IsError(result);
+      }
+
+      #endregion
+
       #region Or
 
       [TestMethod]

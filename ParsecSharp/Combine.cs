@@ -8,6 +8,28 @@ namespace PJanssen.ParsecSharp
    public static class Combine
    {
       /// <summary>
+      /// Only succeeds when the given parser fails.
+      /// </summary>
+      public static Parser<Unit> NotFollowedBy<TValue>(Parser<TValue> parser)
+      {
+         var unexpectedParser = from x in Parse.Try(parser)
+                                from e in Error.UnexpectedParser<Unit>(x)
+                                select e;
+
+         return Combine.Or(unexpectedParser, Parse.Success(Unit.Instance));
+      }
+
+      /// <summary>
+      /// Only succeeds when the second parser fails. Returns the result of the first parser.
+      /// </summary>
+      public static Parser<TValueA> NotFollowedBy<TValueA, TValueB>(this Parser<TValueA> parserA, Parser<TValueB> parserB)
+      {
+         return from a in parserA
+                from b in NotFollowedBy(parserB)
+                select a;
+      }
+
+      /// <summary>
       /// Applies the first parser and returns its value if it succeeds. 
       /// If it fails without consuming any input, the second parser is applied.
       /// </summary>
