@@ -51,7 +51,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<char> OneOf(IEnumerable<char> characters)
       {
-         return Satisfy(c => characters.Contains(c))
+         return Satisfy(characters.Contains)
                   .Label(() => string.Format("Expected one of \"{0}\"", string.Concat(characters)));
       }
 
@@ -69,7 +69,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<char> Letter()
       {
-         return Satisfy(c => char.IsLetter(c))
+         return Satisfy(char.IsLetter)
                   .Label(() => "Expected a letter");
       }
 
@@ -78,7 +78,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<char> Digit()
       {
-         return Satisfy(c => char.IsDigit(c))
+         return Satisfy(char.IsDigit)
                   .Label(() => "Expected a digit");
       }
 
@@ -87,7 +87,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<char> AlphaNum()
       {
-         return Satisfy(c => char.IsLetterOrDigit(c))
+         return Satisfy(char.IsLetterOrDigit)
                   .Label(() => "Expected a letter or digit");
       }
 
@@ -114,7 +114,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<char> WhiteSpace()
       {
-         return Satisfy(c => char.IsWhiteSpace(c))
+         return Satisfy(char.IsWhiteSpace)
                   .Label(() => "Expected a whitespace character");
       }
 
