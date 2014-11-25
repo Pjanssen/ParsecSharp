@@ -189,7 +189,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Between_NonMatchingOpen_ReturnsError()
       {
-         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Chars.Any());
+         var parser = Chars.Char('x').Between(Chars.Char('['), Chars.Char(']'));
          var result = parser.Run("_x]");
 
          ParseAssert.IsError(result);
@@ -198,7 +198,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Between_NonMatchingClose_ReturnsError()
       {
-         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Chars.Any());
+         var parser = Chars.Char('x').Between(Chars.Char('['), Chars.Char(']'));
          var result = parser.Run("[x_");
 
          ParseAssert.IsError(result);
@@ -207,7 +207,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Between_NonMatchingValue_ReturnsError()
       {
-         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Chars.Char('x'));
+         var parser = Chars.Char('x').Between(Chars.Char('['), Chars.Char(']'));
          var result = parser.Run("[_]");
 
          ParseAssert.IsError(result);
@@ -216,7 +216,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Between_AllMatching_ReturnsValue()
       {
-         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Chars.Any());
+         var parser = Chars.Any().Between(Chars.Char('['), Chars.Char(']'));
          var result = parser.Run("[x]");
 
          ParseAssert.ValueEquals('x', result);
@@ -225,7 +225,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Between_RepeatingValue_ReturnsValue()
       {
-         var parser = Combine.Between(Chars.Char('['), Chars.Char(']'), Combine.Many(Chars.NoneOf("]")));
+         var parser = Chars.NoneOf("]").Many().Between(Chars.Char('['), Chars.Char(']'));
          var result = parser.Run("[xyz]");
 
          ParseAssert.ValueEquals("xyz", result);

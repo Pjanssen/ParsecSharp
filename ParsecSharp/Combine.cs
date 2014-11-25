@@ -33,7 +33,7 @@ namespace PJanssen.ParsecSharp
       /// Applies the first parser and returns its value if it succeeds. 
       /// If it fails without consuming any input, the second parser is applied.
       /// </summary>
-      public static Parser<TValue> Or<TValue>(Parser<TValue> parserA, Parser<TValue> parserB)
+      public static Parser<TValue> Or<TValue>(this Parser<TValue> parserA, Parser<TValue> parserB)
       {
          return input =>
          {
@@ -69,7 +69,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Applies the parser zero or more times.
       /// </summary>
-      public static Parser<IEnumerable<TValue>> Many<TValue>(Parser<TValue> parser)
+      public static Parser<IEnumerable<TValue>> Many<TValue>(this Parser<TValue> parser)
       {
          List<TValue> seed = new List<TValue>();
          Func<List<TValue>, TValue, List<TValue>> func = (xs, x) =>
@@ -85,7 +85,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Applies the parser zero or more times.
       /// </summary>
-      public static Parser<string> Many(Parser<char> parser)
+      public static Parser<string> Many(this Parser<char> parser)
       {
          StringBuilder seed = new StringBuilder();
          Func<StringBuilder, char, StringBuilder> func = (builder, c) => builder.Append(c);
@@ -97,7 +97,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Applies the parser one or more times.
       /// </summary>
-      public static Parser<IEnumerable<TValue>> Many1<TValue>(Parser<TValue> parser)
+      public static Parser<IEnumerable<TValue>> Many1<TValue>(this Parser<TValue> parser)
       {
          return from x in parser
                 from xs in Many(parser)
@@ -107,7 +107,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Applies the parser one or more times.
       /// </summary>
-      public static Parser<string> Many1(Parser<char> parser)
+      public static Parser<string> Many1(this Parser<char> parser)
       {
          return from x in parser
                 from xs in Many(parser)
@@ -117,7 +117,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Applies the open parser followed by value and close, returning the result of the value parser.
       /// </summary>
-      public static Parser<TValue> Between<TOpen, TClose, TValue>(Parser<TOpen> open, Parser<TClose> close, Parser<TValue> value)
+      public static Parser<TValue> Between<TOpen, TClose, TValue>(this Parser<TValue> value, Parser<TOpen> open, Parser<TClose> close)
       {
          return from o in open
                 from v in value
