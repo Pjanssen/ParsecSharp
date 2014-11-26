@@ -8,34 +8,34 @@ namespace PJanssen.ParsecSharp
 {
    internal static class ParseAssert
    {
-      public static void IsSuccess<TValue>(Either<TValue, string> result)
+      public static void IsSuccess<TValue>(Either<TValue, ParserError> result)
       {
          if (result.IsError())
             Assert.Fail("Expected Success, got: " + result.FromError());
       }
 
-      public static void IsError<TValue>(Either<TValue, string> result)
+      public static void IsError<TValue>(Either<TValue, ParserError> result)
       {
          if (result.IsSuccess())
             Assert.Fail("Expected Error, got: " + result.FromSuccess());
       }
 
-      public static void ValueEquals<TValue>(TValue expected, Either<TValue, string> result) 
+      public static void ValueEquals<TValue>(TValue expected, Either<TValue, ParserError> result) 
       {
          IsSuccess(result);
          Assert.AreEqual(expected, result.FromSuccess(), "Parsed value");
       }
 
-      public static void ValueEquals<TValue>(IEnumerable<TValue> expected, Either<IEnumerable<TValue>, string> result)
+      public static void ValueEquals<TValue>(IEnumerable<TValue> expected, Either<IEnumerable<TValue>, ParserError> result)
       {
          IsSuccess(result);
          CollectionAssert.AreEqual(expected.ToArray(), result.FromSuccess().ToArray());
       }
 
-      public static void ErrorEquals<TValue>(string expected, Either<TValue, string> result)
+      public static void ErrorEquals<TValue>(string expected, Either<TValue, ParserError> result)
       {
          IsError(result);
-         Assert.AreEqual(expected, result.FromError(), "Error message");
+         Assert.AreEqual(expected, result.FromError().Message, "Error message");
       }
    }
 }

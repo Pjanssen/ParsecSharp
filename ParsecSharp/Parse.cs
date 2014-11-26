@@ -12,7 +12,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<TValue> Success<TValue>(TValue value)
       {
-         return _ => Either.Success<TValue, string>(value);
+         return _ => Either.Success<TValue, ParserError>(value);
       }
 
       /// <summary>
@@ -23,9 +23,9 @@ namespace PJanssen.ParsecSharp
          return input =>
          {
             if (input.EndOfStream)
-               return Either.Success<Unit, string>(Unit.Instance);
+               return Either.Success<Unit, ParserError>(Unit.Instance);
 
-            return Error.Create<Unit>("Expected end of input");
+            return Error.Create<Unit>(input, "Expected end of input");
          };
       }
 

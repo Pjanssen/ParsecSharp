@@ -18,6 +18,8 @@ namespace PJanssen.ParsecSharp.IO
          this.input = input;
          this.length = input.Length;
          this.position = 0;
+         this.Line = 1;
+         this.Column = 1;
       }
 
       public char Read()
@@ -25,7 +27,24 @@ namespace PJanssen.ParsecSharp.IO
          if (EndOfStream)
             return '\0';
 
-         return input[this.position++];
+         char c = input[this.position++];
+
+         SetLineAndColumn(c);
+
+         return c;
+      }
+
+      private void SetLineAndColumn(char c)
+      {
+         if (c == '\n')
+         {
+            Line++;
+            Column = 1;
+         }
+         else
+         {
+            Column++;
+         }
       }
 
       public void Seek(int position)
@@ -44,6 +63,19 @@ namespace PJanssen.ParsecSharp.IO
       public bool EndOfStream
       {
          get { return this.position == this.length; }
+      }
+
+
+      public int Column
+      {
+         get;
+         private set;
+      }
+
+      public int Line
+      {
+         get;
+         private set;
       }
    }
 }

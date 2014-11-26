@@ -53,6 +53,7 @@
     <Compile Include="Numeric.cs" />
     <Compile Include="Parse.cs" />
     <Compile Include="Parser.cs" />
+    <Compile Include="ParserError.cs" />
     <Compile Include="ParserExtensions.cs" />
     <Compile Include="IO\ICharStream.cs" />
     <Compile Include="IO\StringCharStream.cs" />

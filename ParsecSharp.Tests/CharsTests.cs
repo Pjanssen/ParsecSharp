@@ -69,7 +69,7 @@ namespace PJanssen.ParsecSharp
       }
 
       [TestMethod]
-      public void Char_NonMatchingChar_ReturnsChar()
+      public void Char_NonMatchingChar_ReturnsError()
       {
          var parser = Chars.Char('x');
          var result = parser.Run("abc");

@@ -18,10 +18,10 @@ namespace PJanssen.ParsecSharp
          return input =>
          {
             if (input.EndOfStream)
-               return Error.Create<char>("Unexpected end of input");
+               return Error.Create<char>(input, "Unexpected end of input");
 
             char c = input.Read();
-            return Either.Success<char, string>(c);
+            return Either.Success<char, ParserError>(c);
          };
       }
 
@@ -149,7 +149,7 @@ namespace PJanssen.ParsecSharp
                   return Error.Create<string>(result.FromError());
             }
 
-            return Either.Success<string, string>(str);
+            return Either.Success<string, ParserError>(str);
          };
       }
    }

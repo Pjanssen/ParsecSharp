@@ -25,6 +25,16 @@ namespace PJanssen.ParsecSharp.IO
          get;
       }
 
+      int Column
+      {
+         get;
+      }
+
+      int Line
+      {
+         get;
+      }
+
       /// <summary>
       /// Gets a value that indicates whether the reader has reached the end of the stream.
       /// </summary>

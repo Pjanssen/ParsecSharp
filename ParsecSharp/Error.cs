@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PJanssen.ParsecSharp.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,17 +14,23 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Creates a new Error with the given message.
       /// </summary>
-      public static Either<TValue, string> Create<TValue>(string message)
+      public static Either<TValue, ParserError> Create<TValue>(ICharStream input, string message)
       {
-         return Either.Error<TValue, string>(message);
+         ParserError parserError = new ParserError(input.Line, input.Column, message);
+         return Create<TValue>(parserError);
+      }
+
+      public static Either<T, ParserError> Create<T>(ParserError parserError)
+      {
+         return Either.Error<T, ParserError>(parserError);
       }
 
       /// <summary>
       /// Creates a new Error with the message "Unexpected "x"", where 'x' is the given value.
       /// </summary>
-      public static Either<TValue, string> UnexpectedValue<TValue>(object value)
+      public static Either<TValue, ParserError> UnexpectedValue<TValue>(ICharStream input, object value)
       {
-         return Error.Create<TValue>("Unexpected \"" + value.ToString() + "\"");
+         return Error.Create<TValue>(input, "Unexpected \"" + value.ToString() + "\"");
       }
 
       /// <summary>
@@ -31,7 +38,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<TValue> Fail<TValue>(string message)
       {
-         return _ => Error.Create<TValue>(message);
+         return input => Error.Create<TValue>(input, message);
       }
 
       /// <summary>
@@ -39,7 +46,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<TValue> UnexpectedParser<TValue>(object value)
       {
-         return _ => Error.UnexpectedValue<TValue>(value);
+         return input => Error.UnexpectedValue<TValue>(input, value);
       }
    }
 }
