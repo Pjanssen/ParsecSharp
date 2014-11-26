@@ -150,6 +150,19 @@ namespace PJanssen.ParsecSharp
          ParseAssert.ValueEquals(42017, result);
       }
 
+      [TestMethod]
+      public void Aggregate_ConsumedInputThenError_ReturnsError()
+      {
+         var parser = (from x in Chars.Char('x')
+                       from y in Chars.Char('y')
+                       select x.ToString() + y.ToString())
+                           .Aggregate("", (acc, c) => acc + c);
+
+         var result = parser.Run("xyxz");
+
+         ParseAssert.IsError(result);
+      }
+
       #endregion
 
       #region Label

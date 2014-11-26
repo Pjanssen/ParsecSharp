@@ -232,5 +232,45 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region SeparatedBy
+
+      [TestMethod]
+      public void SeparatedBy_Nothing_ReturnsEmptyValue()
+      {
+         var parser = Chars.Any().SeparatedBy(Chars.Char(';'));
+         var result = parser.Run("");
+
+         ParseAssert.ValueEquals(new char[] { }, result);
+      }
+
+      [TestMethod]
+      public void SeparatedBy_ValueOnly_ReturnsValue()
+      {
+         var parser = Chars.Any().SeparatedBy(Chars.Char(';'));
+         var result = parser.Run("x");
+
+         ParseAssert.ValueEquals(new char[] { 'x' }, result);
+      }
+
+      [TestMethod]
+      public void SeparatedBy_ValueAndSeparator_ReturnsError()
+      {
+         var parser = Chars.Any().SeparatedBy(Chars.Char(';'));
+         var result = parser.Run("x;");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void SeparatedBy_MultipleValues_ReturnsValues()
+      {
+         var parser = Chars.Any().SeparatedBy(Chars.Char(';'));
+         var result = parser.Run("x;y;z");
+
+         ParseAssert.ValueEquals(new char[] { 'x', 'y', 'z' }, result);
+      }
+
+      #endregion
    }
 }

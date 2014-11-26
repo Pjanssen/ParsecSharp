@@ -124,5 +124,20 @@ namespace PJanssen.ParsecSharp
                 from c in close
                 select v;
       }
+
+      public static Parser<IEnumerable<T>> SeparatedBy<T, TSep>(this Parser<T> parser, Parser<TSep> separator)
+      {
+         return SeparatedBy1(parser, separator)
+                   .Or(Parse.Success(Enumerable.Empty<T>()));
+      }
+
+      public static Parser<IEnumerable<T>> SeparatedBy1<T, TSep>(this Parser<T> parser, Parser<TSep> separator)
+      {
+         return from x in parser
+                from xs in Many(from _ in separator
+                                from rest in parser
+                                select rest)
+                select new[] { x }.Concat(xs);
+      }
    }
 }

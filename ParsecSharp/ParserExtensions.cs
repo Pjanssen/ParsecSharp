@@ -111,13 +111,23 @@ namespace PJanssen.ParsecSharp
          {
             TAccum acc = seed;
             Either<TValue, string> result = null;
+            int position = input.Position;
+
             while ((result = parser(input)).IsSuccess())
             {
                acc = func(acc, result.FromSuccess());
+               position = input.Position;
             }
 
-            TResult accResult = resultSelector(acc);
-            return Either.Success<TResult, string>(accResult);
+            if (input.Position == position)
+            {
+               TResult accResult = resultSelector(acc);
+               return Either.Success<TResult, string>(accResult);
+            }
+            else
+            {
+               return Error.Create<TResult>(result.FromError());
+            }
          };
       }
 
