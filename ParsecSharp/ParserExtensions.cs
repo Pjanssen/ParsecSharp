@@ -16,7 +16,7 @@ namespace PJanssen.ParsecSharp
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
 
-         ICharStream stream = CharStream.Create(input);
+         IInputStream stream = CharStream.Create(input);
          return parser(stream);
       }
 
@@ -28,7 +28,7 @@ namespace PJanssen.ParsecSharp
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
 
-         ICharStream stream = CharStream.Create(input, encoding);
+         IInputStream stream = CharStream.Create(input, encoding);
          return parser(stream);
       }
 
@@ -111,15 +111,15 @@ namespace PJanssen.ParsecSharp
          {
             TAccum acc = seed;
             Either<TValue, ParserError> result = null;
-            int position = input.Position;
+            Position position = input.GetPosition();
 
             while ((result = parser(input)).IsSuccess())
             {
                acc = func(acc, result.FromSuccess());
-               position = input.Position;
+               position = input.GetPosition();
             }
 
-            if (input.Position == position)
+            if (input.GetPosition() == position)
             {
                TResult accResult = resultSelector(acc);
                return Either.Success<TResult, ParserError>(accResult);

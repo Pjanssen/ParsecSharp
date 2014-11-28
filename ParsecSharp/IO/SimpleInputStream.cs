@@ -6,9 +6,9 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.IO
 {
-   public class SimpleCharStream : StringCharStream
+   public class SimpleInputStream : StringInputStream
    {
-      public SimpleCharStream(Stream input, Encoding encoding)
+      public SimpleInputStream(Stream input, Encoding encoding)
          : base(GetStringInput(input, encoding))
       {
       }

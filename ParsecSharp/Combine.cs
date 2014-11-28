@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PJanssen.ParsecSharp.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,10 +38,10 @@ namespace PJanssen.ParsecSharp
       {
          return input =>
          {
-            int position = input.Position;
+            Position position = input.GetPosition();
 
             var result = parserA(input);
-            if (result.IsSuccess() || input.Position != position)
+            if (result.IsSuccess() || input.GetPosition() != position)
                return result;
 
             return parserB(input);

@@ -11,17 +11,17 @@ namespace PJanssen.ParsecSharp.IO
       /// <summary>
       /// Creates an ICharStream for the given string.
       /// </summary>
-      public static ICharStream Create(string str)
+      public static IInputStream Create(string str)
       {
-         return new StringCharStream(str);
+         return new StringInputStream(str);
       }
 
       /// <summary>
       /// Creates an ICharStream for the given stream.
       /// </summary>
-      public static ICharStream Create(Stream stream, Encoding encoding)
+      public static IInputStream Create(Stream stream, Encoding encoding)
       {
-         return new SimpleCharStream(stream, encoding);
+         return new SimpleInputStream(stream, encoding);
       }
    }
 }

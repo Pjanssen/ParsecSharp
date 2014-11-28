@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.IO
 {
-   public interface ICharStream
+   public interface IInputStream
    {
       /// <summary>
       /// Reads the next character from the reader and advances the position by one character.
@@ -13,27 +13,14 @@ namespace PJanssen.ParsecSharp.IO
       char Read();
 
       /// <summary>
-      /// Sets the position of the reader to the given offset, relative to the beginning of the input.
+      /// Repositions the input stream to the given position.
       /// </summary>
-      void Seek(int position);
+      void Seek(Position position);
 
       /// <summary>
-      /// Gets the current position in the stream, i.e. the total number of characters that have been read.
+      /// Returns the current position in the stream.
       /// </summary>
-      int Position
-      {
-         get;
-      }
-
-      int Column
-      {
-         get;
-      }
-
-      int Line
-      {
-         get;
-      }
+      Position GetPosition();
 
       /// <summary>
       /// Gets a value that indicates whether the reader has reached the end of the stream.

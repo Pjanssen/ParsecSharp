@@ -43,7 +43,8 @@
     <Compile Include="Combine.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="IO\CharStream.cs" />
-    <Compile Include="IO\SimpleCharStream.cs" />
+    <Compile Include="IO\Position.cs" />
+    <Compile Include="IO\SimpleInputStream.cs" />
     <Compile Include="Either\Either.cs" />
     <Compile Include="Either\Either.T2.cs" />
     <Compile Include="Either\Error.cs" />
@@ -55,8 +56,8 @@
     <Compile Include="Parser.cs" />
     <Compile Include="ParserError.cs" />
     <Compile Include="ParserExtensions.cs" />
-    <Compile Include="IO\ICharStream.cs" />
-    <Compile Include="IO\StringCharStream.cs" />
+    <Compile Include="IO\IInputStream.cs" />
+    <Compile Include="IO\StringInputStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tokens.cs" />
   </ItemGroup>

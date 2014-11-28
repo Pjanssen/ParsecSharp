@@ -14,9 +14,9 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Creates a new Error with the given message.
       /// </summary>
-      public static Either<TValue, ParserError> Create<TValue>(ICharStream input, string message)
+      public static Either<TValue, ParserError> Create<TValue>(IInputStream input, string message)
       {
-         ParserError parserError = new ParserError(input.Line, input.Column, message);
+         ParserError parserError = new ParserError(input.GetPosition(), message);
          return Create<TValue>(parserError);
       }
 
@@ -28,7 +28,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Creates a new Error with the message "Unexpected "x"", where 'x' is the given value.
       /// </summary>
-      public static Either<TValue, ParserError> UnexpectedValue<TValue>(ICharStream input, object value)
+      public static Either<TValue, ParserError> UnexpectedValue<TValue>(IInputStream input, object value)
       {
          return Error.Create<TValue>(input, "Unexpected \"" + value.ToString() + "\"");
       }
