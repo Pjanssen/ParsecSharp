@@ -15,7 +15,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<int> Int()
       {
-         return from x in Combine.Many1(Combine.Or(Chars.Digit(), Chars.Char('-')))
+         return from x in Chars.Satisfy(c => char.IsDigit(c) || c == '-' || c == '+').Many1()
                 select int.Parse(x);
       }
    }

@@ -25,7 +25,7 @@ namespace PJanssen.ParsecSharp
       {
          var parser = Numeric.Int();
          var result = parser.Run("42xyz");
-
+         
          ParseAssert.ValueEquals(42, result);
       }
 
@@ -36,6 +36,15 @@ namespace PJanssen.ParsecSharp
          var result = parser.Run("-42xyz");
 
          ParseAssert.ValueEquals(-42, result);
+      }
+
+      [TestMethod]
+      public void Int_Plus_ReturnIntValue()
+      {
+         var parser = Numeric.Int();
+         var result = parser.Run("+42xyz");
+
+         ParseAssert.ValueEquals(42, result);
       }
 
       #endregion
