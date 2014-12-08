@@ -72,7 +72,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<IEnumerable<TValue>> Many<TValue>(this Parser<TValue> parser)
       {
-         List<TValue> seed = new List<TValue>();
+         Func<List<TValue>> seed = () => new List<TValue>();
          Func<List<TValue>, TValue, List<TValue>> func = (xs, x) =>
          {
             xs.Add(x);
@@ -88,7 +88,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<string> Many(this Parser<char> parser)
       {
-         StringBuilder seed = new StringBuilder();
+         Func<StringBuilder> seed = () => new StringBuilder();
          Func<StringBuilder, char, StringBuilder> func = (builder, c) => builder.Append(c);
          Func<StringBuilder, string> sel = builder => builder.ToString();
 

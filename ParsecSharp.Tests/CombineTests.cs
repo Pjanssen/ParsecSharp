@@ -151,6 +151,16 @@ namespace PJanssen.ParsecSharp
          ParseAssert.ValueEquals("xxyz", result);
       }
 
+      [TestMethod]
+      public void Many_RunMultipleTimes_ReturnsSameResult()
+      {
+         Parser<string> parser = Chars.Char('x').Many();
+         var result = parser.Run("x");
+         result = parser.Run("x");
+
+         ParseAssert.ValueEquals("x", result);
+      }
+
       #endregion
 
       #region Many1

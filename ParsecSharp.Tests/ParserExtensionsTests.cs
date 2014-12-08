@@ -123,7 +123,7 @@ namespace PJanssen.ParsecSharp
       public void Aggregate_NoMatch_ReturnsSeed()
       {
          var parser = Error.Fail<char>("xyz")
-                           .Aggregate("test", (acc, c) => acc + c);
+                           .Aggregate(() => "test", (acc, c) => acc + c);
          var result = parser.Run("zz");
 
          ParseAssert.ValueEquals("test", result);
@@ -133,7 +133,7 @@ namespace PJanssen.ParsecSharp
       public void Aggregate_CombinesParsedValues_UntilError()
       {
          var parser = Chars.OneOf("xy")
-                           .Aggregate("test", (acc, c) => acc + c);
+                           .Aggregate(() => "test", (acc, c) => acc + c);
          var result = parser.Run("xxyyzz");
 
          ParseAssert.ValueEquals("testxxyy", result);
@@ -143,8 +143,8 @@ namespace PJanssen.ParsecSharp
       public void Aggregate_ResultSelector_ReturnsTransformedResult()
       {
          var parser = Chars.Digit()
-                           .Aggregate("", (acc, c) => acc + c, 
-                                          x => int.Parse(x));
+                           .Aggregate(() => "", (acc, c) => acc + c, 
+                                                x => int.Parse(x));
          var result = parser.Run("42017");
 
          ParseAssert.ValueEquals(42017, result);
@@ -156,7 +156,7 @@ namespace PJanssen.ParsecSharp
          var parser = (from x in Chars.Char('x')
                        from y in Chars.Char('y')
                        select x.ToString() + y.ToString())
-                           .Aggregate("", (acc, c) => acc + c);
+                           .Aggregate(() => "", (acc, c) => acc + c);
 
          var result = parser.Run("xyxz");
 

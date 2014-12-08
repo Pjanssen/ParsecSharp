@@ -86,10 +86,10 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       /// <typeparam name="TValue">The type of the parser</typeparam>
       /// <typeparam name="TAccum">The type of the aggregated value</typeparam>
-      /// <param name="seed">The initial accumulator value</param>
+      /// <param name="seed">A function that creates the initial accumulator value</param>
       /// <param name="func">An accumulator function that takes the current accumulated value, the currently parsed result, and combines them into a new accumulated value.</param>
       public static Parser<TAccum> Aggregate<TValue, TAccum>(this Parser<TValue> parser, 
-                                                             TAccum seed, 
+                                                             Func<TAccum> seed, 
                                                              Func<TAccum, TValue, TAccum> func)
       {
          return Aggregate(parser, seed, func, x => x);
@@ -100,16 +100,16 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       /// <typeparam name="TValue">The type of the parser</typeparam>
       /// <typeparam name="TAccum">The type of the aggregated value</typeparam>
-      /// <param name="seed">The initial accumulator value</param>
+      /// <param name="seed">A function that creates the initial accumulator value</param>
       /// <param name="func">An accumulator function that takes the current accumulated value, the currently parsed result, and combines them into a new accumulated value.</param>
       public static Parser<TResult> Aggregate<TValue, TAccum, TResult>(this Parser<TValue> parser,
-                                                                       TAccum seed,
+                                                                       Func<TAccum> seed,
                                                                        Func<TAccum, TValue, TAccum> func,
                                                                        Func<TAccum, TResult> resultSelector)
       {
          return input =>
          {
-            TAccum acc = seed;
+            TAccum acc = seed();
             Either<TValue, ParserError> result = null;
             Position position = input.GetPosition();
 
