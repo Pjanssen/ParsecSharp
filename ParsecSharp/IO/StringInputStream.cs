@@ -56,6 +56,8 @@ namespace PJanssen.ParsecSharp.IO
 
       public void Seek(Position position)
       {
+         Throw.IfNull(position, "position");
+
          this.offset = position.Offset;
          this.line = position.Line;
          this.column = position.Column;
