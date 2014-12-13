@@ -17,5 +17,10 @@ namespace PJanssen.ParsecSharp
       {
          return Either.Error<T, ParseError>(new ParseError(input.GetPosition(), message));
       }
+
+      public static Either<T, ParseError> Error<T>(ParseError error)
+      {
+         return Either.Error<T, ParseError>(error);
+      }
    }
 }
