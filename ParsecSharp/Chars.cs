@@ -21,7 +21,7 @@ namespace PJanssen.ParsecSharp
                return Error.Create<char>(input, "Unexpected end of input");
 
             char c = input.Read();
-            return Either.Success<char, ParserError>(c);
+            return Either.Success<char, ParseError>(c);
          };
       }
 
@@ -149,7 +149,7 @@ namespace PJanssen.ParsecSharp
                   return Error.Create<string>(result.FromError());
             }
 
-            return Either.Success<string, ParserError>(str);
+            return Either.Success<string, ParseError>(str);
          };
       }
    }

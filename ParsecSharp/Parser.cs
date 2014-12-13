@@ -12,5 +12,5 @@ namespace PJanssen.ParsecSharp
    /// or Error with an error message.
    /// </summary>
    /// <typeparam name="TValue">The type of the resulting value.</typeparam>
-   public delegate Either<TValue, ParserError> Parser<TValue>(IInputReader input);
+   public delegate Either<TValue, ParseError> Parser<TValue>(IInputReader input);
 }

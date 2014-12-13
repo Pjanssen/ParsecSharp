@@ -30,7 +30,7 @@ namespace PasswordGenerator
 
       private static void GeneratePassword(string pwdRegex)
       {
-         Either<IGenerator, ParserError> generator = Parser.GeneratorParser.Run(pwdRegex);
+         Either<IGenerator, ParseError> generator = Parser.GeneratorParser.Run(pwdRegex);
          if (generator.IsError())
          {
             Console.WriteLine(generator.FromError());

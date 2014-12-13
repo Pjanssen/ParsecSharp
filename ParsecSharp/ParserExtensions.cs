@@ -11,7 +11,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Runs the parser with the given input string.
       /// </summary>
-      public static Either<TValue, ParserError> Run<TValue>(this Parser<TValue> parser, string input)
+      public static Either<TValue, ParseError> Run<TValue>(this Parser<TValue> parser, string input)
       {
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
@@ -23,7 +23,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Runs the parser with the given input stream.
       /// </summary>
-      public static Either<TValue, ParserError> Run<TValue>(this Parser<TValue> parser, System.IO.Stream input, Encoding encoding)
+      public static Either<TValue, ParseError> Run<TValue>(this Parser<TValue> parser, System.IO.Stream input, Encoding encoding)
       {
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
@@ -44,7 +44,7 @@ namespace PJanssen.ParsecSharp
             if (result.IsError())
                return Error.Create<TResult>(result.FromError());
 
-            return Either.Success<TResult, ParserError>(func(result.FromSuccess()));
+            return Either.Success<TResult, ParseError>(func(result.FromSuccess()));
          };
       }
 
@@ -110,7 +110,7 @@ namespace PJanssen.ParsecSharp
          return input =>
          {
             TAccum acc = seed();
-            Either<TValue, ParserError> result = null;
+            Either<TValue, ParseError> result = null;
             Position position = input.GetPosition();
 
             while ((result = parser(input)).IsSuccess())
@@ -122,7 +122,7 @@ namespace PJanssen.ParsecSharp
             if (input.GetPosition() == position)
             {
                TResult accResult = resultSelector(acc);
-               return Either.Success<TResult, ParserError>(accResult);
+               return Either.Success<TResult, ParseError>(accResult);
             }
             else
             {

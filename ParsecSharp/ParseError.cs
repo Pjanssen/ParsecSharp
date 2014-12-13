@@ -6,11 +6,11 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp
 {
-   public class ParserError
+   public class ParseError
    {
       private Position position;
 
-      public ParserError(Position position, string message)
+      public ParseError(Position position, string message)
       {
          this.position = position;
          this.Message = message;
