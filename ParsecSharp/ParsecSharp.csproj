@@ -42,6 +42,7 @@
     <Compile Include="Chars.cs" />
     <Compile Include="Combine.cs" />
     <Compile Include="Error.cs" />
+    <Compile Include="IO\AbstractInputReader.cs" />
     <Compile Include="IO\IInputReader.cs" />
     <Compile Include="IO\InputReader.cs" />
     <Compile Include="IO\StreamInputReader.cs" />

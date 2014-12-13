@@ -6,14 +6,10 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.IO
 {
-   public class StreamInputReader : IInputReader
+   public class StreamInputReader : AbstractInputReader
    {
       private Stream stream;
       private StreamReader reader;
-      private int offset;
-      private int line;
-      private int column;
-
 
       public StreamInputReader(Stream stream, Encoding encoding)
       {
@@ -21,12 +17,9 @@ namespace PJanssen.ParsecSharp.IO
 
          this.stream = stream;
          this.reader = new StreamReader(stream, encoding);
-         this.offset = 0;
-         this.line = 1;
-         this.column = 1;
       }
 
-      public char Read()
+      override public char Read()
       {
          if (EndOfStream)
             return '\0';
@@ -34,39 +27,19 @@ namespace PJanssen.ParsecSharp.IO
          char c = (char)reader.Read();
 
          this.offset++;
-         SetLineAndColumn(c);
+         UpdatePosition(c);
 
          return c;
       }
 
-      private void SetLineAndColumn(char c)
-      {
-         if (c == '\n')
-         {
-            line++;
-            column = 1;
-         }
-         else
-         {
-            column++;
-         }
-      }
-
-      public void Seek(Position position)
+      override public void Seek(Position position)
       {
          this.reader.DiscardBufferedData();
          this.stream.Seek(position.Offset, SeekOrigin.Begin);
-         this.offset = position.Offset;
-         this.line = position.Line;
-         this.column = position.Column;
+         UpdatePosition(position);
       }
 
-      public Position GetPosition()
-      {
-         return new Position(this.offset, this.line, this.column);
-      }
-
-      public bool EndOfStream
+      override public bool EndOfStream
       {
          get
          {
