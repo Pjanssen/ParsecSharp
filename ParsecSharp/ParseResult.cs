@@ -13,14 +13,19 @@ namespace PJanssen.ParsecSharp
          return Either.Success<T, ParseError>(value);
       }
 
-      public static Either<T, ParseError> Error<T>(IInputReader input, string message)
-      {
-         return Either.Error<T, ParseError>(new ParseError(input.GetPosition(), message));
-      }
-
       public static Either<T, ParseError> Error<T>(ParseError error)
       {
          return Either.Error<T, ParseError>(error);
+      }
+
+      public static Either<T, ParseError> Error<T>(IInputReader input, string message)
+      {
+         return Error<T>(new ParseError(input.GetPosition(), message));
+      }
+
+      public static Either<T, ParseError> UnexpectedValue<T>(IInputReader input, T value)
+      {
+         return Error<T>(new ParseError(input.GetPosition(), "Unexpected \"" + value.ToString() + "\""));
       }
    }
 }

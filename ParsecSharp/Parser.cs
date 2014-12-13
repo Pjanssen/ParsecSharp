@@ -27,5 +27,13 @@ namespace PJanssen.ParsecSharp
       {
          return new SelectManyParser<T, TSourceB, TResult>(this, func, combine);
       }
+
+      /// <summary>
+      /// Tests the given predicate for this parser and returns an error if it fails.
+      /// </summary>
+      public Parser<T> Where(Predicate<T> predicate)
+      {
+         return new WhereParser<T>(this, predicate);
+      }
    }
 }

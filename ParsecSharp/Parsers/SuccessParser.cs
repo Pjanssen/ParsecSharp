@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PJanssen.ParsecSharp.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace PJanssen.ParsecSharp.Parsers
          this.value = value;
       }
 
-      public override Either<T, ParseError> Parse(IO.IInputReader input)
+      public override Either<T, ParseError> Parse(IInputReader input)
       {
          return ParseResult.Success(this.value);
       }

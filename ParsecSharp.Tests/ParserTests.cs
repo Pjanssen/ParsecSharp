@@ -76,5 +76,45 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Where
+
+      [TestMethod]
+      public void Where_PassingPredicate_ReturnsSuccess()
+      {
+         var parser = from x in Parse.Succeed(42)
+                      where x == 42
+                      select x;
+
+         var result = parser.Parse("");
+
+         ParseAssert.ValueEquals(42, result);
+      }
+
+      [TestMethod]
+      public void Where_Error_ReturnsError()
+      {
+         var parser = from x in Parse.Fail<int>("test")
+                      where x == 42
+                      select x;
+
+         var result = parser.Parse("");
+
+         ParseAssert.ErrorEquals("test", result);
+      }
+
+      [TestMethod]
+      public void Where_FailingPredicate_ReturnsError()
+      {
+         var parser = from x in Parse.Succeed(42)
+                      where x != 42
+                      select x;
+
+         var result = parser.Parse("");
+
+         ParseAssert.ErrorEquals("Unexpected \"42\"", result);
+      }
+
+      #endregion
    }
 }
