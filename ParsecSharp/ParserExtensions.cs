@@ -16,7 +16,7 @@ namespace PJanssen.ParsecSharp
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
 
-         IInputStream stream = CharStream.Create(input);
+         IInputReader stream = InputReader.Create(input);
          return parser(stream);
       }
 
@@ -28,7 +28,7 @@ namespace PJanssen.ParsecSharp
          Throw.IfNull(parser, "parser");
          Throw.IfNull(input, "input");
 
-         IInputStream stream = CharStream.Create(input, encoding);
+         IInputReader stream = InputReader.Create(input, encoding);
          return parser(stream);
       }
 

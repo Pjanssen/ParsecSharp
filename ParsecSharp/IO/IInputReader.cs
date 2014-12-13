@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.IO
 {
-   public interface IInputStream
+   public interface IInputReader
    {
       /// <summary>
       /// Reads the next character from the reader and advances the position by one character.

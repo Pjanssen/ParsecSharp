@@ -42,22 +42,22 @@
     <Compile Include="Chars.cs" />
     <Compile Include="Combine.cs" />
     <Compile Include="Error.cs" />
-    <Compile Include="IO\CharStream.cs" />
+    <Compile Include="IO\IInputReader.cs" />
+    <Compile Include="IO\InputReader.cs" />
+    <Compile Include="IO\StreamInputReader.cs" />
     <Compile Include="IO\Position.cs" />
-    <Compile Include="IO\SimpleInputStream.cs" />
     <Compile Include="Either\Either.cs" />
     <Compile Include="Either\Either.T2.cs" />
     <Compile Include="Either\Error.cs" />
     <Compile Include="Either\Success.cs" />
     <Compile Include="Helpers\Throw.cs" />
     <Compile Include="Helpers\Unit.cs" />
+    <Compile Include="IO\StringInputReader.cs" />
     <Compile Include="Numeric.cs" />
     <Compile Include="Parse.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParserError.cs" />
     <Compile Include="ParserExtensions.cs" />
-    <Compile Include="IO\IInputStream.cs" />
-    <Compile Include="IO\StringInputStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tokens.cs" />
   </ItemGroup>

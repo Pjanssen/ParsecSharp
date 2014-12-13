@@ -65,7 +65,7 @@ namespace PJanssen.ParsecSharp
          var parserA = Parse.Try(Chars.Char('a'));
          var parserB = Parse.Try(Chars.Char('b'));
 
-         IInputStream input = CharStream.Create("bc");
+         IInputReader input = InputReader.Create("bc");
          var resultA = parserA(input);
          ParseAssert.IsError(resultA);
 

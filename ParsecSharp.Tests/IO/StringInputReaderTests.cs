@@ -4,14 +4,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace PJanssen.ParsecSharp.IO
 {
    [TestClass]
-   public class StringInputStreamTests
+   public class StringInputReaderTests
    {
       #region Read
 
       [TestMethod]
       public void Read_EndOfString_ReturnsCharNull()
       {
-         IInputStream stream = new StringInputStream("");
+         IInputReader stream = new StringInputReader("");
 
          char result = stream.Read();
 
@@ -21,7 +21,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void Read_NewReader_ReturnsFirstChar()
       {
-         IInputStream stream = new StringInputStream("abc");
+         IInputReader stream = new StringInputReader("abc");
 
          char result = (char)stream.Read();
 
@@ -31,7 +31,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void Read_ReadsCharAtPosition()
       {
-         IInputStream stream = new StringInputStream("abc");
+         IInputReader stream = new StringInputReader("abc");
 
          stream.Read();
          char result = (char)stream.Read();
@@ -42,7 +42,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void Read_NonAsciiChars()
       {
-         IInputStream stream = new StringInputStream("éすå");
+         IInputReader stream = new StringInputReader("éすå");
 
          Assert.AreEqual('é', stream.Read());
          Assert.AreEqual('す', stream.Read());
@@ -56,7 +56,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void GetPosition_NothingRead()
       {
-         IInputStream stream = new StringInputStream("");
+         IInputReader stream = new StringInputReader("");
 
          Position position = stream.GetPosition();
 
@@ -68,7 +68,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void GetPosition_ReadChar()
       {
-         IInputStream stream = new StringInputStream("abc\nxyz");
+         IInputReader stream = new StringInputReader("abc\nxyz");
          stream.Read();
 
          Position position = stream.GetPosition();
@@ -81,7 +81,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void GetPosition_ReadNewLine()
       {
-         IInputStream stream = new StringInputStream("abc\nxyz");
+         IInputReader stream = new StringInputReader("abc\nxyz");
          stream.Read();
          stream.Read();
          stream.Read();
@@ -97,7 +97,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void GetPosition_Read_DoesNotUpdateReturnedPosition()
       {
-         IInputStream stream = new StringInputStream("abc");
+         IInputReader stream = new StringInputReader("abc");
          Position position = stream.GetPosition();
 
          stream.Read();
@@ -114,7 +114,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void Seek_UpdatesPosition()
       {
-         IInputStream stream = new StringInputStream("abc");
+         IInputReader stream = new StringInputReader("abc");
          Position position = stream.GetPosition();
 
          stream.Read();
@@ -135,7 +135,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void EndOfStream_NoCharsLeftToRead_ReturnsTrue()
       {
-         IInputStream stream = new StringInputStream("a");
+         IInputReader stream = new StringInputReader("a");
 
          stream.Read();
 
@@ -145,7 +145,7 @@ namespace PJanssen.ParsecSharp.IO
       [TestMethod]
       public void EndOfStream_CharsLeftToRead_ReturnsFalse()
       {
-         IInputStream stream = new StringInputStream("abc");
+         IInputReader stream = new StringInputReader("abc");
 
          stream.Read();
 
