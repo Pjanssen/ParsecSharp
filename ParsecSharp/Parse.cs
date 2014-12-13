@@ -23,5 +23,13 @@ namespace PJanssen.ParsecSharp
       {
          return new ErrorParser<T>(message);
       }
+
+      /// <summary>
+      /// Tries to parse the input using the given parser, only consuming input when the parser succeeds.
+      /// </summary>
+      public static Parser<T> Try<T>(Parser<T> parser)
+      {
+         return new TryParser<T>(parser);
+      }
    }
 }
