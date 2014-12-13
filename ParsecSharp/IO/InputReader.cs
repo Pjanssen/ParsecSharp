@@ -9,7 +9,7 @@ namespace PJanssen.ParsecSharp.IO
    public static class InputReader
    {
       /// <summary>
-      /// Creates an ICharStream for the given string.
+      /// Creates an IInputReader for the given string.
       /// </summary>
       public static IInputReader Create(string str)
       {
@@ -17,7 +17,7 @@ namespace PJanssen.ParsecSharp.IO
       }
 
       /// <summary>
-      /// Creates an ICharStream for the given stream.
+      /// Creates an IInputReader for the given stream.
       /// </summary>
       public static IInputReader Create(Stream stream, Encoding encoding)
       {
