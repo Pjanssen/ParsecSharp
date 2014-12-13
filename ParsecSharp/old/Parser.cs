@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using PJanssen.ParsecSharp.IO;
 
-namespace PJanssen.ParsecSharp
+namespace PJanssen.ParsecSharp.old
 {
    /// <summary>
    /// A monadic parser function that returns either Success with the parsed result,

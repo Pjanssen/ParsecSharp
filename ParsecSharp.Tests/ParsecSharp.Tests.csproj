@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="NParserTests.cs" />
     <Compile Include="Either\EitherTests.cs" />
     <Compile Include="IO\StreamInputReaderTests.cs" />
     <Compile Include="IO\StringInputReaderTests.cs" />

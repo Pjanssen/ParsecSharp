@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PJanssen.ParsecSharp
+namespace PJanssen.ParsecSharp.old
 {
    [TestClass]
    public class NumericTests

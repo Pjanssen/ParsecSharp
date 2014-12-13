@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace PJanssen.ParsecSharp
+namespace PJanssen.ParsecSharp.old
 {
    [TestClass]
    public class CombineTests

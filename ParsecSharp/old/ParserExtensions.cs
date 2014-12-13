@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using PJanssen.ParsecSharp.IO;
 
-namespace PJanssen.ParsecSharp
+namespace PJanssen.ParsecSharp.old
 {
    public static class ParserExtensions
    {
