@@ -53,19 +53,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="NParserTests.cs" />
     <Compile Include="Either\EitherTests.cs" />
     <Compile Include="IO\StreamInputReaderTests.cs" />
     <Compile Include="IO\StringInputReaderTests.cs" />
-    <Compile Include="NumericTests.cs" />
+    <Compile Include="old\NumericTests.cs" />
+    <Compile Include="old\ParseAssert.cs" />
     <Compile Include="ParseAssert.cs" />
-    <Compile Include="ParserExtensionsTests.cs" />
-    <Compile Include="ParseTests.cs" />
+    <Compile Include="old\ParserExtensionsTests.cs" />
+    <Compile Include="old\ParseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CharsTests.cs" />
-    <Compile Include="CombineTests.cs" />
-    <Compile Include="ErrorTests.cs" />
-    <Compile Include="TokensTests.cs" />
+    <Compile Include="old\CharsTests.cs" />
+    <Compile Include="old\CombineTests.cs" />
+    <Compile Include="old\ErrorTests.cs" />
+    <Compile Include="old\TokensTests.cs" />
+    <Compile Include="ParseTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParsecSharp\ParsecSharp.csproj">
