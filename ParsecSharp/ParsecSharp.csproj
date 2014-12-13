@@ -65,6 +65,7 @@
     <Compile Include="ParseResult.cs" />
     <Compile Include="ParserExtensions.cs" />
     <Compile Include="Parsers\ErrorParser.cs" />
+    <Compile Include="Parsers\SelectManyParser.cs" />
     <Compile Include="Parsers\SelectParser.cs" />
     <Compile Include="Parsers\SuccessParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

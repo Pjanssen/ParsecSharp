@@ -14,9 +14,18 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Applies a projection function to the result of a parser.
       /// </summary>
-      public Parser<TTarget> Select<TTarget>(Func<T, TTarget> func)
+      public Parser<TResult> Select<TResult>(Func<T, TResult> func)
       {
-         return new SelectParser<T, TTarget>(this, func);
+         return new SelectParser<T, TResult>(this, func);
+      }
+
+      /// <summary>
+      /// Combines the results of two Parsers.
+      /// </summary>
+      public Parser<TResult> SelectMany<TSourceB, TResult>(Func<T, Parser<TSourceB>> func,
+                                                           Func<T, TSourceB, TResult> combine)
+      {
+         return new SelectManyParser<T, TSourceB, TResult>(this, func, combine);
       }
    }
 }
