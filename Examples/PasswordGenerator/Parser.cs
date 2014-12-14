@@ -10,20 +10,17 @@ namespace PasswordGenerator
    public static class Parser
    {
       public static readonly Parser<IGenerator> GeneratorParser = from expressions in Expressions()
-                                                                  from _ in Parse.Eof()
+                                                                  from _ in Parse.Eof<IGenerator>()
                                                                   select (IGenerator)new CompositeGenerator(expressions);
 
       static Parser<IEnumerable<IGenerator>> Expressions()
       {
-         return Parse.Try(QuantifiedExpression())
-                     .Or(Expression())
-                     .Many();
+         return (Parse.Try(QuantifiedExpression()) | Expression()).Many();
       }
 
       static Parser<IGenerator> Expression()
       {
-         return AnyChar().Or(CharSet())
-                         .Or(CharLiteral());
+         return AnyChar() | CharSet() | CharLiteral();
       }
 
       static Parser<IGenerator> AnyChar()
@@ -35,7 +32,7 @@ namespace PasswordGenerator
       static Parser<IGenerator> CharSet()
       {
          return from open in Chars.Char('[')
-                from cs in Parse.Try(CharRange()).Or(SingleChar()).Many1()
+                from cs in Parse.Try(CharRange() | SingleChar()).Many1()
                 from close in Chars.Char(']')
                 select (IGenerator)new CharSetGenerator(string.Concat(cs.ToArray()));
       }
@@ -80,9 +77,7 @@ namespace PasswordGenerator
 
       static Parser<IQuantifier> Quantifier()
       {
-         return ZeroOrMore().Or(ZeroOrOne())
-                            .Or(OneOrMore())
-                            .Or(Range());
+         return ZeroOrMore() | ZeroOrOne() | OneOrMore() | Range();
       }
 
       static Parser<IQuantifier> ZeroOrMore()
