@@ -86,6 +86,37 @@ namespace PJanssen.ParsecSharp
 
       #endregion
 
+      #region Choose
+
+      [TestMethod]
+      public void Choose_EmptySequence_ReturnsError()
+      {
+         var parser = Combine.Choose<char>();
+         var result = parser.Parse("z");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void Choose_UnsuccesfulParsers_ReturnsError()
+      {
+         var parser = Combine.Choose(Chars.Char('x'), Chars.Char('y'), Chars.Char('z'));
+         var result = parser.Parse("a");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void Choose_SuccesfulParsers_ReturnsFirstSuccess()
+      {
+         var parser = Combine.Choose(Chars.Char('x'), Chars.Char('y'), Chars.Char('z'));
+         var result = parser.Parse("y");
+
+         ParseAssert.ValueEquals('y', result);
+      }
+
+      #endregion
+
       #region Or
 
       [TestMethod]
