@@ -69,6 +69,7 @@
     <Compile Include="ParserExtensions.cs" />
     <Compile Include="Parsers\AggregateParser.cs" />
     <Compile Include="Parsers\AnyCharParser.cs" />
+    <Compile Include="Parsers\EofParser.cs" />
     <Compile Include="Parsers\ErrorParser.cs" />
     <Compile Include="Parsers\LabeledParser.cs" />
     <Compile Include="Parsers\NegatedParser.cs" />

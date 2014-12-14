@@ -88,5 +88,27 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Eof
+
+      [TestMethod]
+      public void Eof_EndOfInput_ReturnsSuccess()
+      {
+         var parser = Parse.Eof<int>();
+         var result = parser.Parse("");
+
+         ParseAssert.IsSuccess(result);
+      }
+
+      [TestMethod]
+      public void Eof_RemainingInput_ReturnsError()
+      {
+         var parser = Parse.Eof<int>();
+         var result = parser.Parse("abc");
+
+         ParseAssert.IsError(result);
+      }
+
+      #endregion
    }
 }

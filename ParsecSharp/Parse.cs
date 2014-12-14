@@ -39,5 +39,13 @@ namespace PJanssen.ParsecSharp
       {
          return new NegatedParser<T>(parser);
       }
+
+      /// <summary>
+      /// Succeeds only at the end of the input. Returns the default value of T.
+      /// </summary>
+      public static Parser<T> Eof<T>()
+      {
+         return new EofParser<T>();
+      }
    }
 }
