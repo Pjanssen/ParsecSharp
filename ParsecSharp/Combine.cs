@@ -9,6 +9,17 @@ namespace PJanssen.ParsecSharp
    public static class Combine
    {
       /// <summary>
+      /// Applies the open parser followed by value and close, returning the result of the value parser.
+      /// </summary>
+      public static Parser<TValue> Between<TOpen, TClose, TValue>(this Parser<TValue> value, Parser<TOpen> open, Parser<TClose> close)
+      {
+         return from o in open
+                from v in value
+                from c in close
+                select v;
+      }
+
+      /// <summary>
       /// Applies the first parser and returns its value if it succeeds. 
       /// If it fails without consuming any input, the second parser is applied.
       /// </summary>
@@ -63,6 +74,27 @@ namespace PJanssen.ParsecSharp
          return from x in parser
                 from xs in Many(parser)
                 select x + xs;
+      }
+
+      /// <summary>
+      /// Parses zero or more occurrences of a parser, each followed by a separator parser.
+      /// </summary>
+      public static Parser<IEnumerable<T>> SeparatedBy<T, TSep>(this Parser<T> parser, Parser<TSep> separator)
+      {
+         return SeparatedBy1(parser, separator) | Parse.Succeed(Enumerable.Empty<T>());
+      }
+
+      /// <summary>
+      /// Parses one or more occurrences of a parser, each followed by a separator parser.
+      /// </summary>
+      public static Parser<IEnumerable<T>> SeparatedBy1<T, TSep>(this Parser<T> parser, Parser<TSep> separator)
+      {
+         return from x in parser
+                from xs in
+                   Many(from _ in separator
+                        from rest in parser
+                        select rest)
+                select new[] { x }.Concat(xs);
       }
    }
 }
