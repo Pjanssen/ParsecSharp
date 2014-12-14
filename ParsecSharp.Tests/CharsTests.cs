@@ -123,5 +123,36 @@ namespace PJanssen.ParsecSharp
 
       #endregion
 
+      #region EndOfLine
+
+      [TestMethod]
+      public void EndOfLine_NoMatch_ReturnsError()
+      {
+         var parser = Chars.EndOfLine();
+         var result = parser.Parse("abc");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void EndOfLine_LF_ReturnsLF()
+      {
+         var parser = Chars.EndOfLine();
+         var result = parser.Parse("\n");
+
+         ParseAssert.ValueEquals('\n', result);
+      }
+
+      [TestMethod]
+      public void EndOfLine_CRLF_ReturnsLF()
+      {
+         var parser = Chars.EndOfLine();
+         var result = parser.Parse("\r\n");
+
+         ParseAssert.ValueEquals('\n', result);
+      }
+
+      #endregion
+
    }
 }

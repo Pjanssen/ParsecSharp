@@ -111,5 +111,25 @@ namespace PJanssen.ParsecSharp
          return Satisfy(char.IsWhiteSpace)
                   .Label(() => "Expected a whitespace character");
       }
+
+      /// <summary>
+      /// Succeeds if the current character is a CR ('\r'), followed by an LF ('\n').
+      /// Returns the line feed.
+      /// </summary>
+      public static Parser<char> CrLf()
+      {
+         return (from cr in Char('\r')
+                 from lf in Char('\n')
+                 select lf).Label(() => "Expected CRLF");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a LF ('\n') or CRLF ('\r\n').
+      /// Returns the line feed.
+      /// </summary>
+      public static Parser<char> EndOfLine()
+      {
+         return Char('\n') | CrLf();
+      }
    }
 }
