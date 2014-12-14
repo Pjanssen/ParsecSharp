@@ -71,6 +71,7 @@
     <Compile Include="old\ErrorTests.cs" />
     <Compile Include="old\TokensTests.cs" />
     <Compile Include="ParseTests.cs" />
+    <Compile Include="TokensTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParsecSharp\ParsecSharp.csproj">
