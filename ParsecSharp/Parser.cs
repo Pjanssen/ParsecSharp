@@ -88,6 +88,15 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
+      /// Tries to apply the first parser and returns its value if it succeeds.
+      /// If it fails, the second parser is applied. This is equivalent to "Parse.Try(parserA) | parserB".
+      /// </summary>
+      public static Parser<T> operator ^(Parser<T> parserA, Parser<T> parserB)
+      {
+         return ParsecSharp.Parse.Try(parserA) | parserB;
+      }
+
+      /// <summary>
       /// Applies the first parser, followed by the second. Returns the value of the second parser.
       /// </summary>
       public static Parser<T> operator >=(Parser<T> parserA, Parser<T> parserB)

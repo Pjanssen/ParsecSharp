@@ -15,7 +15,7 @@ namespace PasswordGenerator
 
       static Parser<IEnumerable<IGenerator>> Expressions()
       {
-         return (Parse.Try(QuantifiedExpression()) | Expression()).Many();
+         return (QuantifiedExpression() ^ Expression()).Many();
       }
 
       static Parser<IGenerator> Expression()
@@ -32,7 +32,7 @@ namespace PasswordGenerator
       static Parser<IGenerator> CharSet()
       {
          return from open in Chars.Char('[')
-                from cs in (Parse.Try(CharRange()) | SingleChar()).Many1()
+                from cs in (CharRange() ^ SingleChar()).Many1()
                 from close in Chars.Char(']')
                 select (IGenerator)new CharSetGenerator(string.Concat(cs.ToArray()));
       }
