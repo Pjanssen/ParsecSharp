@@ -198,6 +198,51 @@ namespace PJanssen.ParsecSharp
          ParseAssert.ValueEquals(42, result);
       }
 
+      [TestMethod]
+      public void SelectRightOperator_Success_ReturnsSecondValue()
+      {
+         var parser = Parse.Succeed(7) >= Parse.Succeed(42);
+         var result = parser.Parse("");
+
+         ParseAssert.ValueEquals(42, result);
+      }
+
+      [TestMethod]
+      public void SelectRightOperator_Error_ReturnsError()
+      {
+         var parser = Parse.Fail<int>("test") >= Parse.Succeed(42);
+         var result = parser.Parse("");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void SelectLeftOperator_Success_ReturnsFirstValue()
+      {
+         var parser = Parse.Succeed(7) <= Parse.Succeed(42);
+         var result = parser.Parse("");
+
+         ParseAssert.ValueEquals(7, result);
+      }
+
+      [TestMethod]
+      public void SelectLeftOperator_Error_ReturnsError()
+      {
+         var parser = Parse.Succeed(7) <= Parse.Fail<int>("test");
+         var result = parser.Parse("");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void SelectRight_SelectLeft_Operators()
+      {
+         var parser = Parse.Succeed(7) >= Parse.Succeed(42) <= Parse.Succeed(0);
+         var result = parser.Parse("");
+
+         ParseAssert.ValueEquals(42, result);
+      }
+
       #endregion
    }
 }

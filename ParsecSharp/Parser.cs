@@ -77,5 +77,25 @@ namespace PJanssen.ParsecSharp
       {
          return Combine.Or(parserA, parserB);
       }
+
+      /// <summary>
+      /// Applies the first parser, followed by the second. Returns the value of the second parser.
+      /// </summary>
+      public static Parser<T> operator >=(Parser<T> parserA, Parser<T> parserB)
+      {
+         return from a in parserA
+                from b in parserB
+                select b;
+      }
+
+      /// <summary>
+      /// Applies the first parser, followed by the second. Returns the value of the first parser.
+      /// </summary>
+      public static Parser<T> operator <=(Parser<T> parserA, Parser<T> parserB)
+      {
+         return from a in parserA
+                from b in parserB
+                select a;
+      }
    }
 }
