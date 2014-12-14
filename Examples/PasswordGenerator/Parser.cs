@@ -32,7 +32,7 @@ namespace PasswordGenerator
       static Parser<IGenerator> CharSet()
       {
          return from open in Chars.Char('[')
-                from cs in Parse.Try(CharRange() | SingleChar()).Many1()
+                from cs in (Parse.Try(CharRange()) | SingleChar()).Many1()
                 from close in Chars.Char(']')
                 select (IGenerator)new CharSetGenerator(string.Concat(cs.ToArray()));
       }
