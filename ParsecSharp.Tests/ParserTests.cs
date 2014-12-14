@@ -186,5 +186,18 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Operators
+
+      [TestMethod]
+      public void Or_Operator()
+      {
+         var parser = Parse.Fail<int>("test") | Parse.Succeed(42);
+         var result = parser.Parse("");
+
+         ParseAssert.ValueEquals(42, result);
+      }
+
+      #endregion
    }
 }

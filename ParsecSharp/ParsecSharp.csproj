@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chars.cs" />
+    <Compile Include="Combine.cs" />
     <Compile Include="old\Chars.cs" />
     <Compile Include="old\Combine.cs" />
     <Compile Include="old\Error.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Parsers\AnyCharParser.cs" />
     <Compile Include="Parsers\ErrorParser.cs" />
     <Compile Include="Parsers\LabeledParser.cs" />
+    <Compile Include="Parsers\OrParser.cs" />
     <Compile Include="Parsers\SelectManyParser.cs" />
     <Compile Include="Parsers\SelectParser.cs" />
     <Compile Include="Parsers\SuccessParser.cs" />

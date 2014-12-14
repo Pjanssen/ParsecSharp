@@ -68,5 +68,14 @@ namespace PJanssen.ParsecSharp
       {
          return new WhereParser<T>(this, predicate);
       }
+
+      /// <summary>
+      /// Applies the first parser and returns its value if it succeeds. 
+      /// If it fails without consuming any input, the second parser is applied.
+      /// </summary>
+      public static Parser<T> operator |(Parser<T> parserA, Parser<T> parserB)
+      {
+         return Combine.Or(parserA, parserB);
+      }
    }
 }

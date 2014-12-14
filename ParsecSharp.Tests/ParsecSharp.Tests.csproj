@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CharsTests.cs" />
+    <Compile Include="CombineTests.cs" />
     <Compile Include="Either\EitherTests.cs" />
     <Compile Include="IO\StreamInputReaderTests.cs" />
     <Compile Include="IO\StringInputReaderTests.cs" />
