@@ -76,7 +76,7 @@
     <Compile Include="Parsers\StringParser.cs" />
     <Compile Include="Parsers\SuccessParser.cs" />
     <Compile Include="Parsers\TryParser.cs" />
-    <Compile Include="Parsers\WhereParser.cs" />
+    <Compile Include="Parsers\PredicateParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="old\Tokens.cs" />
   </ItemGroup>

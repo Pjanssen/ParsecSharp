@@ -66,7 +66,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public Parser<T> Where(Predicate<T> predicate)
       {
-         return new WhereParser<T>(this, predicate);
+         return new PredicateParser<T>(this, predicate);
       }
 
       /// <summary>
