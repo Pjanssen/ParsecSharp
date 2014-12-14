@@ -35,7 +35,7 @@ namespace PJanssen.ParsecSharp.Parsers
          if (this.Predicate(resultValue))
             return result;
 
-         return ParseResult.UnexpectedValue(input, resultValue);
+         return ParseResult.UnexpectedValue<T>(input, resultValue);
       }
    }
 }

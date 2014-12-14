@@ -31,5 +31,13 @@ namespace PJanssen.ParsecSharp
       {
          return new TryParser<T>(parser);
       }
+
+      /// <summary>
+      /// Only succeeds when the given parser fails. Returns a Unit.
+      /// </summary>
+      public static Parser<Unit> Not<T>(Parser<T> parser)
+      {
+         return new NegatedParser<T>(parser);
+      }
    }
 }

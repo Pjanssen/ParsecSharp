@@ -6,54 +6,36 @@ namespace PJanssen.ParsecSharp
    [TestClass]
    public class CombineTests
    {
-      //#region NotFollowedBy
+      #region NotFollowedBy
 
-      //[TestMethod]
-      //public void NotFollowedBy_Success_ReturnsError()
-      //{
-      //   var parser = Combine.NotFollowedBy(Chars.Any());
-      //   var result = parser.Parse("xyz");
+      [TestMethod]
+      public void NotFollowedBy_ParserAError_ReturnsError()
+      {
+         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var result = parser.Parse("y");
 
-      //   ParseAssert.ErrorEquals("Unexpected \"x\"", result);
-      //}
+         ParseAssert.IsError(result);
+      }
 
-      //[TestMethod]
-      //public void NotFollowedBy_Error_ReturnsSuccess()
-      //{
-      //   var parser = Combine.NotFollowedBy(Chars.String("xyz"));
-      //   var result = parser.Parse("x");
+      [TestMethod]
+      public void NotFollowedBy_ParserBError_ReturnsParserAValue()
+      {
+         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var result = parser.Parse("xz");
 
-      //   ParseAssert.ValueEquals(Unit.Instance, result);
-      //}
+         ParseAssert.ValueEquals('x', result);
+      }
 
-      //[TestMethod]
-      //public void NotFollowedBy_ParserAError_ReturnsError()
-      //{
-      //   var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
-      //   var result = parser.Parse("y");
+      [TestMethod]
+      public void NotFollowedBy_ParserBSuccess_ReturnsError()
+      {
+         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var result = parser.Parse("xy");
 
-      //   ParseAssert.IsError(result);
-      //}
+         ParseAssert.IsError(result);
+      }
 
-      //[TestMethod]
-      //public void NotFollowedBy_ParserBError_ReturnsParserAValue()
-      //{
-      //   var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
-      //   var result = parser.Parse("xz");
-
-      //   ParseAssert.ValueEquals('x', result);
-      //}
-
-      //[TestMethod]
-      //public void NotFollowedBy_ParserBSuccess_ReturnsError()
-      //{
-      //   var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
-      //   var result = parser.Parse("xy");
-
-      //   ParseAssert.IsError(result);
-      //}
-
-      //#endregion
+      #endregion
 
       #region Between
 

@@ -66,5 +66,27 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Not
+
+      [TestMethod]
+      public void Not_Success_ReturnsError()
+      {
+         var parser = Parse.Not(Chars.Any());
+         var result = parser.Parse("xyz");
+
+         ParseAssert.ErrorEquals("Unexpected \"x\"", result);
+      }
+
+      [TestMethod]
+      public void Not_Error_ReturnsSuccess()
+      {
+         var parser = Parse.Not(Chars.String("xyz"));
+         var result = parser.Parse("x");
+
+         ParseAssert.ValueEquals(Unit.Instance, result);
+      }
+
+      #endregion
    }
 }

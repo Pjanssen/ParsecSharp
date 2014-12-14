@@ -70,6 +70,7 @@
     <Compile Include="Parsers\AnyCharParser.cs" />
     <Compile Include="Parsers\ErrorParser.cs" />
     <Compile Include="Parsers\LabeledParser.cs" />
+    <Compile Include="Parsers\NegatedParser.cs" />
     <Compile Include="Parsers\OrParser.cs" />
     <Compile Include="Parsers\SelectManyParser.cs" />
     <Compile Include="Parsers\SelectParser.cs" />

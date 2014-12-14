@@ -187,7 +187,7 @@ namespace PJanssen.ParsecSharp
 
       #endregion
 
-      #region Operators
+      #region operator |
 
       [TestMethod]
       public void Or_Operator()
@@ -197,6 +197,10 @@ namespace PJanssen.ParsecSharp
 
          ParseAssert.ValueEquals(42, result);
       }
+
+      #endregion
+
+      #region operator >= and <= 
 
       [TestMethod]
       public void SelectRightOperator_Success_ReturnsSecondValue()
@@ -238,6 +242,19 @@ namespace PJanssen.ParsecSharp
       public void SelectRight_SelectLeft_Operators()
       {
          var parser = Parse.Succeed(7) >= Parse.Succeed(42) <= Parse.Succeed(0);
+         var result = parser.Parse("");
+
+         ParseAssert.ValueEquals(42, result);
+      }
+
+      #endregion
+
+      #region operator !
+
+      [TestMethod]
+      public void NegationOperator()
+      {
+         var parser = Parse.Succeed(42) <= !Parse.Fail<int>("test");
          var result = parser.Parse("");
 
          ParseAssert.ValueEquals(42, result);

@@ -77,6 +77,16 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
+      /// Only succeeds when the second parser fails. Returns the result of the first parser.
+      /// </summary>
+      public static Parser<TValueA> NotFollowedBy<TValueA, TValueB>(this Parser<TValueA> parserA, Parser<TValueB> parserB)
+      {
+         return from a in parserA
+                from b in Parse.Not(parserB)
+                select a;
+      }
+
+      /// <summary>
       /// Parses zero or more occurrences of a parser, each followed by a separator parser.
       /// </summary>
       public static Parser<IEnumerable<T>> SeparatedBy<T, TSep>(this Parser<T> parser, Parser<TSep> separator)

@@ -70,6 +70,15 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
+      /// Succeeds only if the given parser fails. Returns the default value of T.
+      /// </summary>
+      public static Parser<T> operator !(Parser<T> parser)
+      {
+         return from n in ParsecSharp.Parse.Not<T>(parser)
+                select default(T);
+      }
+
+      /// <summary>
       /// Applies the first parser and returns its value if it succeeds. 
       /// If it fails without consuming any input, the second parser is applied.
       /// </summary>

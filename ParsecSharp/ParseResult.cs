@@ -23,7 +23,7 @@ namespace PJanssen.ParsecSharp
          return Error<T>(new ParseError(input.GetPosition(), message));
       }
 
-      public static Either<T, ParseError> UnexpectedValue<T>(IInputReader input, T value)
+      public static Either<T, ParseError> UnexpectedValue<T>(IInputReader input, object value)
       {
          return Error<T>(new ParseError(input.GetPosition(), "Unexpected \"" + value.ToString() + "\""));
       }
