@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chars.cs" />
     <Compile Include="old\Chars.cs" />
     <Compile Include="old\Combine.cs" />
     <Compile Include="old\Error.cs" />
@@ -64,10 +65,14 @@
     <Compile Include="Parser.cs" />
     <Compile Include="ParseResult.cs" />
     <Compile Include="ParserExtensions.cs" />
+    <Compile Include="Parsers\AggregateParser.cs" />
+    <Compile Include="Parsers\AnyCharParser.cs" />
     <Compile Include="Parsers\ErrorParser.cs" />
+    <Compile Include="Parsers\LabeledParser.cs" />
     <Compile Include="Parsers\SelectManyParser.cs" />
     <Compile Include="Parsers\SelectParser.cs" />
     <Compile Include="Parsers\SuccessParser.cs" />
+    <Compile Include="Parsers\TryParser.cs" />
     <Compile Include="Parsers\WhereParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="old\Tokens.cs" />

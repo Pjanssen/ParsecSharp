@@ -12,6 +12,31 @@ namespace PJanssen.ParsecSharp
       public abstract Either<T, ParseError> Parse(IInputReader input);
 
       /// <summary>
+      /// Applies the parser until it fails, combining the results using the given accumulator function and initial value.
+      /// </summary>
+      /// <typeparam name="TAccum">The type of the aggregated value</typeparam>
+      /// <param name="seed">A function that creates the initial accumulator value</param>
+      /// <param name="func">An accumulator function that takes the current accumulated value, the currently parsed result, and combines them into a new accumulated value.</param>
+      public Parser<TAccum> Aggregate<TAccum>(Func<TAccum> seed, Func<TAccum, T, TAccum> func)
+      {
+         return Aggregate(seed, func, x => x);
+      }
+
+      /// <summary>
+      /// Applies the parser until it fails, combining the results using the given accumulator function and initial value.
+      /// </summary>
+      /// <typeparam name="TAccum">The type of the aggregated value</typeparam>
+      /// <param name="seed">A function that creates the initial accumulator value</param>
+      /// <param name="func">An accumulator function that takes the current accumulated value, the currently parsed result, and combines them into a new accumulated value.</param>
+      /// <param name="resultSelector">A function that creates the final aggregated result.</param>
+      public Parser<TResult> Aggregate<TAccum, TResult>(Func<TAccum> seed,
+                                                        Func<TAccum, T, TAccum> func,
+                                                        Func<TAccum, TResult> resultSelector)
+      {
+         return new AggregateParser<T, TAccum, TResult>(this, seed, func, resultSelector);
+      }
+
+      /// <summary>
       /// Labels the parser with a message that is added to a potential Error value.
       /// </summary>
       public Parser<T> Label(Func<string> msgFunc)
