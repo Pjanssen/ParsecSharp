@@ -131,5 +131,14 @@ namespace PJanssen.ParsecSharp
       {
          return Char('\n') | CrLf();
       }
+
+      /// <summary>
+      /// Succeeds if the current input matches the entire string. Returns the parsed string.
+      /// </summary>
+      public static Parser<string> String(string str)
+      {
+         return new StringParser(str)
+                     .Label(() => "Expected \"" + str + "\"");
+      }
    }
 }

@@ -73,6 +73,7 @@
     <Compile Include="Parsers\OrParser.cs" />
     <Compile Include="Parsers\SelectManyParser.cs" />
     <Compile Include="Parsers\SelectParser.cs" />
+    <Compile Include="Parsers\StringParser.cs" />
     <Compile Include="Parsers\SuccessParser.cs" />
     <Compile Include="Parsers\TryParser.cs" />
     <Compile Include="Parsers\WhereParser.cs" />
