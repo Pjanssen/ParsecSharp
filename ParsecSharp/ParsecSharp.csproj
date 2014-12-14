@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Chars.cs" />
     <Compile Include="Combine.cs" />
+    <Compile Include="Numeric.cs" />
     <Compile Include="old\Chars.cs" />
     <Compile Include="old\Combine.cs" />
     <Compile Include="old\Error.cs" />

@@ -58,6 +58,7 @@
     <Compile Include="Either\EitherTests.cs" />
     <Compile Include="IO\StreamInputReaderTests.cs" />
     <Compile Include="IO\StringInputReaderTests.cs" />
+    <Compile Include="NumericTests.cs" />
     <Compile Include="old\NumericTests.cs" />
     <Compile Include="old\ParseAssert.cs" />
     <Compile Include="ParseAssert.cs" />
