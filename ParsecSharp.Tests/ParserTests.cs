@@ -116,5 +116,27 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Label
+
+      [TestMethod]
+      public void Label_Success_ReturnsSuccess()
+      {
+         var parser = Parse.Succeed(42).Label(() => "test");
+         var result = parser.Parse("");
+
+         ParseAssert.ValueEquals(42, result);
+      }
+
+      [TestMethod]
+      public void Label_Error_ReturnsErrorWithMessage()
+      {
+         var parser = Parse.Fail<int>("Oh noes").Label(() => "Test");
+         var result = parser.Parse("");
+
+         ParseAssert.ErrorEquals("Oh noes. Test.", result);
+      }
+
+      #endregion
    }
 }

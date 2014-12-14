@@ -12,6 +12,14 @@ namespace PJanssen.ParsecSharp
       public abstract Either<T, ParseError> Parse(IInputReader input);
 
       /// <summary>
+      /// Labels the parser with a message that is added to a potential Error value.
+      /// </summary>
+      public Parser<T> Label(Func<string> msgFunc)
+      {
+         return new LabeledParser<T>(this, msgFunc);
+      }
+
+      /// <summary>
       /// Applies a projection function to the result of a parser.
       /// </summary>
       public Parser<TResult> Select<TResult>(Func<T, TResult> func)
