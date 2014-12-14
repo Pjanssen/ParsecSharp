@@ -56,5 +56,72 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Char
+
+      [TestMethod]
+      public void Char_MatchingChar_ReturnsChar()
+      {
+         var parser = Chars.Char('x');
+         var result = parser.Parse("xyz");
+
+         ParseAssert.ValueEquals('x', result);
+      }
+
+      [TestMethod]
+      public void Char_NonMatchingChar_ReturnsError()
+      {
+         var parser = Chars.Char('x');
+         var result = parser.Parse("abc");
+
+         ParseAssert.IsError(result);
+      }
+
+      #endregion
+
+      #region OneOf
+
+      [TestMethod]
+      public void OneOf_MatchingChar_ReturnsChar()
+      {
+         var parser = Chars.OneOf("abc");
+         var result = parser.Parse("b");
+
+         ParseAssert.ValueEquals('b', result);
+      }
+
+      [TestMethod]
+      public void OneOf_NonMatchingChar_ReturnsError()
+      {
+         var parser = Chars.OneOf("xyz");
+         var result = parser.Parse("a");
+
+         ParseAssert.IsError(result);
+      }
+
+      #endregion
+
+      #region NoneOf
+
+      [TestMethod]
+      public void NoneOf_MatchingChar_ReturnsError()
+      {
+         var parser = Chars.NoneOf("abc");
+         var result = parser.Parse("b");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void OneOf_NonMatchingChar_ReturnsChar()
+      {
+         var parser = Chars.NoneOf("xyz");
+         var result = parser.Parse("b");
+
+         ParseAssert.ValueEquals('b', result);
+      }
+
+      #endregion
+
    }
 }

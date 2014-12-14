@@ -31,5 +31,85 @@ namespace PJanssen.ParsecSharp
                           select c);
       }
 
+      /// <summary>
+      /// Succeeds for the given character. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Char(char character)
+      {
+         return Satisfy(c => c == character)
+                  .Label(() => "Expected \"" + character + "\"");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is in the given sequence of characters. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> OneOf(IEnumerable<char> characters)
+      {
+         return Satisfy(characters.Contains)
+                  .Label(() => string.Format("Expected one of \"{0}\"", string.Concat(characters)));
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is not in the given sequence of characters. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> NoneOf(IEnumerable<char> characters)
+      {
+         return Satisfy(c => !characters.Contains(c))
+                  .Label(() => string.Format("Expected any char except \"{0}\"", string.Concat(characters)));
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a letter. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Letter()
+      {
+         return Satisfy(char.IsLetter)
+                  .Label(() => "Expected a letter");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a letter. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Digit()
+      {
+         return Satisfy(char.IsDigit)
+                  .Label(() => "Expected a digit");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a letter or digit. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> AlphaNum()
+      {
+         return Satisfy(char.IsLetterOrDigit)
+                  .Label(() => "Expected a letter or digit");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a space. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Space()
+      {
+         return Satisfy(c => c == ' ')
+                  .Label(() => "Expected a space");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a tab. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Tab()
+      {
+         return Satisfy(c => c == '\t')
+                  .Label(() => "Expected a tab");
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a whitespace character. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> WhiteSpace()
+      {
+         return Satisfy(char.IsWhiteSpace)
+                  .Label(() => "Expected a whitespace character");
+      }
    }
 }
