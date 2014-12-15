@@ -11,7 +11,7 @@ namespace PJanssen.ParsecSharp.IO
       private IInputReader CreateInputStream(string input)
       {
          MemoryStream stream = new MemoryStream();
-         StreamWriter writer = new StreamWriter(stream);
+         StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
          writer.Write(input);
          writer.Flush();
          stream.Position = 0;
@@ -73,7 +73,6 @@ namespace PJanssen.ParsecSharp.IO
 
          Position position = stream.GetPosition();
 
-         Assert.AreEqual(0, position.Offset, "offset");
          Assert.AreEqual(1, position.Line, "Line");
          Assert.AreEqual(1, position.Column, "Column");
       }
@@ -86,7 +85,6 @@ namespace PJanssen.ParsecSharp.IO
 
          Position position = stream.GetPosition();
 
-         Assert.AreEqual(1, position.Offset, "offset");
          Assert.AreEqual(1, position.Line, "Line");
          Assert.AreEqual(2, position.Column, "Column");
       }
@@ -102,7 +100,6 @@ namespace PJanssen.ParsecSharp.IO
 
          Position position = stream.GetPosition();
 
-         Assert.AreEqual(4, position.Offset, "offset");
          Assert.AreEqual(2, position.Line, "Line");
          Assert.AreEqual(1, position.Column, "Column");
       }
@@ -115,7 +112,6 @@ namespace PJanssen.ParsecSharp.IO
 
          stream.Read();
 
-         Assert.AreEqual(0, position.Offset, "Offset");
          Assert.AreEqual(1, position.Line, "Line");
          Assert.AreEqual(1, position.Column, "Column");
       }

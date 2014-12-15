@@ -8,15 +8,17 @@ namespace PJanssen.ParsecSharp.IO
 {
    public class StreamInputReader : AbstractInputReader
    {
-      private Stream stream;
       private StreamReader reader;
+      private Encoding encoding;
 
       public StreamInputReader(Stream stream, Encoding encoding)
       {
          Throw.IfNull(stream, "stream");
+         Throw.IfNull(encoding, "Encoding");
 
-         this.stream = stream;
          this.reader = new StreamReader(stream, encoding);
+         this.encoding = encoding;
+         this.offset = encoding.GetPreamble().Length;
       }
 
       override public char Read()
@@ -26,7 +28,7 @@ namespace PJanssen.ParsecSharp.IO
 
          char c = (char)reader.Read();
 
-         this.offset++;
+         this.offset += this.encoding.GetByteCount(new[] { c });
          UpdatePosition(c);
 
          return c;
@@ -35,7 +37,7 @@ namespace PJanssen.ParsecSharp.IO
       override public void Seek(Position position)
       {
          this.reader.DiscardBufferedData();
-         this.stream.Seek(position.Offset, SeekOrigin.Begin);
+         this.reader.BaseStream.Seek(position.Offset, SeekOrigin.Begin);
          UpdatePosition(position);
       }
 
