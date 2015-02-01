@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PJanssen.ParsecSharp.IO;
 
 namespace PJanssen.ParsecSharp
 {
@@ -194,6 +195,30 @@ namespace PJanssen.ParsecSharp
          var result = parser.Parse("abc");
 
          ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void String_NoMatch_ConsumesNoInput()
+      {
+         var parser = Chars.String("xyz");
+         var input = new StringInputReader("---");
+         var result = parser.Parse(input);
+
+         Position position = input.GetPosition();
+         Assert.AreEqual(0, position.Offset);
+      }
+
+      [TestMethod]
+      public void String_PartialMatch_SetsCorrectPosition()
+      {
+         var parser = Chars.String("xyz");
+         var input = new StringInputReader("xy-");
+         var result = parser.Parse(input);
+
+         Position position = input.GetPosition();
+         Assert.AreEqual(2, position.Offset, "Offset");
+         Assert.AreEqual(1, position.Line, "Line");
+         Assert.AreEqual(3, position.Column, "Column");
       }
 
       [TestMethod]

@@ -9,21 +9,23 @@ namespace PJanssen.ParsecSharp.Parsers
    internal class StringParser : Parser<string>
    {
       private string str;
-      private PredicateParser<char> parser;
+      private Parser<char> parser;
+      private PredicateParser<char> predicateParser;
 
       public StringParser(string str)
       {
          Throw.IfNull(str, "str");
 
          this.str = str;
-         this.parser = new PredicateParser<char>(new AnyCharParser(), x => true);
+         this.predicateParser = new PredicateParser<char>(new AnyCharParser(), x => true);
+         this.parser = new TryParser<char>(this.predicateParser);
       }
 
       public override Either<string, ParseError> Parse(IInputReader input)
       {
          for (int i = 0; i < str.Length; i++)
          {
-            this.parser.Predicate = str[i].Equals;
+            this.predicateParser.Predicate = str[i].Equals;
 
             var result = this.parser.Parse(input);
             if (result.IsError())
