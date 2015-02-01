@@ -123,6 +123,28 @@ namespace PJanssen.ParsecSharp
 
       #endregion
 
+      #region Not
+
+      [TestMethod]
+      public void Not_MatchingChar_ReturnsError()
+      {
+         var parser = Chars.Not('x');
+         var result = parser.Parse("x");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void Not_NonMatchingChar_ReturnsParsedChar()
+      {
+         var parser = Chars.Not('x');
+         var result = parser.Parse("y");
+
+         ParseAssert.ValueEquals('y', result);
+      }
+
+      #endregion
+
       #region EndOfLine
 
       [TestMethod]

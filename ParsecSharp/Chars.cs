@@ -59,6 +59,15 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
+      /// Succeeds if the current character is any except the given character. Returns the parsed character.
+      /// </summary>
+      public static Parser<char> Not(char character)
+      {
+         return Satisfy(c => c != character)
+                  .Label(() => string.Format("Expected any char except '{0}'", character));
+      }
+
+      /// <summary>
       /// Succeeds if the current character is a letter. Returns the parsed character.
       /// </summary>
       public static Parser<char> Letter()
