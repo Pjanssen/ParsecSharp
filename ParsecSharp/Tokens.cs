@@ -21,11 +21,19 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
-      /// Parses the given symbol name followed by any whitespace. Returns the parsed symbol name.
+      /// Parses the given symbol followed by any whitespace. Returns the parsed symbol.
       /// </summary>
-      public static Parser<string> Symbol(string name)
+      public static Parser<string> Symbol(string symbol)
       {
-         return Lexeme(Chars.String(name));
+         return Lexeme(Chars.String(symbol));
+      }
+
+      /// <summary>
+      /// Parses the given symbol followed by any whitespace. Returns the parsed symbol.
+      /// </summary>
+      public static Parser<char> Symbol(char symbol)
+      {
+         return Lexeme(Chars.Char(symbol));
       }
    }
 }
