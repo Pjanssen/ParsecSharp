@@ -65,5 +65,10 @@ namespace PJanssen.ParsecSharp.IO
       {
          return !(positionA == positionB);
       }
+
+      public override string ToString()
+      {
+         return string.Format("Pos {0}, Ln {1}, Col {2}", Offset, Line, Column);
+      }
    }
 }
