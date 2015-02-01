@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordGenerator", "Exampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BNF", "Examples\BNF\BNF.csproj", "{DAF69528-FB94-4F68-9B7F-B40F53BF6107}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Json", "Examples\Json\Json.csproj", "{A70811C0-8933-4311-9BFB-0EC1F0C2E4A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DAF69528-FB94-4F68-9B7F-B40F53BF6107}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAF69528-FB94-4F68-9B7F-B40F53BF6107}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAF69528-FB94-4F68-9B7F-B40F53BF6107}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A70811C0-8933-4311-9BFB-0EC1F0C2E4A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A70811C0-8933-4311-9BFB-0EC1F0C2E4A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A70811C0-8933-4311-9BFB-0EC1F0C2E4A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A70811C0-8933-4311-9BFB-0EC1F0C2E4A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,5 +46,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{25309087-0239-46F6-92E7-B695EEDE7B75} = {922363E4-03CA-40E0-B023-13C6395410B2}
 		{DAF69528-FB94-4F68-9B7F-B40F53BF6107} = {922363E4-03CA-40E0-B023-13C6395410B2}
+		{A70811C0-8933-4311-9BFB-0EC1F0C2E4A6} = {922363E4-03CA-40E0-B023-13C6395410B2}
 	EndGlobalSection
 EndGlobal
