@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PJanssen.ParsecSharp;
+using System.IO;
+using Json.Syntax;
 
 namespace Json
 {
@@ -11,7 +13,12 @@ namespace Json
       static void Main(string[] args)
       {
          var parser = Parser.Create();
-         var result = parser.Parse("true");
+         using (FileStream stream = File.OpenRead(args[0]))
+         {
+            var result = parser.Parse(stream, Encoding.UTF8);
+         }
+
+         Console.Read();
       }
    }
 }
