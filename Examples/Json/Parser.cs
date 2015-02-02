@@ -26,10 +26,12 @@ namespace Json
             from value in Tokens.Lexeme(TrueLiteral | FalseLiteral)
             select (JsonValue)new JsonBool(value);
 
+
       public static readonly Parser<JsonValue> JsonNull =
             from _ in Tokens.Symbol("null")
             select (JsonValue)new JsonNull();
 
+      
       private static readonly Parser<char> EscapedChar =
             Chars.Char('\\') >= Chars.OneOf("\"\\");
 
@@ -43,6 +45,14 @@ namespace Json
             from value in Tokens.Lexeme(StringLiteral)
             select (JsonValue)new JsonString(value);
 
+
+      public static readonly Parser<double> Number = Numeric.Double();
+
+      public static readonly Parser<JsonValue> JsonNumber =
+            from value in Tokens.Lexeme(Number)
+            select (JsonValue)new JsonNumber(value);
+
+
       public static readonly Parser<IEnumerable<JsonValue>> Array =
             from open in Tokens.Symbol('[')
             from values in JsonValue.SeparatedBy(Tokens.Symbol(','))
@@ -53,6 +63,7 @@ namespace Json
             from values in Array
             select (JsonValue)new JsonArray(values);
 
+      
       private static readonly Parser<KeyValuePair<string, JsonValue>> ObjectEntry =
             from key in Tokens.Lexeme(StringLiteral)
             from sep in Tokens.Symbol(':')
@@ -69,10 +80,12 @@ namespace Json
             from values in Object
             select (JsonValue)new JsonObject(values);
 
+      
       public static readonly Parser<JsonValue> JsonValue = JsonObject
                                                          | JsonArray
-                                                         | JsonBoolean 
                                                          | JsonString 
+                                                         | JsonNumber
+                                                         | JsonBoolean 
                                                          | JsonNull;
    }
 }

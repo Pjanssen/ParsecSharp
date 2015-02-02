@@ -31,6 +31,12 @@ namespace PJanssen.ParsecSharp
          Assert.AreEqual(expected, valueSelector(result.FromSuccess()), "Parsed value");
       }
 
+      public static void ValueEquals(double expected, Either<double, ParseError> result)
+      {
+         IsSuccess(result);
+         Assert.AreEqual(expected, result.FromSuccess(), 0.0001);
+      }
+
       public static void ValueEquals<TValue>(IEnumerable<TValue> expected, Either<IEnumerable<TValue>, ParseError> result)
       {
          IsSuccess(result);

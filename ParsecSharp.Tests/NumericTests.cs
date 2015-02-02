@@ -48,5 +48,36 @@ namespace PJanssen.ParsecSharp
       }
 
       #endregion
+
+      #region Double
+
+      [TestMethod]
+      public void Double_NonNumeric_ReturnsError()
+      {
+         var parser = Numeric.Double();
+         var result = parser.Parse("test");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void Double_Int_ReturnsDoubleValue()
+      {
+         var parser = Numeric.Double();
+         var result = parser.Parse("42");
+
+         ParseAssert.ValueEquals(42, result);
+      }
+
+      [TestMethod]
+      public void Double_IntThenFraction_ReturnsDoubleValue()
+      {
+         var parser = Numeric.Double();
+         var result = parser.Parse("42.37");
+
+         ParseAssert.ValueEquals(42.37, result);
+      }
+
+      #endregion
    }
 }
