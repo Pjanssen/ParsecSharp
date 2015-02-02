@@ -11,20 +11,22 @@ namespace Json
    {
       public static Parser<JsonValue> Create()
       {
-         return Boolean | Null;
+         return JsonBoolean | JsonNull;
       }
 
-      private static readonly Parser<JsonValue> True =
+      public static readonly Parser<bool> TrueLiteral =
             from _ in Chars.String("true")
-            select (JsonValue)new JsonBool(true);
+            select true;
 
-      private static readonly Parser<JsonValue> False =
+      public static readonly Parser<bool> FalseLiteral =
             from _ in Chars.String("false")
-            select (JsonValue)new JsonBool(false);
+            select false;
 
-      private static readonly Parser<JsonValue> Boolean = True | False;
+      public static readonly Parser<JsonValue> JsonBoolean =
+            from value in TrueLiteral | FalseLiteral
+            select (JsonValue)new JsonBool(value);
 
-      private static readonly Parser<JsonValue> Null =
+      private static readonly Parser<JsonValue> JsonNull =
             from _ in Chars.String("null")
             select (JsonValue)new JsonNull();
    }

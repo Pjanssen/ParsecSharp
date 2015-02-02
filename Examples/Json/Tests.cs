@@ -27,18 +27,27 @@ namespace Json
       #region Boolean
 
       [TestMethod]
-      public void JsonBool_True()
+      public void TrueLiteral()
       {
-         var parser = Parser.Create();
+         var parser = Parser.TrueLiteral;
          var result = parser.Parse("true");
 
-         ParseAssert.ValueEquals(true, result, r => ((JsonBool)r).Value);
+         ParseAssert.ValueEquals(true, result);
+      }
+
+      [TestMethod]
+      public void FalseLiteral()
+      {
+         var parser = Parser.FalseLiteral;
+         var result = parser.Parse("false");
+
+         ParseAssert.ValueEquals(false, result);
       }
 
       [TestMethod]
       public void JsonBool_False()
       {
-         var parser = Parser.Create();
+         var parser = Parser.JsonBoolean;
          var result = parser.Parse("false");
 
          ParseAssert.ValueEquals(false, result, r => ((JsonBool)r).Value);
