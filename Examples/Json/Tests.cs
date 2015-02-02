@@ -54,5 +54,36 @@ namespace Json
       }
 
       #endregion
+
+      #region String
+
+      [TestMethod]
+      public void JsonString()
+      {
+         var parser = Parser.StringLiteral;
+         var result = parser.Parse("\"test\"");
+
+         ParseAssert.ValueEquals("test", result);
+      }
+
+      [TestMethod]
+      public void JsonString_EscapedQuote()
+      {
+         var parser = Parser.StringLiteral;
+         var result = parser.Parse("\"\\\"escaped quotes\\\"\"");
+
+         ParseAssert.ValueEquals("\"escaped quotes\"", result);
+      }
+
+      [TestMethod]
+      public void JsonString_EscapedSlash()
+      {
+         var parser = Parser.StringLiteral;
+         var result = parser.Parse(@"""\\""");
+
+         ParseAssert.ValueEquals("\\", result);
+      }
+
+      #endregion
    }
 }
