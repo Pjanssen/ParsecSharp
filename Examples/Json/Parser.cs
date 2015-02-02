@@ -23,11 +23,11 @@ namespace Json
             select false;
 
       public static readonly Parser<JsonValue> JsonBoolean =
-            from value in TrueLiteral | FalseLiteral
+            from value in Tokens.Lexeme(TrueLiteral | FalseLiteral)
             select (JsonValue)new JsonBool(value);
 
       public static readonly Parser<JsonValue> JsonNull =
-            from _ in Chars.String("null")
+            from _ in Tokens.Symbol("null")
             select (JsonValue)new JsonNull();
 
       private static readonly Parser<char> EscapedChar =
@@ -40,12 +40,12 @@ namespace Json
             select value;
 
       public static readonly Parser<JsonValue> JsonString =
-            from value in StringLiteral
+            from value in Tokens.Lexeme(StringLiteral)
             select (JsonValue)new JsonString(value);
 
       public static readonly Parser<IEnumerable<JsonValue>> Array =
             from open in Tokens.Symbol('[')
-            from values in Tokens.Lexeme(JsonValue).SeparatedBy(Tokens.Symbol(','))
+            from values in JsonValue.SeparatedBy(Tokens.Symbol(','))
             from close in Tokens.Symbol(']')
             select values;
 
@@ -54,9 +54,9 @@ namespace Json
             select (JsonValue)new JsonArray(values);
 
       private static readonly Parser<KeyValuePair<string, JsonValue>> ObjectEntry =
-            from key in StringLiteral
+            from key in Tokens.Lexeme(StringLiteral)
             from sep in Tokens.Symbol(':')
-            from value in Tokens.Lexeme(JsonValue)
+            from value in JsonValue
             select new KeyValuePair<string, JsonValue>(key, value);
 
       public static readonly Parser<Dictionary<string, JsonValue>> Object =

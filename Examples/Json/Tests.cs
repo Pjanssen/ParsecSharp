@@ -174,7 +174,7 @@ namespace Json
       public void JsonObject_NestedObjects()
       {
          var parser = Parser.Object;
-         var result = parser.Parse(@"{ ""x"": { ""y"": true } }");
+         var result = parser.Parse(@"{ ""x"" : { ""y"": true } }");
 
          ParseAssert.ValueEquals(true, result, v => ((JsonBool)((JsonObject)v["x"]).Values["y"]).Value);
       }
