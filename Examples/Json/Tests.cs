@@ -85,5 +85,59 @@ namespace Json
       }
 
       #endregion
+
+      #region Array
+
+      [TestMethod]
+      public void JsonArray_EmptyArray()
+      {
+         var parser = Parser.Array;
+         var result = parser.Parse("[]");
+
+         ParseAssert.ValueEquals(new JsonValue[0], result);
+      }
+
+      [TestMethod]
+      public void JsonArray_SingleValue()
+      {
+         var parser = Parser.Array;
+         var result = parser.Parse("[true]");
+
+         ParseAssert.ValueEquals(true, result, v => ((JsonBool)v.First()).Value);
+      }
+
+      [TestMethod]
+      public void JsonArray_MultipleValues()
+      {
+         var parser = Parser.Array;
+         var result = parser.Parse("[true,false,true]");
+
+         ParseAssert.ValueEquals(true, result, v => ((JsonBool)v.First()).Value);
+         ParseAssert.ValueEquals(false, result, v => ((JsonBool)v.Skip(1).First()).Value);
+         ParseAssert.ValueEquals(true, result, v => ((JsonBool)v.Skip(2).First()).Value);
+      }
+
+      [TestMethod]
+      public void JsonArray_WithWhitespace()
+      {
+         var parser = Parser.Array;
+         var result = parser.Parse(@"[ true
+                                     , false ]");
+
+         ParseAssert.ValueEquals(true, result, v => ((JsonBool)v.First()).Value);
+         ParseAssert.ValueEquals(false, result, v => ((JsonBool)v.Skip(1).First()).Value);
+      }
+
+      [TestMethod]
+      public void JsonArray_NestedArray()
+      {
+         var parser = Parser.Array;
+         var result = parser.Parse(@"[ true, [ false, false ] ]");
+
+         ParseAssert.ValueEquals(true, result, v => ((JsonBool)v.First()).Value);
+         ParseAssert.ValueEquals(2, result, v => ((JsonArray)v.Skip(1).First()).Values.Count());
+      }
+
+      #endregion
    }
 }
