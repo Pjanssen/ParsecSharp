@@ -53,7 +53,24 @@ namespace Json
             from values in Array
             select (JsonValue)new JsonArray(values);
 
-      public static readonly Parser<JsonValue> JsonValue = JsonArray
+      private static readonly Parser<KeyValuePair<string, JsonValue>> ObjectEntry =
+            from key in StringLiteral
+            from sep in Tokens.Symbol(':')
+            from value in Tokens.Lexeme(JsonValue)
+            select new KeyValuePair<string, JsonValue>(key, value);
+
+      public static readonly Parser<Dictionary<string, JsonValue>> Object =
+            from open in Tokens.Symbol('{')
+            from values in ObjectEntry.SeparatedBy(Tokens.Symbol(','))
+            from close in Tokens.Symbol('}')
+            select values.ToDictionary(v => v.Key, v => v.Value);
+
+      public static readonly Parser<JsonValue> JsonObject =
+            from values in Object
+            select (JsonValue)new JsonObject(values);
+
+      public static readonly Parser<JsonValue> JsonValue = JsonObject
+                                                         | JsonArray
                                                          | JsonBoolean 
                                                          | JsonString 
                                                          | JsonNull;

@@ -139,5 +139,46 @@ namespace Json
       }
 
       #endregion
+
+      #region Object
+
+      [TestMethod]
+      public void JsonObject_EmptyObject()
+      {
+         var parser = Parser.Object;
+         var result = parser.Parse("{}");
+
+         ParseAssert.ValueEquals(0, result, v => v.Count);
+      }
+
+      [TestMethod]
+      public void JsonObject_SingleProperty()
+      {
+         var parser = Parser.Object;
+         var result = parser.Parse(@"{ ""test"": ""42"" }");
+
+         ParseAssert.ValueEquals("42", result, v => ((JsonString)v["test"]).Value);
+      }
+
+      [TestMethod]
+      public void JsonObject_MultipleProperties()
+      {
+         var parser = Parser.Object;
+         var result = parser.Parse(@"{ ""test"": ""42"", ""x"": true }");
+
+         ParseAssert.ValueEquals("42", result, v => ((JsonString)v["test"]).Value);
+         ParseAssert.ValueEquals(true, result, v => ((JsonBool)v["x"]).Value);
+      }
+
+      [TestMethod]
+      public void JsonObject_NestedObjects()
+      {
+         var parser = Parser.Object;
+         var result = parser.Parse(@"{ ""x"": { ""y"": true } }");
+
+         ParseAssert.ValueEquals(true, result, v => ((JsonBool)((JsonObject)v["x"]).Values["y"]).Value);
+      }
+
+      #endregion
    }
 }

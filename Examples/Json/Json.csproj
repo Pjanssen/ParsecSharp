@@ -47,6 +47,7 @@
     <Compile Include="Syntax\JsonArray.cs" />
     <Compile Include="Syntax\JsonBool.cs" />
     <Compile Include="Syntax\JsonNull.cs" />
+    <Compile Include="Syntax\JsonObject.cs" />
     <Compile Include="Syntax\JsonString.cs" />
     <Compile Include="Syntax\JsonValue.cs" />
     <Compile Include="Tests.cs" />
