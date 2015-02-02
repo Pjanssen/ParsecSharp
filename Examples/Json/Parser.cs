@@ -9,11 +9,6 @@ namespace Json
 {
    public static class Parser
    {
-      public static Parser<JsonValue> Create()
-      {
-         return JsonValue;
-      }
-
       public static readonly Parser<bool> TrueLiteral =
             from _ in Chars.String("true")
             select true;

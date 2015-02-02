@@ -12,7 +12,7 @@ namespace Json
    {
       static void Main(string[] args)
       {
-         var parser = Parser.Create();
+         var parser = Parser.JsonValue;
          using (FileStream stream = File.OpenRead(args[0]))
          {
             var result = parser.Parse(stream, Encoding.UTF8);

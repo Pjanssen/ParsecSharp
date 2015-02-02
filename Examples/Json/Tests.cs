@@ -16,7 +16,7 @@ namespace Json
       [TestMethod]
       public void JsonNull()
       {
-         var parser = Parser.Create();
+         var parser = Parser.JsonNull;
          var result = parser.Parse("null");
 
          ParseAssert.ValueEquals(typeof(JsonNull), result, v => v.GetType());
