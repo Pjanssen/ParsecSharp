@@ -11,10 +11,23 @@ namespace Json
    [TestClass]
    public class Tests
    {
+      #region Null
+
+      [TestMethod]
+      public void JsonNull()
+      {
+         var parser = Parser.Create();
+         var result = parser.Parse("null");
+
+         ParseAssert.ValueEquals(typeof(JsonNull), result, v => v.GetType());
+      }
+
+      #endregion
+
       #region Boolean
 
       [TestMethod]
-      public void BoolTrue()
+      public void JsonBool_True()
       {
          var parser = Parser.Create();
          var result = parser.Parse("true");
@@ -23,7 +36,7 @@ namespace Json
       }
 
       [TestMethod]
-      public void BoolFalse()
+      public void JsonBool_False()
       {
          var parser = Parser.Create();
          var result = parser.Parse("false");
@@ -32,7 +45,5 @@ namespace Json
       }
 
       #endregion
-
-
    }
 }

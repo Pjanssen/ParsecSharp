@@ -11,7 +11,7 @@ namespace Json
    {
       public static Parser<JsonValue> Create()
       {
-         return Boolean;
+         return Boolean | Null;
       }
 
       private static readonly Parser<JsonValue> True =
@@ -23,5 +23,9 @@ namespace Json
             select (JsonValue)new JsonBool(false);
 
       private static readonly Parser<JsonValue> Boolean = True | False;
+
+      private static readonly Parser<JsonValue> Null =
+            from _ in Chars.String("null")
+            select (JsonValue)new JsonNull();
    }
 }

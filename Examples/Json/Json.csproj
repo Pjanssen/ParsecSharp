@@ -45,6 +45,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Syntax\JsonBool.cs" />
+    <Compile Include="Syntax\JsonNull.cs" />
     <Compile Include="Syntax\JsonValue.cs" />
     <Compile Include="Tests.cs" />
   </ItemGroup>
