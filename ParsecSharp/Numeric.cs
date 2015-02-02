@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -15,8 +16,22 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static Parser<int> Int()
       {
-         return from x in Chars.Satisfy(c => char.IsDigit(c) || c == '-' || c == '+').Many1()
+         return from x in Chars.Satisfy(c => char.IsDigit(c) 
+                                          || c == '-' 
+                                          || c == '+').Many1()
                 select int.Parse(x);
+      }
+
+      /// <summary>
+      /// Parses a double value.
+      /// </summary>
+      public static Parser<double> Double()
+      {
+         return from x in Chars.Satisfy(c => char.IsDigit(c) 
+                                          || c == '-' 
+                                          || c == '+' 
+                                          || c == '.').Many1()
+                select double.Parse(x, CultureInfo.InvariantCulture);
       }
    }
 }

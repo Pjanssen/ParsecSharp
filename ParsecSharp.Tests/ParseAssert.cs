@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp
 {
-   internal static class ParseAssert
+   public static class ParseAssert
    {
       public static void IsSuccess<TValue>(Either<TValue, ParseError> result)
       {
@@ -22,8 +22,19 @@ namespace PJanssen.ParsecSharp
 
       public static void ValueEquals<TValue>(TValue expected, Either<TValue, ParseError> result) 
       {
+         ValueEquals(expected, result, v => v);
+      }
+
+      public static void ValueEquals<T, TValue>(TValue expected, Either<T, ParseError> result, Func<T, TValue> valueSelector)
+      {
          IsSuccess(result);
-         Assert.AreEqual(expected, result.FromSuccess(), "Parsed value");
+         Assert.AreEqual(expected, valueSelector(result.FromSuccess()), "Parsed value");
+      }
+
+      public static void ValueEquals(double expected, Either<double, ParseError> result)
+      {
+         IsSuccess(result);
+         Assert.AreEqual(expected, result.FromSuccess(), 0.0001);
       }
 
       public static void ValueEquals<TValue>(IEnumerable<TValue> expected, Either<IEnumerable<TValue>, ParseError> result)
