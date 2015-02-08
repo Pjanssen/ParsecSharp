@@ -28,7 +28,7 @@ namespace Json
 
       
       private static readonly Parser<char> EscapedChar =
-            Chars.Char('\\') >= Chars.OneOf("\"\\");
+            Chars.Char('\\').Before(Chars.OneOf("\"\\"));
 
       public static readonly Parser<string> StringLiteral =
             from open in Chars.Char('"')

@@ -9,6 +9,16 @@ namespace PJanssen.ParsecSharp
    public static class Combine
    {
       /// <summary>
+      /// Applies parser A, followed by parser B. Returns the result of parser B.
+      /// </summary>
+      public static Parser<TValueB> Before<TValueA, TValueB>(this Parser<TValueA> parserA, Parser<TValueB> parserB)
+      {
+         return from a in parserA
+                from b in parserB
+                select b;
+      }
+
+      /// <summary>
       /// Applies the between parser followed by value and between, returning the result of the value parser.
       /// </summary>
       public static Parser<TValue> Between<TBetween, TValue>(this Parser<TValue> value, Parser<TBetween> between)
@@ -101,6 +111,16 @@ namespace PJanssen.ParsecSharp
          return from x in parser
                 from xs in Many(parser)
                 select x + xs;
+      }
+
+      /// <summary>
+      /// Applies parser A, followed by parser B. Returns the result of parser A.
+      /// </summary>
+      public static Parser<TValueA> FollowedBy<TValueA, TValueB>(this Parser<TValueA> parserA, Parser<TValueB> parserB)
+      {
+         return from a in parserA
+                from b in parserB
+                select a;
       }
 
       /// <summary>

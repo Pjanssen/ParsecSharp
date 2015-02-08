@@ -6,33 +6,33 @@ namespace PJanssen.ParsecSharp
    [TestClass]
    public class CombineTests
    {
-      #region NotFollowedBy
+      #region Before
 
       [TestMethod]
-      public void NotFollowedBy_ParserAError_ReturnsError()
+      public void Before_ParserAError_ReturnsError()
       {
-         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var parser = Chars.Char('x').Before(Chars.Char('y'));
          var result = parser.Parse("y");
 
          ParseAssert.IsError(result);
       }
 
       [TestMethod]
-      public void NotFollowedBy_ParserBError_ReturnsParserAValue()
+      public void Before_ParserBError_ReturnsError()
       {
-         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
-         var result = parser.Parse("xz");
+         var parser = Chars.Char('x').Before(Chars.Char('y'));
+         var result = parser.Parse("xx");
 
-         ParseAssert.ValueEquals('x', result);
+         ParseAssert.IsError(result);
       }
 
       [TestMethod]
-      public void NotFollowedBy_ParserBSuccess_ReturnsError()
+      public void Before_ParserABSuccess_ReturnsParserBResult()
       {
-         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var parser = Chars.Char('x').Before(Chars.Char('y'));
          var result = parser.Parse("xy");
 
-         ParseAssert.IsError(result);
+         ParseAssert.ValueEquals('y', result);
       }
 
       #endregion
@@ -232,6 +232,68 @@ namespace PJanssen.ParsecSharp
          var result = parser.Parse("xxyz");
 
          ParseAssert.ValueEquals("xxyz", result);
+      }
+
+      #endregion
+
+      #region FollowedBy
+
+      [TestMethod]
+      public void FollowedBy_ParserAError_ReturnsError()
+      {
+         var parser = Chars.Char('x').FollowedBy(Chars.Char('y'));
+         var result = parser.Parse("y");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void FollowedBy_ParserBError_ReturnsError()
+      {
+         var parser = Chars.Char('x').FollowedBy(Chars.Char('y'));
+         var result = parser.Parse("xx");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void FollowedBy_ParserABSuccess_ReturnsParserAResult()
+      {
+         var parser = Chars.Char('x').FollowedBy(Chars.Char('y'));
+         var result = parser.Parse("xy");
+
+         ParseAssert.ValueEquals('x', result);
+      }
+
+      #endregion
+
+      #region NotFollowedBy
+
+      [TestMethod]
+      public void NotFollowedBy_ParserAError_ReturnsError()
+      {
+         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var result = parser.Parse("y");
+
+         ParseAssert.IsError(result);
+      }
+
+      [TestMethod]
+      public void NotFollowedBy_ParserBError_ReturnsParserAValue()
+      {
+         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var result = parser.Parse("xz");
+
+         ParseAssert.ValueEquals('x', result);
+      }
+
+      [TestMethod]
+      public void NotFollowedBy_ParserBSuccess_ReturnsError()
+      {
+         var parser = Chars.Char('x').NotFollowedBy(Chars.Char('y'));
+         var result = parser.Parse("xy");
+
+         ParseAssert.IsError(result);
       }
 
       #endregion

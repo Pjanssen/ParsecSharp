@@ -11,7 +11,7 @@ namespace BNF
    {
       public static Parser<IEnumerable<Rule>> Create()
       {
-         return Rule.Many() <= Parse.Eof<IEnumerable<Rule>>();
+         return Rule.Many().FollowedBy(Parse.Eof<IEnumerable<Rule>>());
       }
 
       private static Parser<string> SymbolName =

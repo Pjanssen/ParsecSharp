@@ -10,7 +10,7 @@ namespace Csv
    {
       private const char _Separator = ',';
 
-      private static readonly Parser<char> ValueSeparator =
+      private static readonly Parser<char> ValueSeparator = 
             Chars.Char(_Separator);
 
       private static readonly Parser<char> LineSeparator =
@@ -23,7 +23,7 @@ namespace Csv
             Chars.Char('"');
 
       private static readonly Parser<char> EscapedQuote =
-            Parse.Try(Quote >= Quote);
+            Parse.Try(Quote.FollowedBy(Quote));
 
       public static readonly Parser<string> QuotedValue =
             (EscapedQuote | Chars.Not('"')).Many()
