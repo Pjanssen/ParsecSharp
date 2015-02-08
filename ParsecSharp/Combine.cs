@@ -9,6 +9,14 @@ namespace PJanssen.ParsecSharp
    public static class Combine
    {
       /// <summary>
+      /// Applies the between parser followed by value and between, returning the result of the value parser.
+      /// </summary>
+      public static Parser<TValue> Between<TBetween, TValue>(this Parser<TValue> value, Parser<TBetween> between)
+      {
+         return Between(value, between, between);
+      }
+
+      /// <summary>
       /// Applies the open parser followed by value and close, returning the result of the value parser.
       /// </summary>
       public static Parser<TValue> Between<TOpen, TClose, TValue>(this Parser<TValue> value, Parser<TOpen> open, Parser<TClose> close)

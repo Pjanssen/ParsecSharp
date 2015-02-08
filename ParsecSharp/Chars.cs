@@ -52,6 +52,14 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is not in the given sequence of characters. Returns the parsed character.
       /// </summary>
+      public static Parser<char> NoneOf(params char[] characters)
+      {
+         return NoneOf((IEnumerable<char>)characters);
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is not in the given sequence of characters. Returns the parsed character.
+      /// </summary>
       public static Parser<char> NoneOf(IEnumerable<char> characters)
       {
          return Satisfy(c => !characters.Contains(c))
