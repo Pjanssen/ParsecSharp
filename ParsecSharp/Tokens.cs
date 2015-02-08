@@ -10,13 +10,15 @@ namespace PJanssen.ParsecSharp
    /// </summary>
    public static class Tokens
    {
+      private static readonly Parser<string> WhiteSpace = Chars.WhiteSpace().Many();
+
       /// <summary>
       /// Applies the given parser and consumes any following whitespace. Returns the parsed value.
       /// </summary>
       public static Parser<T> Lexeme<T>(Parser<T> parser)
       {
          return from value in parser
-                from _ in Chars.WhiteSpace().Many()
+                from _ in WhiteSpace
                 select value;
       }
 
