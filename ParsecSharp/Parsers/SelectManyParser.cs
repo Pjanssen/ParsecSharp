@@ -25,9 +25,9 @@ namespace PJanssen.ParsecSharp.Parsers
 
       public override Either<TResult, ParseError> Parse(IInputReader input)
       {
-         // TODO: optimize (inline?)
-         return parser.Parse(input).Select(resultA => func(resultA).Parse(input).Select(
-                                           resultB => combine(resultA, resultB)));
+         return from resultA in parser.Parse(input)
+                from resultB in func(resultA).Parse(input)
+                select combine(resultA, resultB);
       }
    }
 }
