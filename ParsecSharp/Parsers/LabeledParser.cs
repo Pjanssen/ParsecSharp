@@ -26,7 +26,7 @@ namespace PJanssen.ParsecSharp.Parsers
          if (result.IsSuccess())
             return result;
 
-         return ParseResult.Error<T>(input, result.FromError().Message + ". " + msgFunc() + ".");
+         return ParseResult.Error<T>(input, msgFunc, result.FromError());
       }
    }
 }

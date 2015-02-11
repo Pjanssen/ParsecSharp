@@ -182,7 +182,19 @@ namespace PJanssen.ParsecSharp
          var parser = Parse.Fail<int>("Oh noes").Label(() => "Test");
          var result = parser.Parse("");
 
-         ParseAssert.ErrorEquals("Oh noes. Test.", result);
+         ParseAssert.ErrorEquals("Test", result);
+      }
+
+      [TestMethod]
+      public void Label_Error_SetsInnerError()
+      {
+         var parser = Parse.Fail<int>("Oh noes").Label(() => "Test");
+         var result = parser.Parse("");
+
+         ParseError error = result.FromError();
+
+         Assert.IsNotNull(error.InnerError);
+         Assert.AreEqual(error.InnerError.Message, "Oh noes");
       }
 
       #endregion

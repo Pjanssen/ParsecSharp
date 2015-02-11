@@ -9,11 +9,26 @@ namespace PJanssen.ParsecSharp
    public class ParseError
    {
       private Position position;
+      private Func<string> getMessageFn;
 
       public ParseError(Position position, string message)
+         : this(position, () => message)
       {
+      }
+
+      public ParseError(Position position, Func<string> getMessageFn)
+         : this(position, getMessageFn, null)
+      {
+      }
+
+      public ParseError(Position position, Func<string> getMessageFn, ParseError innerError)
+      {
+         Throw.IfNull(position, "position");
+         Throw.IfNull(getMessageFn, "getMessageFn");
+
          this.position = position;
-         this.Message = message;
+         this.getMessageFn = getMessageFn;
+         this.InnerError = innerError;
       }
 
       public int Line
@@ -34,14 +49,26 @@ namespace PJanssen.ParsecSharp
 
       public string Message
       {
+         get
+         {
+            return this.getMessageFn();
+         }
+      }
+
+      public ParseError InnerError
+      {
          get;
          private set;
       }
 
       public override string ToString()
       {
-         return string.Format("Parser error at line {0}, column {1}: \r\n{2}"
-                             , Line, Column, Message);
+         string innerErrorMsg = "";
+         if (InnerError != null)
+            innerErrorMsg = InnerError.Message + ". ";
+
+         return string.Format("Parser error at line {0}, column {1}: \r\n{2}{3}."
+                             , Line, Column, innerErrorMsg, Message);
       }
    }
 }
