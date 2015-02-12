@@ -5,31 +5,41 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.IO
 {
-   public sealed class Position
+   public struct Position : IEquatable<Position>
    {
+      private int _offset;
+      private int _line;
+      private int _column;
+
       internal Position(int offset, int line, int column)
       {
-         this.Offset = offset;
-         this.Line = line;
-         this.Column = column;
+         this._offset = offset;
+         this._line = line;
+         this._column = column;
       }
 
       public int Offset
       {
-         get;
-         private set;
+         get
+         {
+            return _offset;
+         }
       }
 
       public int Line
       {
-         get;
-         private set;
+         get
+         {
+            return _line;
+         }
       }
 
       public int Column
       {
-         get;
-         private set;
+         get
+         {
+            return _column;
+         }
       }
 
       public override int GetHashCode()
@@ -41,24 +51,19 @@ namespace PJanssen.ParsecSharp.IO
 
       public override bool Equals(object obj)
       {
-         Position other = obj as Position;
-         if (other == null)
-            return false;
+         return obj is Position && this == (Position)obj;
+      }
 
-         return Offset == other.Offset
-             && Line == other.Line
-             && Column == other.Column;
+      public bool Equals(Position other)
+      {
+         return this == other;
       }
 
       public static bool operator ==(Position positionA, Position positionB)
       {
-         if (Object.ReferenceEquals(positionA, positionB))
-            return true;
-
-         if ((object)positionA == null || (object)positionB == null)
-            return false;
-
-         return positionA.Equals(positionB);
+         return positionA.Offset == positionB.Offset
+             && positionA.Line == positionB.Line
+             && positionA.Column == positionB.Column;
       }
 
       public static bool operator !=(Position positionA, Position positionB)
