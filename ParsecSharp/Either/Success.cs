@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp
 {
-   internal class Success<S, E> : Either<S, E>
+   internal sealed class Success<S, E> : Either<S, E>
    {
       public Success(S value)
       {
