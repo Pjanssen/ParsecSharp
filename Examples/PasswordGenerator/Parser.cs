@@ -26,7 +26,7 @@ namespace PasswordGenerator
       static IParser<IGenerator> AnyChar()
       {
          return from c in Chars.Char('.')
-                select (IGenerator)new AnyCharGenerator();
+                select new AnyCharGenerator();
       }
 
       static IParser<IGenerator> CharSet()
@@ -34,7 +34,7 @@ namespace PasswordGenerator
          return from open in Chars.Char('[')
                 from cs in (Parse.Try(CharRange()).Or(SingleChar())).Many1()
                 from close in Chars.Char(']')
-                select (IGenerator)new CharSetGenerator(string.Concat(cs.ToArray()));
+                select new CharSetGenerator(string.Concat(cs.ToArray()));
       }
 
       static IParser<string> SingleChar()
@@ -83,19 +83,19 @@ namespace PasswordGenerator
       static IParser<IQuantifier> ZeroOrMore()
       {
          return from _ in Chars.Char('*')
-                select (IQuantifier)new RangeQuantifier(0, 10);
+                select new RangeQuantifier(0, 10);
       }
 
       static IParser<IQuantifier> OneOrMore()
       {
          return from _ in Chars.Char('+')
-                select (IQuantifier)new RangeQuantifier(1, 10);
+                select new RangeQuantifier(1, 10);
       }
 
       static IParser<IQuantifier> ZeroOrOne()
       {
          return from _ in Chars.Char('?')
-                select (IQuantifier)new RangeQuantifier(0, 1);
+                select new RangeQuantifier(0, 1);
       }
 
       static IParser<IQuantifier> Range()
@@ -106,7 +106,7 @@ namespace PasswordGenerator
                 from max in Numeric.Int()
                 from close in Chars.Char('}')
                 where min > 0 && max >= min
-                select (IQuantifier)new RangeQuantifier(min, max);
+                select new RangeQuantifier(min, max);
       }
    }
 }
