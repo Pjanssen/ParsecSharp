@@ -6,10 +6,10 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class StringParser : Parser<string>
+   internal class StringParser : IParser<string>
    {
       private string str;
-      private Parser<char> parser;
+      private IParser<char> parser;
       private PredicateParser<char> predicateParser;
 
       public StringParser(string str)
@@ -21,7 +21,7 @@ namespace PJanssen.ParsecSharp.Parsers
          this.parser = new TryParser<char>(this.predicateParser);
       }
 
-      public override Either<string, ParseError> Parse(IInputReader input)
+      public IEither<string, ParseError> Parse(IInputReader input)
       {
          for (int i = 0; i < str.Length; i++)
          {

@@ -9,41 +9,41 @@ namespace PasswordGenerator
 {
    public static class Parser
    {
-      public static readonly Parser<IGenerator> GeneratorParser = from expressions in Expressions()
-                                                                  from _ in Parse.Eof<IGenerator>()
-                                                                  select (IGenerator)new CompositeGenerator(expressions);
+      public static readonly IParser<IGenerator> GeneratorParser = from expressions in Expressions()
+                                                                   from _ in Parse.Eof<IGenerator>()
+                                                                   select new CompositeGenerator(expressions);
 
-      static Parser<IEnumerable<IGenerator>> Expressions()
+      static IParser<IEnumerable<IGenerator>> Expressions()
       {
-         return (QuantifiedExpression() ^ Expression()).Many();
+         return (Parse.Try(QuantifiedExpression()).Or(Expression())).Many();
       }
 
-      static Parser<IGenerator> Expression()
+      static IParser<IGenerator> Expression()
       {
-         return AnyChar() | CharSet() | CharLiteral();
+         return Combine.Choose(AnyChar(), CharSet(), CharLiteral());
       }
 
-      static Parser<IGenerator> AnyChar()
+      static IParser<IGenerator> AnyChar()
       {
          return from c in Chars.Char('.')
                 select (IGenerator)new AnyCharGenerator();
       }
 
-      static Parser<IGenerator> CharSet()
+      static IParser<IGenerator> CharSet()
       {
          return from open in Chars.Char('[')
-                from cs in (CharRange() ^ SingleChar()).Many1()
+                from cs in (Parse.Try(CharRange()).Or(SingleChar())).Many1()
                 from close in Chars.Char(']')
                 select (IGenerator)new CharSetGenerator(string.Concat(cs.ToArray()));
       }
 
-      static Parser<string> SingleChar()
+      static IParser<string> SingleChar()
       {
          return from c in Chars.NoneOf("]")
                 select c.ToString();
       }
 
-      static Parser<string> CharRange()
+      static IParser<string> CharRange()
       {
          return from cFrom in Chars.NoneOf("-]")
                 from sep in Chars.Char('-')
@@ -61,44 +61,44 @@ namespace PasswordGenerator
          return result.ToString();
       }
 
-      static Parser<IGenerator> CharLiteral()
+      static IParser<IGenerator> CharLiteral()
       {
          return from c in Chars.Any()
                 select (IGenerator)new CharLiteralGenerator(c);
       }
 
 
-      static Parser<IGenerator> QuantifiedExpression()
+      static IParser<IGenerator> QuantifiedExpression()
       {
          return from e in Expression()
                 from q in Quantifier()
                 select (IGenerator)new QuantifiedExpression(e, q);
       }
 
-      static Parser<IQuantifier> Quantifier()
+      static IParser<IQuantifier> Quantifier()
       {
-         return ZeroOrMore() | ZeroOrOne() | OneOrMore() | Range();
+         return Combine.Choose(ZeroOrMore(), ZeroOrOne(), OneOrMore(), Range());
       }
 
-      static Parser<IQuantifier> ZeroOrMore()
+      static IParser<IQuantifier> ZeroOrMore()
       {
          return from _ in Chars.Char('*')
                 select (IQuantifier)new RangeQuantifier(0, 10);
       }
 
-      static Parser<IQuantifier> OneOrMore()
+      static IParser<IQuantifier> OneOrMore()
       {
          return from _ in Chars.Char('+')
                 select (IQuantifier)new RangeQuantifier(1, 10);
       }
 
-      static Parser<IQuantifier> ZeroOrOne()
+      static IParser<IQuantifier> ZeroOrOne()
       {
          return from _ in Chars.Char('?')
                 select (IQuantifier)new RangeQuantifier(0, 1);
       }
 
-      static Parser<IQuantifier> Range()
+      static IParser<IQuantifier> Range()
       {
          return from open in Chars.Char('{')
                 from min in Numeric.Int()

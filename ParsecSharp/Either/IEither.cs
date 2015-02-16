@@ -11,39 +11,26 @@ namespace PJanssen.ParsecSharp
    /// </summary>
    /// <typeparam name="S">The type of the Success value.</typeparam>
    /// <typeparam name="E">The type of the Error value.</typeparam>
-   public abstract class Either<S, E>
+   public interface IEither<out S, out E>
    {
       /// <summary>
       /// Tests if this instance is a "success" value.
       /// </summary>
-      public abstract bool IsSuccess();
+      bool IsSuccess();
 
       /// <summary>
       /// Tests if this instance is an "error" value.
       /// </summary>
-      public abstract bool IsError();
+      bool IsError();
 
       /// <summary>
       /// Unwraps the success value.
       /// </summary>
-      public abstract S FromSuccess();
+      S FromSuccess();
 
       /// <summary>
       /// Unwraps the error value.
       /// </summary>
-      public abstract E FromError();
-
-      public abstract Either<TResult, E> Select<TResult>(Func<S, Either<TResult, E>> func);
-
-      public Either<TResult, E> Select<TResult>(Func<S, TResult> func)
-      {
-         return Select(x => Either.Success<TResult, E>(func(x)));
-      }
-
-      public Either<TResult, E> SelectMany<T, TResult>(Func<S, Either<T, E>> func, Func<S, T, TResult> select)
-      {
-         return Select(x => func(x).Select(
-                       y => select(x, y)));
-      }
+      E FromError();
    }
 }

@@ -14,7 +14,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Parses an integer value.
       /// </summary>
-      public static Parser<int> Int()
+      public static IParser<int> Int()
       {
          return from x in Chars.Satisfy(c => char.IsDigit(c) 
                                           || c == '-' 
@@ -25,7 +25,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Parses a double value.
       /// </summary>
-      public static Parser<double> Double()
+      public static IParser<double> Double()
       {
          return from x in Chars.Satisfy(c => char.IsDigit(c) 
                                           || c == '-' 

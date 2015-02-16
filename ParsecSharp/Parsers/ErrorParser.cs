@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class ErrorParser<T> : Parser<T>
+   internal class ErrorParser<T> : IParser<T>
    {
       private string message;
       public ErrorParser(string message)
@@ -14,7 +14,7 @@ namespace PJanssen.ParsecSharp.Parsers
          this.message = message;
       }
 
-      public override Either<T, ParseError> Parse(IInputReader input)
+      public IEither<T, ParseError> Parse(IInputReader input)
       {
          return ParseResult.Error<T>(input, this.message);
       }

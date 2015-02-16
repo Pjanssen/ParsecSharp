@@ -11,7 +11,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void IsSuccess_Success_ReturnsTrue()
       {
-         Either<bool, int> either = Either.Success<bool, int>(true);
+         IEither<bool, int> either = Either.Success<bool, int>(true);
          
          Assert.IsTrue(either.IsSuccess());
       }
@@ -19,7 +19,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void IsSuccess_Error_ReturnsFalse()
       {
-         Either<bool, int> either = Either.Error<bool, int>(42);
+         IEither<bool, int> either = Either.Error<bool, int>(42);
 
          Assert.IsFalse(either.IsSuccess());
       }
@@ -31,7 +31,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void FromSuccess_Success_ReturnsValue()
       {
-         Either<bool, int> either = Either.Success<bool, int>(true);
+         IEither<bool, int> either = Either.Success<bool, int>(true);
 
          Assert.AreEqual(true, either.FromSuccess());
       }
@@ -40,7 +40,7 @@ namespace PJanssen.ParsecSharp
       [ExpectedException(typeof(InvalidOperationException))]
       public void FromSuccess_Error_ThrowsException()
       {
-         Either<bool, int> either = Either.Error<bool, int>(42);
+         IEither<bool, int> either = Either.Error<bool, int>(42);
 
          either.FromSuccess();
       }
@@ -52,7 +52,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void IsError_Success_ReturnsFalse()
       {
-         Either<bool, int> either = Either.Success<bool, int>(true);
+         IEither<bool, int> either = Either.Success<bool, int>(true);
 
          Assert.IsFalse(either.IsError());
       }
@@ -60,7 +60,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void IsError_Error_ReturnsTrue()
       {
-         Either<bool, int> either = Either.Error<bool, int>(42);
+         IEither<bool, int> either = Either.Error<bool, int>(42);
 
          Assert.IsTrue(either.IsError());
       }
@@ -73,7 +73,7 @@ namespace PJanssen.ParsecSharp
       [ExpectedException(typeof(InvalidOperationException))]
       public void FromError_Success_ThrowsException()
       {
-         Either<bool, int> either = Either.Success<bool, int>(true);
+         IEither<bool, int> either = Either.Success<bool, int>(true);
 
          either.FromError();
       }
@@ -81,7 +81,7 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void FromError_Error_ReturnsValue()
       {
-         Either<bool, int> either = Either.Error<bool, int>(42);
+         IEither<bool, int> either = Either.Error<bool, int>(42);
 
          Assert.AreEqual(42, either.FromError());
       }

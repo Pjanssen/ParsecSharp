@@ -6,9 +6,9 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class AnyCharParser : Parser<char>
+   internal class AnyCharParser : IParser<char>
    {
-      public override Either<char, ParseError> Parse(IInputReader input)
+      public IEither<char, ParseError> Parse(IInputReader input)
       {
          if (input.EndOfStream)
             return ParseResult.Error<char>(input, "Unexpected end of input");

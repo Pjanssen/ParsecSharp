@@ -25,8 +25,8 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Select_Error_ReturnsError()
       {
-         Parser<int> parser = from i in Parse.Fail<int>("test")
-                              select i * 2;
+         var parser = from i in Parse.Fail<int>("test")
+                      select i * 2;
 
          var result = parser.Parse("");
 
@@ -195,32 +195,6 @@ namespace PJanssen.ParsecSharp
 
          Assert.IsNotNull(error.InnerError);
          Assert.AreEqual(error.InnerError.Message, "Oh noes");
-      }
-
-      #endregion
-
-      #region operator |
-
-      [TestMethod]
-      public void Or_Operator()
-      {
-         var parser = Parse.Fail<int>("test") | Parse.Succeed(42);
-         var result = parser.Parse("");
-
-         ParseAssert.ValueEquals(42, result);
-      }
-
-      #endregion
-
-      #region operator !
-
-      [TestMethod]
-      public void NegationOperator()
-      {
-         var parser = !Parse.Fail<int>("test");
-         var result = parser.Parse("");
-
-         ParseAssert.ValueEquals(default(int), result);
       }
 
       #endregion

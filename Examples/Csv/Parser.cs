@@ -10,34 +10,34 @@ namespace Csv
    {
       private const char _Separator = ',';
 
-      private static readonly Parser<char> ValueSeparator = 
+      private static readonly IParser<char> ValueSeparator = 
             Chars.Char(_Separator);
 
-      private static readonly Parser<char> LineSeparator =
+      private static readonly IParser<char> LineSeparator =
             Chars.EndOfLine();
 
-      public static readonly Parser<string> UnquotedValue = 
+      public static readonly IParser<string> UnquotedValue = 
             Chars.NoneOf(_Separator, '\r', '\n').Many();
 
-      private static readonly Parser<char> Quote = 
+      private static readonly IParser<char> Quote = 
             Chars.Char('"');
 
-      private static readonly Parser<char> EscapedQuote =
+      private static readonly IParser<char> EscapedQuote =
             Parse.Try(Quote.FollowedBy(Quote));
 
-      public static readonly Parser<string> QuotedValue =
-            (EscapedQuote | Chars.Not('"')).Many()
-                                           .Between(Quote);
+      public static readonly IParser<string> QuotedValue =
+            (EscapedQuote.Or(Chars.Not('"'))).Many()
+                                             .Between(Quote);
 
-      public static readonly Parser<string> Value =
-            QuotedValue | UnquotedValue;
+      public static readonly IParser<string> Value =
+            QuotedValue.Or(UnquotedValue);
 
 
-      public static readonly Parser<IEnumerable<string>> Line =
+      public static readonly IParser<IEnumerable<string>> Line =
             Value.SeparatedBy(ValueSeparator);
 
 
-      public static readonly Parser<IEnumerable<IEnumerable<string>>> Lines =
+      public static readonly IParser<IEnumerable<IEnumerable<string>>> Lines =
             Line.SeparatedBy(LineSeparator);
    }
 }

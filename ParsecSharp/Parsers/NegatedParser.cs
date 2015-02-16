@@ -6,18 +6,18 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class NegatedParser<T> : Parser<Unit>
+   internal class NegatedParser<T> : IParser<Unit>
    {
-      private Parser<T> parser;
+      private IParser<T> parser;
 
-      public NegatedParser(Parser<T> parser)
+      public NegatedParser(IParser<T> parser)
       {
          Throw.IfNull(parser, "parser");
 
          this.parser = parser;
       }
 
-      public override Either<Unit, ParseError> Parse(IInputReader input)
+      public IEither<Unit, ParseError> Parse(IInputReader input)
       {
          var result = this.parser.Parse(input);
          if (result.IsSuccess())

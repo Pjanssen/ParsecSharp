@@ -39,26 +39,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chars.cs" />
-    <Compile Include="Combine.cs" />
-    <Compile Include="Numeric.cs" />
+    <Compile Include="Chars.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Combine.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Either\IEither.cs" />
+    <Compile Include="IParser.cs" />
     <Compile Include="IO\AbstractInputReader.cs" />
     <Compile Include="IO\IInputReader.cs" />
     <Compile Include="IO\InputReader.cs" />
     <Compile Include="IO\StreamInputReader.cs" />
     <Compile Include="IO\Position.cs" />
     <Compile Include="Either\Either.cs" />
-    <Compile Include="Either\Either.T2.cs" />
     <Compile Include="Either\Error.cs" />
     <Compile Include="Either\Success.cs" />
     <Compile Include="Helpers\Throw.cs" />
     <Compile Include="Helpers\Unit.cs" />
     <Compile Include="IO\StringInputReader.cs" />
+    <Compile Include="Numeric.cs" />
     <Compile Include="Parse.cs" />
     <Compile Include="ParseError.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParseResult.cs" />
-    <Compile Include="ParserExtensions.cs" />
     <Compile Include="Parsers\AggregateParser.cs" />
     <Compile Include="Parsers\AnyCharParser.cs" />
     <Compile Include="Parsers\EofParser.cs" />
