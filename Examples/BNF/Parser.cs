@@ -22,7 +22,7 @@ namespace BNF
             from open in Chars.Char('<')
             from symbol in SymbolName
             from close in Chars.Char('>')
-            select (NonTerminal)new Identifier(symbol);
+            select new Identifier(symbol);
 
       private static IParser<string> Assignment = Chars.String("::=");
 
@@ -30,24 +30,24 @@ namespace BNF
             from open in Chars.OneOf("\"'")
             from value in Chars.Not(open).Many()
             from close in Chars.Char(open)
-            select (NonTerminal)new Terminal(value);
+            select new Terminal(value);
 
       private static IParser<NonTerminal> Concatenation =
             from left in Identifier.Or(Terminal)
             from ws in Chars.Space()
-            from right in Parse.Try(Concatenation).Or(Identifier).Or(Terminal)
-            select (NonTerminal)new Concatenation(left, right);
+            from right in Combine.Choose(Parse.Try(Concatenation), Identifier, Terminal)
+            select new Concatenation(left, right);
 
       private static IParser<NonTerminal> Alternation =
-            from left in Tokens.Lexeme(Parse.Try(Concatenation).Or(Identifier).Or(Terminal))
+            from left in Tokens.Lexeme(Combine.Choose(Parse.Try(Concatenation), Identifier, Terminal))
             from bar in Tokens.Symbol('|')
             from right in RightHandSide
-            select (NonTerminal)new Alternation(left, right);
+            select new Alternation(left, right);
 
-      private static IParser<NonTerminal> RightHandSide = Combine.Choose( Parse.Try(Alternation) 
-                                                                        , Parse.Try(Concatenation) 
-                                                                        , Identifier 
-                                                                        , Terminal);
+      private static IParser<NonTerminal> RightHandSide = Combine.Choose<NonTerminal>( Parse.Try(Alternation) 
+                                                                                     , Parse.Try(Concatenation) 
+                                                                                     , Identifier 
+                                                                                     , Terminal);
 
       private static IParser<Rule> Rule = 
             from ws in Chars.WhiteSpace().Many()
