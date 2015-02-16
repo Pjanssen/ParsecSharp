@@ -50,7 +50,7 @@ namespace BNF
                                                                                      , Terminal);
 
       private static IParser<Rule> Rule = 
-            from ws in Chars.WhiteSpace().Many()
+            from ws in Tokens.WhiteSpace()
             from identifier in Tokens.Lexeme(Identifier)
             from assignment in Tokens.Lexeme(Assignment)
             from value in Tokens.Lexeme(RightHandSide)

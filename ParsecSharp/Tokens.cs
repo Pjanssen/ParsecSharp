@@ -10,7 +10,7 @@ namespace PJanssen.ParsecSharp
    /// </summary>
    public static class Tokens
    {
-      private static readonly IParser<string> WhiteSpace = Chars.WhiteSpace().Many();
+      private static readonly IParser<string> whiteSpace = Chars.WhiteSpace().Many();
 
       /// <summary>
       /// Applies the given parser and consumes any following whitespace. Returns the parsed value.
@@ -18,7 +18,7 @@ namespace PJanssen.ParsecSharp
       public static IParser<T> Lexeme<T>(IParser<T> parser)
       {
          return from value in parser
-                from _ in WhiteSpace
+                from _ in whiteSpace
                 select value;
       }
 
@@ -36,6 +36,14 @@ namespace PJanssen.ParsecSharp
       public static IParser<char> Symbol(char symbol)
       {
          return Lexeme(Chars.Char(symbol));
+      }
+
+      /// <summary>
+      /// Parses zero or more whitespace characters.
+      /// </summary>
+      public static IParser<string> WhiteSpace()
+      {
+         return whiteSpace;
       }
    }
 }
