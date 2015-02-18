@@ -148,7 +148,7 @@ namespace PJanssen.ParsecSharp
                    Many(from _ in separator
                         from rest in parser
                         select rest)
-                select new[] { x }.Concat(xs);
+                select Enumerable.Repeat(x, 1).Concat(xs);
       }
    }
 }
