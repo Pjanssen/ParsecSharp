@@ -70,15 +70,12 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static IParser<IEnumerable<T>> Many<T>(this IParser<T> parser)
       {
-         Func<List<T>> seed = () => new List<T>();
-         Func<List<T>, T, List<T>> func = (xs, x) =>
-         {
-            xs.Add(x);
-            return xs;
-         };
-         Func<List<T>, IEnumerable<T>> sel = xs => (IEnumerable<T>)xs;
+         return parser.Aggregate(() => Enumerable.Empty<T>(), Concat, x => x);
+      }
 
-         return parser.Aggregate(seed, func, sel);
+      private static IEnumerable<T> Concat<T>(IEnumerable<T> xs, T y)
+      {
+         return xs.Concat(Enumerable.Repeat(y, 1));
       }
 
       /// <summary>
