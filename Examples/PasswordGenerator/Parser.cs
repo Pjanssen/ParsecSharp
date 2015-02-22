@@ -9,8 +9,7 @@ namespace PasswordGenerator
 {
    public static class Parser
    {
-      public static readonly IParser<IGenerator> GeneratorParser = from expressions in Expressions()
-                                                                   from _ in Parse.Eof<IGenerator>()
+      public static readonly IParser<IGenerator> GeneratorParser = from expressions in Expressions().FollowedByEof()
                                                                    select new CompositeGenerator(expressions);
 
       static IParser<IEnumerable<IGenerator>> Expressions()

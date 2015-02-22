@@ -11,7 +11,8 @@ namespace BNF
    {
       public static IParser<IEnumerable<Rule>> Create()
       {
-         return Rule.Many().FollowedBy(Parse.Eof<IEnumerable<Rule>>());
+         return Rule.Many()
+                    .FollowedByEof();
       }
 
       private static IParser<string> SymbolName =
