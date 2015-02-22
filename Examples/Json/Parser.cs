@@ -32,7 +32,7 @@ namespace Json
 
       public static readonly IParser<string> StringLiteral =
             from open in Chars.Char('"')
-            from value in (Parse.Try(EscapedChar).Or(Chars.Not('"'))).Many()
+            from value in (EscapedChar.Try().Or(Chars.Not('"'))).Many()
             from close in Chars.Char('"')
             select value;
 

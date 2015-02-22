@@ -35,17 +35,17 @@ namespace BNF
       private static IParser<NonTerminal> Concatenation =
             from left in Identifier.Or(Terminal)
             from ws in Chars.Space()
-            from right in Combine.Choose(Parse.Try(Concatenation), Identifier, Terminal)
+            from right in Combine.Choose(Concatenation.Try(), Identifier, Terminal)
             select new Concatenation(left, right);
 
       private static IParser<NonTerminal> Alternation =
-            from left in Tokens.Lexeme(Combine.Choose(Parse.Try(Concatenation), Identifier, Terminal))
+            from left in Tokens.Lexeme(Combine.Choose(Concatenation.Try(), Identifier, Terminal))
             from bar in Tokens.Symbol('|')
             from right in RightHandSide
             select new Alternation(left, right);
 
-      private static IParser<NonTerminal> RightHandSide = Combine.Choose<NonTerminal>( Parse.Try(Alternation) 
-                                                                                     , Parse.Try(Concatenation) 
+      private static IParser<NonTerminal> RightHandSide = Combine.Choose<NonTerminal>( Alternation.Try()
+                                                                                     , Concatenation.Try()
                                                                                      , Identifier 
                                                                                      , Terminal);
 

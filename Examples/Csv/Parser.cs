@@ -23,7 +23,7 @@ namespace Csv
             Chars.Char('"');
 
       private static readonly IParser<char> EscapedQuote =
-            Parse.Try(Quote.FollowedBy(Quote));
+            Quote.FollowedBy(Quote).Try();
 
       public static readonly IParser<string> QuotedValue =
             (EscapedQuote.Or(Chars.Not('"'))).Many()
