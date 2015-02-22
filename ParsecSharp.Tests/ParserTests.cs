@@ -25,8 +25,8 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Select_Error_ReturnsError()
       {
-         Parser<int> parser = from i in Parse.Fail<int>("test")
-                              select i * 2;
+         var parser = from i in Parse.Fail<int>("test")
+                      select i * 2;
 
          var result = parser.Parse("");
 
@@ -182,82 +182,19 @@ namespace PJanssen.ParsecSharp
          var parser = Parse.Fail<int>("Oh noes").Label(() => "Test");
          var result = parser.Parse("");
 
-         ParseAssert.ErrorEquals("Oh noes. Test.", result);
-      }
-
-      #endregion
-
-      #region operator |
-
-      [TestMethod]
-      public void Or_Operator()
-      {
-         var parser = Parse.Fail<int>("test") | Parse.Succeed(42);
-         var result = parser.Parse("");
-
-         ParseAssert.ValueEquals(42, result);
-      }
-
-      #endregion
-
-      #region operator >= and <= 
-
-      [TestMethod]
-      public void SelectRightOperator_Success_ReturnsSecondValue()
-      {
-         var parser = Parse.Succeed(7) >= Parse.Succeed(42);
-         var result = parser.Parse("");
-
-         ParseAssert.ValueEquals(42, result);
+         ParseAssert.ErrorEquals("Test", result);
       }
 
       [TestMethod]
-      public void SelectRightOperator_Error_ReturnsError()
+      public void Label_Error_SetsInnerError()
       {
-         var parser = Parse.Fail<int>("test") >= Parse.Succeed(42);
+         var parser = Parse.Fail<int>("Oh noes").Label(() => "Test");
          var result = parser.Parse("");
 
-         ParseAssert.IsError(result);
-      }
+         ParseError error = result.FromError();
 
-      [TestMethod]
-      public void SelectLeftOperator_Success_ReturnsFirstValue()
-      {
-         var parser = Parse.Succeed(7) <= Parse.Succeed(42);
-         var result = parser.Parse("");
-
-         ParseAssert.ValueEquals(7, result);
-      }
-
-      [TestMethod]
-      public void SelectLeftOperator_Error_ReturnsError()
-      {
-         var parser = Parse.Succeed(7) <= Parse.Fail<int>("test");
-         var result = parser.Parse("");
-
-         ParseAssert.IsError(result);
-      }
-
-      [TestMethod]
-      public void SelectRight_SelectLeft_Operators()
-      {
-         var parser = Parse.Succeed(7) >= Parse.Succeed(42) <= Parse.Succeed(0);
-         var result = parser.Parse("");
-
-         ParseAssert.ValueEquals(42, result);
-      }
-
-      #endregion
-
-      #region operator !
-
-      [TestMethod]
-      public void NegationOperator()
-      {
-         var parser = Parse.Succeed(42) <= !Parse.Fail<int>("test");
-         var result = parser.Parse("");
-
-         ParseAssert.ValueEquals(42, result);
+         Assert.IsNotNull(error.InnerError);
+         Assert.AreEqual(error.InnerError.Message, "Oh noes");
       }
 
       #endregion

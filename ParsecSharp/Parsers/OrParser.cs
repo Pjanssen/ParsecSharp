@@ -6,12 +6,12 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class OrParser<T> : Parser<T>
+   internal class OrParser<T> : IParser<T>
    {
-      private Parser<T> parserA;
-      private Parser<T> parserB;
+      private IParser<T> parserA;
+      private IParser<T> parserB;
 
-      public OrParser(Parser<T> parserA, Parser<T> parserB)
+      public OrParser(IParser<T> parserA, IParser<T> parserB)
       {
          Throw.IfNull(parserA, "parserA");
          Throw.IfNull(parserB, "parserB");
@@ -20,7 +20,7 @@ namespace PJanssen.ParsecSharp.Parsers
          this.parserB = parserB;
       }
 
-      public override Either<T, ParseError> Parse(IInputReader input)
+      public IEither<T, ParseError> Parse(IInputReader input)
       {
          Position position = input.GetPosition();
 

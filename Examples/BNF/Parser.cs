@@ -9,48 +9,49 @@ namespace BNF
 {
    public static class Parser
    {
-      public static Parser<IEnumerable<Rule>> Create()
+      public static IParser<IEnumerable<Rule>> Create()
       {
-         return Rule.Many() <= Parse.Eof<IEnumerable<Rule>>();
+         return Rule.Many()
+                    .FollowedByEof();
       }
 
-      private static Parser<string> SymbolName =
+      private static IParser<string> SymbolName =
             Chars.Satisfy(c => Char.IsLetterOrDigit(c) || c == '-')
                  .Many1();
 
-      private static Parser<NonTerminal> Identifier =
+      private static IParser<NonTerminal> Identifier =
             from open in Chars.Char('<')
             from symbol in SymbolName
             from close in Chars.Char('>')
-            select (NonTerminal)new Identifier(symbol);
+            select new Identifier(symbol);
 
-      private static Parser<string> Assignment = Chars.String("::=");
+      private static IParser<string> Assignment = Chars.String("::=");
 
-      private static Parser<NonTerminal> Terminal =
+      private static IParser<NonTerminal> Terminal =
             from open in Chars.OneOf("\"'")
             from value in Chars.Not(open).Many()
             from close in Chars.Char(open)
-            select (NonTerminal)new Terminal(value);
+            select new Terminal(value);
 
-      private static Parser<NonTerminal> Concatenation =
-            from left in Identifier | Terminal
+      private static IParser<NonTerminal> Concatenation =
+            from left in Identifier.Or(Terminal)
             from ws in Chars.Space()
-            from right in Parse.Try(Concatenation) | Identifier | Terminal
-            select (NonTerminal)new Concatenation(left, right);
+            from right in Combine.Choose(Concatenation.Try(), Identifier, Terminal)
+            select new Concatenation(left, right);
 
-      private static Parser<NonTerminal> Alternation =
-            from left in Tokens.Lexeme(Parse.Try(Concatenation) | Identifier | Terminal)
+      private static IParser<NonTerminal> Alternation =
+            from left in Tokens.Lexeme(Combine.Choose(Concatenation.Try(), Identifier, Terminal))
             from bar in Tokens.Symbol('|')
             from right in RightHandSide
-            select (NonTerminal)new Alternation(left, right);
+            select new Alternation(left, right);
 
-      private static Parser<NonTerminal> RightHandSide = Parse.Try(Alternation) 
-                                                       | Parse.Try(Concatenation) 
-                                                       | Identifier 
-                                                       | Terminal;
+      private static IParser<NonTerminal> RightHandSide = Combine.Choose<NonTerminal>( Alternation.Try()
+                                                                                     , Concatenation.Try()
+                                                                                     , Identifier 
+                                                                                     , Terminal);
 
-      private static Parser<Rule> Rule = 
-            from ws in Chars.WhiteSpace().Many()
+      private static IParser<Rule> Rule = 
+            from ws in Tokens.WhiteSpace()
             from identifier in Tokens.Lexeme(Identifier)
             from assignment in Tokens.Lexeme(Assignment)
             from value in Tokens.Lexeme(RightHandSide)

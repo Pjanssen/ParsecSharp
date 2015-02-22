@@ -6,14 +6,14 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class AggregateParser<T, TAccum, TResult> : Parser<TResult>
+   internal class AggregateParser<T, TAccum, TResult> : IParser<TResult>
    {
-      private Parser<T> parser;
+      private IParser<T> parser;
       private Func<TAccum> seed;
       private Func<TAccum, T, TAccum> func;
       private Func<TAccum, TResult> resultSelector;
 
-      public AggregateParser(Parser<T> parser, Func<TAccum> seed, Func<TAccum, T, TAccum> func, Func<TAccum, TResult> resultSelector)
+      public AggregateParser(IParser<T> parser, Func<TAccum> seed, Func<TAccum, T, TAccum> func, Func<TAccum, TResult> resultSelector)
       {
          Throw.IfNull(parser, "parser");
          Throw.IfNull(seed, "seed");
@@ -26,11 +26,11 @@ namespace PJanssen.ParsecSharp.Parsers
          this.resultSelector = resultSelector;
       }
 
-      public override Either<TResult, ParseError> Parse(IInputReader input)
+      public IEither<TResult, ParseError> Parse(IInputReader input)
       {
          TAccum acc = this.seed();
 
-         Either<T, ParseError> result = null;
+         IEither<T, ParseError> result = null;
          Position position = input.GetPosition();
 
          while ((result = this.parser.Parse(input)).IsSuccess())

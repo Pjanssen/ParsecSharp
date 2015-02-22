@@ -6,9 +6,9 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class EofParser<T> : Parser<T>
+   internal class EofParser<T> : IParser<T>
    {
-      public override Either<T, ParseError> Parse(IInputReader input)
+      public IEither<T, ParseError> Parse(IInputReader input)
       {
          if (input.EndOfStream)
             return ParseResult.Success(default(T));

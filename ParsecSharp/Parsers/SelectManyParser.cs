@@ -6,13 +6,13 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class SelectManyParser<TSourceA, TSourceB, TResult> : Parser<TResult>
+   internal class SelectManyParser<TSourceA, TSourceB, TResult> : IParser<TResult>
    {
-      private Parser<TSourceA> parser;
-      private Func<TSourceA, Parser<TSourceB>> func;
+      private IParser<TSourceA> parser;
+      private Func<TSourceA, IParser<TSourceB>> func;
       private Func<TSourceA, TSourceB, TResult> combine;
 
-      public SelectManyParser(Parser<TSourceA> parser, Func<TSourceA, Parser<TSourceB>> func, Func<TSourceA, TSourceB, TResult> combine)
+      public SelectManyParser(IParser<TSourceA> parser, Func<TSourceA, IParser<TSourceB>> func, Func<TSourceA, TSourceB, TResult> combine)
       {
          Throw.IfNull(parser, "parser");
          Throw.IfNull(func, "func");
@@ -23,11 +23,11 @@ namespace PJanssen.ParsecSharp.Parsers
          this.combine = combine;
       }
 
-      public override Either<TResult, ParseError> Parse(IInputReader input)
+      public IEither<TResult, ParseError> Parse(IInputReader input)
       {
-         // TODO: optimize (inline?)
-         return parser.Parse(input).Select(resultA => func(resultA).Parse(input).Select(
-                                           resultB => combine(resultA, resultB)));
+         return from resultA in parser.Parse(input)
+                from resultB in func(resultA).Parse(input)
+                select combine(resultA, resultB);
       }
    }
 }

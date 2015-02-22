@@ -6,12 +6,12 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class SelectParser<TSource, TResult> : Parser<TResult>
+   internal class SelectParser<TSource, TResult> : IParser<TResult>
    {
-      private Parser<TSource> parser;
+      private IParser<TSource> parser;
       private Func<TSource, TResult> func;
 
-      public SelectParser(Parser<TSource> parser, Func<TSource, TResult> func)
+      public SelectParser(IParser<TSource> parser, Func<TSource, TResult> func)
       {
          Throw.IfNull(parser, "parser");
          Throw.IfNull(func, "func");
@@ -20,7 +20,7 @@ namespace PJanssen.ParsecSharp.Parsers
          this.func = func;
       }
 
-      public override Either<TResult, ParseError> Parse(IInputReader input)
+      public IEither<TResult, ParseError> Parse(IInputReader input)
       {
          var result = this.parser.Parse(input);
          if (result.IsError())

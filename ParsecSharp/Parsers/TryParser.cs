@@ -6,18 +6,18 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class TryParser<T> : Parser<T>
+   internal class TryParser<T> : IParser<T>
    {
-      private Parser<T> parser;
+      private IParser<T> parser;
 
-      public TryParser(Parser<T> parser)
+      public TryParser(IParser<T> parser)
       {
          Throw.IfNull(parser, "parser");
 
          this.parser = parser;
       }
 
-      public override Either<T, ParseError> Parse(IInputReader input)
+      public IEither<T, ParseError> Parse(IInputReader input)
       {
          Position position = input.GetPosition();
 

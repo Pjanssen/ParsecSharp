@@ -14,7 +14,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds for any character. Returns the parsed character.
       /// </summary>
-      public static Parser<char> Any()
+      public static IParser<char> Any()
       {
          return new AnyCharParser();
       }
@@ -22,7 +22,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds for any character for which the given predicate returns true. Returns the parsed character.
       /// </summary>
-      public static Parser<char> Satisfy(Predicate<char> predicate)
+      public static IParser<char> Satisfy(Predicate<char> predicate)
       {
          Throw.IfNull(predicate, "predicate");
 
@@ -34,7 +34,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds for the given character. Returns the parsed character.
       /// </summary>
-      public static Parser<char> Char(char character)
+      public static IParser<char> Char(char character)
       {
          return Satisfy(c => c == character)
                   .Label(() => "Expected \"" + character + "\"");
@@ -43,7 +43,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is in the given sequence of characters. Returns the parsed character.
       /// </summary>
-      public static Parser<char> OneOf(IEnumerable<char> characters)
+      public static IParser<char> OneOf(IEnumerable<char> characters)
       {
          return Satisfy(characters.Contains)
                   .Label(() => string.Format("Expected one of \"{0}\"", string.Concat(characters)));
@@ -52,7 +52,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is not in the given sequence of characters. Returns the parsed character.
       /// </summary>
-      public static Parser<char> NoneOf(params char[] characters)
+      public static IParser<char> NoneOf(params char[] characters)
       {
          return NoneOf((IEnumerable<char>)characters);
       }
@@ -60,7 +60,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is not in the given sequence of characters. Returns the parsed character.
       /// </summary>
-      public static Parser<char> NoneOf(IEnumerable<char> characters)
+      public static IParser<char> NoneOf(IEnumerable<char> characters)
       {
          return Satisfy(c => !characters.Contains(c))
                   .Label(() => string.Format("Expected any char except \"{0}\"", string.Concat(characters)));
@@ -69,7 +69,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is any except the given character. Returns the parsed character.
       /// </summary>
-      public static Parser<char> Not(char character)
+      public static IParser<char> Not(char character)
       {
          return Satisfy(c => c != character)
                   .Label(() => string.Format("Expected any char except '{0}'", character));
@@ -78,7 +78,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is a letter. Returns the parsed character.
       /// </summary>
-      public static Parser<char> Letter()
+      public static IParser<char> Letter()
       {
          return Satisfy(char.IsLetter)
                   .Label(() => "Expected a letter");
@@ -87,7 +87,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is a letter. Returns the parsed character.
       /// </summary>
-      public static Parser<char> Digit()
+      public static IParser<char> Digit()
       {
          return Satisfy(char.IsDigit)
                   .Label(() => "Expected a digit");
@@ -96,7 +96,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is a letter or digit. Returns the parsed character.
       /// </summary>
-      public static Parser<char> AlphaNum()
+      public static IParser<char> AlphaNum()
       {
          return Satisfy(char.IsLetterOrDigit)
                   .Label(() => "Expected a letter or digit");
@@ -105,7 +105,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is a space. Returns the parsed character.
       /// </summary>
-      public static Parser<char> Space()
+      public static IParser<char> Space()
       {
          return Satisfy(c => c == ' ')
                   .Label(() => "Expected a space");
@@ -114,7 +114,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is a tab. Returns the parsed character.
       /// </summary>
-      public static Parser<char> Tab()
+      public static IParser<char> Tab()
       {
          return Satisfy(c => c == '\t')
                   .Label(() => "Expected a tab");
@@ -123,7 +123,7 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Succeeds if the current character is a whitespace character. Returns the parsed character.
       /// </summary>
-      public static Parser<char> WhiteSpace()
+      public static IParser<char> WhiteSpace()
       {
          return Satisfy(char.IsWhiteSpace)
                   .Label(() => "Expected a whitespace character");
@@ -133,7 +133,7 @@ namespace PJanssen.ParsecSharp
       /// Succeeds if the current character is a CR ('\r'), followed by an LF ('\n').
       /// Returns the line feed.
       /// </summary>
-      public static Parser<char> CrLf()
+      public static IParser<char> CrLf()
       {
          return (from cr in Char('\r')
                  from lf in Char('\n')
@@ -144,15 +144,15 @@ namespace PJanssen.ParsecSharp
       /// Succeeds if the current character is a LF ('\n') or CRLF ('\r\n').
       /// Returns the line feed.
       /// </summary>
-      public static Parser<char> EndOfLine()
+      public static IParser<char> EndOfLine()
       {
-         return Char('\n') | CrLf();
+         return Char('\n').Or(CrLf());
       }
 
       /// <summary>
       /// Succeeds if the current input matches the entire string. Returns the parsed string.
       /// </summary>
-      public static Parser<string> String(string str)
+      public static IParser<string> String(string str)
       {
          return new StringParser(str)
                      .Label(() => "Expected \"" + str + "\"");

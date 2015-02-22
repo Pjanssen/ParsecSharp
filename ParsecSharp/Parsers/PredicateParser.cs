@@ -6,11 +6,11 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp.Parsers
 {
-   internal class PredicateParser<T> : Parser<T>
+   internal class PredicateParser<T> : IParser<T>
    {
-      private Parser<T> parser;
+      private IParser<T> parser;
 
-      public PredicateParser(Parser<T> parser, Predicate<T> predicate)
+      public PredicateParser(IParser<T> parser, Predicate<T> predicate)
       {
          Throw.IfNull(parser, "parser");
          Throw.IfNull(predicate, "predicate");
@@ -25,7 +25,7 @@ namespace PJanssen.ParsecSharp.Parsers
          set;
       }
 
-      public override Either<T, ParseError> Parse(IInputReader input)
+      public IEither<T, ParseError> Parse(IInputReader input)
       {
          var result = this.parser.Parse(input);
          if (result.IsError())

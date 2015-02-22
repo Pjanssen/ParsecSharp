@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PJanssen.ParsecSharp
 {
-   internal class Error<S, E> : Either<S, E>
+   internal sealed class Error<S, E> : IEither<S, E>
    {
       public Error(E value)
       {
@@ -18,29 +18,24 @@ namespace PJanssen.ParsecSharp
          private set;
       }
 
-      public override bool IsSuccess()
+      public bool IsSuccess()
       {
          return false;
       }
 
-      public override bool IsError()
+      public bool IsError()
       {
          return true;
       }
 
-      public override S FromSuccess()
+      public S FromSuccess()
       {
          throw new InvalidOperationException("Cannot call FromSuccess on Error");
       }
 
-      public override E FromError()
+      public E FromError()
       {
          return this.Value;
-      }
-
-      public override Either<TResult, E> Select<TResult>(Func<S, Either<TResult, E>> func)
-      {
-         return new Error<TResult, E>(this.Value);
       }
 
       public override string ToString()
