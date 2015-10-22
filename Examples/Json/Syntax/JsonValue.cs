@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Json.Syntax
 {
-   public class JsonValue
+   public abstract class JsonValue
    {
    }
 }
