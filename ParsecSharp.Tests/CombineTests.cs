@@ -169,7 +169,7 @@ namespace PJanssen.ParsecSharp
       {
          var parser = Chars.Char('x').Many();
          var result = parser.Parse("xy");
-         
+
          ParseAssert.ValueEquals("x", result);
       }
 
@@ -195,8 +195,8 @@ namespace PJanssen.ParsecSharp
       [TestMethod]
       public void Many_IEnumerable()
       {
-         var parser = (from c in Chars.Any() 
-                       from x in Parse.Succeed(42) 
+         var parser = (from c in Chars.Any()
+                       from x in Parse.Succeed(42)
                        select x).Many();
          var result = parser.Parse("xyz");
 
@@ -334,6 +334,55 @@ namespace PJanssen.ParsecSharp
          var result = parser.Parse("x;y;z");
 
          ParseAssert.ValueEquals(new char[] { 'x', 'y', 'z' }, result);
+      }
+
+      #endregion
+
+      #region Repeat
+
+      [TestMethod]
+      public void Repeat_CountLessThanZero_ReturnsEmptyResult()
+      {
+         var parser = Chars.Char('x').Repeat(-1);
+         var result = parser.Parse("xxxxx");
+
+         ParseAssert.ValueEquals(new char[0], result);
+      }
+
+      [TestMethod]
+      public void Repeat_CountZero_ReturnsEmptyResult()
+      {
+         var parser = Chars.Char('x').Repeat(0);
+         var result = parser.Parse("xxxxx");
+
+         ParseAssert.ValueEquals(new char[0], result);
+      }
+
+      [TestMethod]
+      public void Repeat_CountOne_ReturnsSingleMatch()
+      {
+         var parser = Chars.Char('x').Repeat(1);
+         var result = parser.Parse("xxxxx");
+
+         ParseAssert.ValueEquals(new char[] { 'x' }, result);
+      }
+
+      [TestMethod]
+      public void Repeat_CountThree_ReturnsThreeMatches()
+      {
+         var parser = Chars.Char('x').Repeat(3);
+         var result = parser.Parse("xxxxx");
+
+         ParseAssert.ValueEquals(new char[] { 'x', 'x', 'x' }, result);
+      }
+
+      [TestMethod]
+      public void Repeat_CountLargerThanMatching_ReturnsError()
+      {
+         var parser = Chars.Char('x').Repeat(42);
+         var result = parser.Parse("xxxxx");
+
+         ParseAssert.IsError(result);
       }
 
       #endregion

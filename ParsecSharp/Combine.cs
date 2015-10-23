@@ -52,7 +52,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static IParser<T> Choose<T>(IEnumerable<IParser<T>> parsers)
       {
-         return parsers.Aggregate( Parse.Fail<T>("Empty choose sequence")
+         return parsers.Aggregate(Parse.Fail<T>("Empty choose sequence")
                                  , (acc, p) => acc.Or(p));
       }
 
@@ -128,6 +128,17 @@ namespace PJanssen.ParsecSharp
          return from a in parserA
                 from b in Parse.Not(parserB)
                 select a;
+      }
+
+      /// <summary>
+      /// Repeats a parser a given number of times.
+      /// </summary>
+      public static IParser<IEnumerable<TValue>> Repeat<TValue>(this IParser<TValue> parser, int repeatCount)
+      {
+         if (repeatCount <= 0)
+            return Parse.Succeed(Enumerable.Empty<TValue>());
+
+         return new SequenceParser<TValue>(Enumerable.Repeat(parser, repeatCount));
       }
 
       /// <summary>
