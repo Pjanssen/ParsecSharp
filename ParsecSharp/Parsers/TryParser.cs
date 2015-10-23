@@ -22,7 +22,7 @@ namespace PJanssen.ParsecSharp.Parsers
          Position position = input.GetPosition();
 
          var result = this.parser.Parse(input);
-         if (result.IsError())
+         if (result.IsError)
             input.Seek(position);
 
          return result;

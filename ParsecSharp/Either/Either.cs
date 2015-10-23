@@ -12,7 +12,7 @@ namespace PJanssen.ParsecSharp
    {
       public static IEither<TResult, E> Select<S, E, TResult>(this IEither<S, E> either, Func<S, IEither<TResult, E>> func)
       {
-         if (either.IsSuccess())
+         if (either.IsSuccess)
             return func(either.FromSuccess());
          else
             return Either.Error<TResult, E>(either.FromError());

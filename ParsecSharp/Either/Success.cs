@@ -18,14 +18,20 @@ namespace PJanssen.ParsecSharp
          private set;
       }
 
-      public bool IsSuccess()
+      public bool IsSuccess
       {
-         return true;
+         get
+         {
+            return true;
+         }
       }
 
-      public bool IsError()
+      public bool IsError
       {
-         return false;
+         get
+         {
+            return false;
+         }
       }
 
       public S FromSuccess()

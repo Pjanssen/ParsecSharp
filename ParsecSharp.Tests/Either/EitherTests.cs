@@ -13,7 +13,7 @@ namespace PJanssen.ParsecSharp
       {
          IEither<bool, int> either = Either.Success<bool, int>(true);
          
-         Assert.IsTrue(either.IsSuccess());
+         Assert.IsTrue(either.IsSuccess);
       }
 
       [TestMethod]
@@ -21,7 +21,7 @@ namespace PJanssen.ParsecSharp
       {
          IEither<bool, int> either = Either.Error<bool, int>(42);
 
-         Assert.IsFalse(either.IsSuccess());
+         Assert.IsFalse(either.IsSuccess);
       }
 
       #endregion
@@ -54,7 +54,7 @@ namespace PJanssen.ParsecSharp
       {
          IEither<bool, int> either = Either.Success<bool, int>(true);
 
-         Assert.IsFalse(either.IsError());
+         Assert.IsFalse(either.IsError);
       }
 
       [TestMethod]
@@ -62,7 +62,7 @@ namespace PJanssen.ParsecSharp
       {
          IEither<bool, int> either = Either.Error<bool, int>(42);
 
-         Assert.IsTrue(either.IsError());
+         Assert.IsTrue(either.IsError);
       }
 
       #endregion

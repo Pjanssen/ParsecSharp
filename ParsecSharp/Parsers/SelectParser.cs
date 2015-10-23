@@ -23,7 +23,7 @@ namespace PJanssen.ParsecSharp.Parsers
       public IEither<TResult, ParseError> Parse(IInputReader input)
       {
          var result = this.parser.Parse(input);
-         if (result.IsError())
+         if (result.IsError)
             return ParseResult.Error<TResult>(result.FromError());
 
          return ParseResult.Success(this.func(result.FromSuccess()));

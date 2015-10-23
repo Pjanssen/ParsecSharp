@@ -28,7 +28,7 @@ namespace PJanssen.ParsecSharp.Parsers
             this.predicateParser.Predicate = str[i].Equals;
 
             var result = this.parser.Parse(input);
-            if (result.IsError())
+            if (result.IsError)
                return ParseResult.Error<string>(result.FromError());
          }
 

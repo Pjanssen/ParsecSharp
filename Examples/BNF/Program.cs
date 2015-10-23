@@ -16,7 +16,7 @@ namespace BNF
          using (FileStream stream = File.OpenRead(args[0]))
          {
             var result = parser.Parse(stream, Encoding.UTF8);
-            if (result.IsSuccess())
+            if (result.IsSuccess)
                WriteResult(result.FromSuccess());
             else
                WriteError(result.FromError());

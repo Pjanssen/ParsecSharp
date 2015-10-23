@@ -16,12 +16,18 @@ namespace PJanssen.ParsecSharp
       /// <summary>
       /// Tests if this instance is a "success" value.
       /// </summary>
-      bool IsSuccess();
+      bool IsSuccess
+      {
+         get;
+      }
 
       /// <summary>
       /// Tests if this instance is an "error" value.
       /// </summary>
-      bool IsError();
+      bool IsError
+      {
+         get;
+      }
 
       /// <summary>
       /// Unwraps the success value.

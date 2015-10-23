@@ -25,7 +25,7 @@ namespace PJanssen.ParsecSharp.Parsers
          Position position = input.GetPosition();
 
          var result = this.parserA.Parse(input);
-         if (result.IsSuccess() || input.GetPosition() != position)
+         if (result.IsSuccess || input.GetPosition() != position)
             return result;
 
          return this.parserB.Parse(input);

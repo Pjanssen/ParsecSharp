@@ -33,7 +33,7 @@ namespace PJanssen.ParsecSharp.Parsers
          IEither<T, ParseError> result = null;
          Position position = input.GetPosition();
 
-         while ((result = this.parser.Parse(input)).IsSuccess())
+         while ((result = this.parser.Parse(input)).IsSuccess)
          {
             acc = this.func(acc, result.FromSuccess());
             position = input.GetPosition();
