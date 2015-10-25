@@ -111,6 +111,39 @@ namespace PJanssen.ParsecSharp
 
       #endregion
 
+      #region Chain
+
+      [TestMethod]
+      [ExpectedException(typeof(ArgumentNullException))]
+      public void Chain_ParsersNull_ThrowsException()
+      {
+         Parse.Chain<Unit>(null);
+      }
+
+      [TestMethod]
+      public void Chain_SucceedingSequence_ReturnsLastResults()
+      {
+         var parser = Parse.Chain(Chars.Char('x'),
+                                  Chars.Char('y'),
+                                  Chars.Char('z'));
+         var result = parser.Parse("xyz");
+
+         ParseAssert.ValueEquals('z', result);
+      }
+
+      [TestMethod]
+      public void Chain_FailingSequence_ReturnsError()
+      {
+         var parser = Parse.Chain(Chars.Char('x'),
+                                  Chars.Char('y'),
+                                  Chars.Char('z'));
+         var result = parser.Parse("xy");
+
+         ParseAssert.IsError(result);
+      }
+
+      #endregion
+
       #region Sequence
 
       [TestMethod]

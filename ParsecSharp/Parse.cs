@@ -49,6 +49,24 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
+      /// Applies the given parsers in order and returns the result of the last one.
+      /// Only succeeds if all parsers succeed.
+      /// </summary>
+      public static IParser<T> Chain<T>(IEnumerable<IParser<T>> parsers)
+      {
+         return new ChainParser<T>(parsers);
+      }
+
+      /// <summary>
+      /// Applies the given parsers in order and returns the result of the last one.
+      /// Only succeeds if all parsers succeed.
+      /// </summary>
+      public static IParser<T> Chain<T>(params IParser<T>[] parsers)
+      {
+         return new ChainParser<T>(parsers);
+      }
+
+      /// <summary>
       /// Applies the given parsers in order and returns the result of each parser. 
       /// Only succeeds if all parsers succeed.
       /// </summary>

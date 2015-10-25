@@ -65,6 +65,7 @@
     <Compile Include="ParseResult.cs" />
     <Compile Include="Parsers\AggregateParser.cs" />
     <Compile Include="Parsers\AnyCharParser.cs" />
+    <Compile Include="Parsers\ChainParser.cs" />
     <Compile Include="Parsers\EofParser.cs" />
     <Compile Include="Parsers\ErrorParser.cs" />
     <Compile Include="Parsers\LabeledParser.cs" />
