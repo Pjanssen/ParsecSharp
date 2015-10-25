@@ -138,7 +138,7 @@ namespace PJanssen.ParsecSharp
          if (repeatCount <= 0)
             return Parse.Succeed(Enumerable.Empty<TValue>());
 
-         return new SequenceParser<TValue>(Enumerable.Repeat(parser, repeatCount));
+         return Parse.Sequence(Enumerable.Repeat(parser, repeatCount));
       }
 
       /// <summary>
