@@ -130,14 +130,29 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
+      /// Succeeds if the current character is a carriage return ('\r').
+      /// </summary>
+      public static IParser<char> CarriageReturn()
+      {
+         return Char('\r');
+      }
+
+      /// <summary>
+      /// Succeeds if the current character is a linefeed ('\n').
+      /// </summary>
+      public static IParser<char> LineFeed()
+      {
+         return Char('\n');
+      }
+
+      /// <summary>
       /// Succeeds if the current character is a CR ('\r'), followed by an LF ('\n').
       /// Returns the line feed.
       /// </summary>
       public static IParser<char> CrLf()
       {
-         return (from cr in Char('\r')
-                 from lf in Char('\n')
-                 select lf).Label(() => "Expected CRLF");
+         return Parse.Chain(CarriageReturn(), LineFeed())
+                     .Label(() => "Expected CRLF");
       }
 
       /// <summary>
@@ -146,7 +161,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static IParser<char> EndOfLine()
       {
-         return Char('\n').Or(CrLf());
+         return LineFeed().Or(CrLf());
       }
 
       /// <summary>
