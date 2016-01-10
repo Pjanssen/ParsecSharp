@@ -38,25 +38,6 @@ namespace PJanssen.ParsecSharp
       }
 
       /// <summary>
-      /// Tries to apply the given parsers in order, until one of them succeeds. 
-      /// Returns the value of the succeeding parser.
-      /// </summary>
-      public static IParser<T> Choose<T>(params IParser<T>[] parsers)
-      {
-         return Choose((IEnumerable<IParser<T>>)parsers);
-      }
-
-      /// <summary>
-      /// Tries to apply the given parsers in order, until one of them succeeds. 
-      /// Returns the value of the succeeding parser.
-      /// </summary>
-      public static IParser<T> Choose<T>(IEnumerable<IParser<T>> parsers)
-      {
-         return parsers.Aggregate(Parse.Fail<T>("Empty choose sequence")
-                                 , (acc, p) => acc.Or(p));
-      }
-
-      /// <summary>
       /// Applies the first parser and returns its value if it succeeds. 
       /// If it fails without consuming any input, the second parser is applied.
       /// </summary>

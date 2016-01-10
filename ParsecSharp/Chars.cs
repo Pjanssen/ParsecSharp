@@ -161,7 +161,7 @@ namespace PJanssen.ParsecSharp
       /// </summary>
       public static IParser<char> EndOfLine()
       {
-         return LineFeed().Or(CrLf());
+			return LineFeed().Or(CrLf());
       }
 
       /// <summary>

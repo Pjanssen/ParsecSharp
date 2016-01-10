@@ -76,11 +76,12 @@ namespace Json
             select new JsonObject(values);
 
 
-      public static readonly IParser<JsonValue> JsonValue = Combine.Choose( JsonObject
-                                                                          , JsonArray
-                                                                          , JsonString
-                                                                          , JsonNumber
-                                                                          , JsonBoolean
-                                                                          , JsonNull);
+      public static readonly IParser<JsonValue> JsonValue = 
+            Parse.Choose( JsonObject
+                        , JsonArray
+                        , JsonString
+                        , JsonNumber
+                        , JsonBoolean
+                        , JsonNull);
    }
 }

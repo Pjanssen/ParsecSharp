@@ -19,7 +19,7 @@ namespace PasswordGenerator
 
       static IParser<IGenerator> Expression()
       {
-         return Combine.Choose(AnyChar(), CharSet(), CharLiteral());
+         return Parse.Choose(AnyChar(), CharSet(), CharLiteral());
       }
 
       static IParser<IGenerator> AnyChar()
@@ -76,7 +76,7 @@ namespace PasswordGenerator
 
       static IParser<IQuantifier> Quantifier()
       {
-         return Combine.Choose(ZeroOrMore(), ZeroOrOne(), OneOrMore(), Range());
+         return Parse.Choose(ZeroOrMore(), ZeroOrOne(), OneOrMore(), Range());
       }
 
       static IParser<IQuantifier> ZeroOrMore()
